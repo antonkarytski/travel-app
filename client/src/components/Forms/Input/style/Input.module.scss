@@ -1,0 +1,11 @@
+.InputBlock{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  input{
+    margin-left: 5px;
+    outline: none;
+  }
+}

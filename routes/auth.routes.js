@@ -29,12 +29,11 @@ route.post(
             if (potentialUser) {
                 res.status(400).json({message: "User with this email is existing yet"})
             }
-            const hashedPassword = await bcrypt.hash(password, 12)
+            const hashedPassword = await bcrypt.hash(password, 10)
             const user = new User({email, password: hashedPassword})
             user.save().then((data) => {
             }).catch((e) => {
             })
-
 
             res.status(201).json({message: "You successfully registered"})
         } catch (e) {
@@ -59,26 +58,23 @@ route.post('/login',
             }
 
             const {email, password} = req.body
-            const user = await User.findOne({})
+            const user = await User.findOne({ email })
             if (!user) {
                 return res.status(400).json({message: "User is not found"})
             }
 
             const passwordIsCorrect = await bcrypt.compare(password, user.password)
-            console.log(user.password)
             if (!passwordIsCorrect) {
                 return res.status(400).json({message: "Неверный пароль"})
             }
-            const token = jwt({
-                    userId: user.id
-                },
-                config.get('jwtSecret'),
+            const token = jwt.sign(
+                {userId: user.id},
+                config.get('jwtSecretKey'),
                 {expiresIn: '1h'}
             )
-            res.json({token, userId: user.id})
-
+            res.json({token, userId: user.id, message: "you logged in"})
         } catch (e) {
-            res.status(500).json({message: "Something wrong"})
+            res.status(500).json({message: "Something wrong", e})
         }
     })
 

@@ -1,0 +1,51 @@
+.AuthPage{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .AuthForm{
+    color: #111;
+    background-color: #17c3b2;
+    padding: 40px 40px 25px;
+
+    .FormMessage{
+      min-height: 30px;
+    }
+
+    .AuthInput{
+      input{
+        border: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    }
+
+    .AuthButtonSet{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-top: 20px;
+      height: 40px;
+
+      .FormButton{
+        width: 45%;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 2px solid white;
+        transition: box-shadow 0.5s;
+
+        &.SignUpButton{
+          background-color: white;
+        }
+        &.SignInButton{
+          background-color: inherit;
+        }
+
+        &:hover{
+          box-shadow: 0 0 70px rgba(0, 0, 0, 0.2) inset;
+        }
+      }
+    }
+  }
+}

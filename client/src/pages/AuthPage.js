@@ -1,13 +1,20 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {useHttp} from "../hooks/useHttp";
+import {AuthContext} from "../context/AuthContext";
+import InputText from "../components/Forms/Input/InputText";
+import InputPassword from "../components/Forms/Input/InputPassword";
+import classesCss from "./styles/AuthPage.module.scss"
+import Button from "../components/Buttons/Button";
 
 export const AuthPage = () => {
+
     const [form, setForm] = useState({
         email: '',
         password: ''
     })
-    const {loading, error, request, clearError} = useHttp()
+    const {loading, error, request} = useHttp()
     const [message, setMessage] = useState('')
+    const auth = useContext(AuthContext)
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value})
@@ -25,9 +32,9 @@ export const AuthPage = () => {
     const loginHandler = async() => {
         try{
             const data = await request('/api/auth/login', 'POST', {...form})
+            auth.login(data.token, data.userId)
             setMessage(data.message || '')
         } catch(e){
-
         }
     }
 
@@ -36,34 +43,39 @@ export const AuthPage = () => {
     }, [error])
 
     return (
-        <div>
-            <div>
-                <div>{message}</div>
-                <label htmlFor="authLogin">Login:</label>
-                <input
+        <div className={classesCss.AuthPage}>
+            <div className={classesCss.AuthForm}>
+                <div className={classesCss.FormMessage}>{message}</div>
+                <InputText
+                    className={classesCss.AuthInput}
+                    label={"Login: "}
                     name={'email'}
                     id={"authEmail"}
-                    type="email"
+                    type="text"
                     onChange={changeHandler}
                 />
-                <label htmlFor="authLogin">Password:</label>
-                <input
+                <InputPassword
+                    className={classesCss.AuthInput}
                     name={'password'}
                     id={"authPassword"}
-                    type={"password"}
+                    label={"Password: "}
                     onChange={changeHandler}
                 />
-                <button
-                    onClick={requestHandler}
-                    disabled={loading}
-                >
-                    Sign Up
-                </button>
-                <button
-                    onClick={loginHandler}
-                    disabled={loading}
-                >Sign In
-                </button>
+                <div className={classesCss.AuthButtonSet}>
+                    <Button
+                        onClick={loginHandler}
+                        disabled={loading}
+                        label={"Sign In"}
+                        className={[classesCss.SignInButton, classesCss.FormButton].join(" ")}
+                    />
+
+                    <Button
+                        onClick={requestHandler}
+                        disabled={loading}
+                        label={"Sign Up"}
+                        className={[classesCss.SignUpButton, classesCss.FormButton].join(" ")}
+                    />
+                </div>
             </div>
         </div>
     )
