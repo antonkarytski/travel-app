@@ -4,9 +4,9 @@ const config = require('config')
 const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
-const route = Router()
+const router = Router()
 
-route.post(
+router.post(
     '/register',
     [
         check('email', 'email is incorrect').isEmail(),
@@ -31,17 +31,16 @@ route.post(
             }
             const hashedPassword = await bcrypt.hash(password, 10)
             const user = new User({email, password: hashedPassword})
-            user.save().then((data) => {
-            }).catch((e) => {
-            })
+            user.save()
+                .catch((e) => {})
 
             res.status(201).json({message: "You successfully registered"})
         } catch (e) {
-            res.status(500).json({message: "Smth wrong"})
+            res.status(500).json({message: "Something wrong"})
         }
     })
 
-route.post('/login',
+router.post('/login',
     [
         check('email', 'Enter correct email').normalizeEmail().isEmail(),
         check('password', 'Enter password').exists()
@@ -78,4 +77,4 @@ route.post('/login',
         }
     })
 
-module.exports = route
+module.exports = router

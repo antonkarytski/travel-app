@@ -8,6 +8,7 @@ import {useAuth} from "./hooks/useAuth";
 import {AuthContext} from "./context/AuthContext";
 import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
+import AdminPage from "./pages/AdminPage";
 
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
                     <Switch>
                         <Route path="/country/:countryName" exact>
                             <CountryPage/>
+                        </Route>
+                        <Route path="/admin" exact>
+                            <AdminPage/>
                         </Route>
                         <Route path="/" exact component={MainPage}/>
                         {!isAuthenticated ?
