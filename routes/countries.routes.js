@@ -23,7 +23,7 @@ router.post(
                 await LangCountry.create({
                     countryCode: countryCode.toUpperCase(),
                     ...countryLangData
-                })
+                }, err => {return err})
             }
             res.status(201).json({message: "Country was successfully added"})
         } catch(e){
@@ -35,35 +35,20 @@ router.post(
 router.post(
     '/update',
     async (req, res) => {
-        const {
-            countryCode,
-            countryLangData
-        } = req.body
+        const countryData = req.body
         try{
-
-            const countryCheck = await Country.findOne({countryCode})
+            const countryCheck = await Country.findOne({countryCode: countryData.countryCode})
             if(countryCheck){
-                const langCountry = {countryCode, lang: countryLangData}
+                const langCountry = {countryCode: countryData.countryCode, lang: countryData.lang}
                 const countryLangCheck = await LangCountry.findOne(langCountry)
                 if(countryLangCheck){
-                    await LangCountry.updateOne(langCountry, {
-                        countryCode,
-                        ...countryLangData
-                    })
+                    await LangCountry.updateOne(langCountry, countryData)
                 } else {
-                    await LangCountry.create({
-                        countryCode,
-                        ...countryLangData
-                    })
+                    await LangCountry.create(countryData, err => {return err})
                 }
             } else {
-                await Country.create({
-                    countryCode
-                })
-                await LangCountry.create({
-                    countryCode,
-                    ...countryLangData
-                })
+                await Country.create({countryCode: countryData.countryCode})
+                await LangCountry.create(countryData, err => {return err})
             }
             res.status(201).json({message: "Country was successfully update"})
         } catch(e){
@@ -80,19 +65,19 @@ router.post(
             lang
         } = req.body
         try{
-            let countrySet
+            let countrySet = {}
             if(countryCode && lang) {
-                countrySet = await Country.findOne({countryCode})
-                countrySet.langData = await LangCountry.findOne({countryCode, lang})
+                countrySet.countries = await Country.findOne({countryCode})
+                countrySet.langCountries = await LangCountry.findOne({countryCode, lang})
             } else if(countryCode){
-                countrySet = await Country.findOne({countryCode})
-                countrySet.langData = await LangCountry.findOne({countryCode})
+                countrySet.countries = await Country.findOne({countryCode})
+                countrySet.langCountries = await LangCountry.find({countryCode})
             } else if(lang){
-                countrySet = await Country.find({})
-                countrySet.langData = await LangCountry.find({lang})
+                countrySet.countries = await Country.find({})
+                countrySet.langCountries = await LangCountry.find({lang})
             } else {
-                countrySet = await Country.find({})
-                countrySet.langData = await LangCountry.find({})
+                countrySet.countries = await Country.find({})
+                countrySet.langCountries = await LangCountry.find({})
             }
             res.json(countrySet)
         } catch(e){
