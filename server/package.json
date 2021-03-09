@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "rss task 2: travel app",
   "main": "app.js",
+  "engines": {
+    "node": "14.x",
+    "npm": "6.14.4"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node app.js",
     "server": "nodemon app.js",
-    "client": "npm run start --prefix client",
+    "client": "npm run start --prefix ../client/",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server \" \"npm run client\"",
-    "client:install": "npm install --prefix client",
-    "client:build": "npm run build --prefix client"
+    "client:install": "npm install --prefix ../client/",
+    "client:build": "npm run build --prefix ../client/"
   },
   "author": "Task 2 Team",
   "license": "ISC",
