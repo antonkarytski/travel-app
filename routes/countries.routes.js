@@ -2,7 +2,7 @@ const {Router} = require('express')
 const router = Router()
 const {Country, LangCountry} = require('../models/Country')
 
-const langs = ["EN", "RU", "FR"]
+const langSet = ["EN", "RU", "FR"]
 
 const countryDummy = {
     countryCode: "",
@@ -40,17 +40,17 @@ router.post(
                 ...countryDummy,
                 countryCode: countryCode,
             }
-            for(let i = 0; i < langs.length; i++){
+            for(let i = 0; i < langSet.length; i++){
                 countryEmptyBase.langData.push({
                     ...langShortDummy,
-                    lang: langs[i]
+                    lang: langSet[i]
                 })
             }
             await Country.create(countryEmptyBase, e => e)
-            for(let i = 0; i < langs.length; i++){
+            for(let i = 0; i < langSet.length; i++){
                 await LangCountry.create({
                     ...langFullDummy,
-                    lang: langs[i],
+                    lang: langSet[i],
                     countryCode : countryCode,
                 }, e => e)
             }
@@ -103,13 +103,16 @@ router.post(
     async (req, res) => {
         const {
             countryCode,
-            lang
+            lang,
+            key //short
         } = req.body
         try{
             let countrySet = {
-                langs
+                langs: langSet
             }
-            if(countryCode && lang) {
+            if(key === "short"){
+                countrySet.countries = await Country.find({})
+            }else if(countryCode && lang) {
                 countrySet.countries = await Country.findOne({countryCode})
                 countrySet.langCountries = await LangCountry.findOne({countryCode, lang})
             } else if(countryCode){
