@@ -7,9 +7,8 @@ const countryData = {
     countryCode: ""
 }
 
-const CountryAddForm = ({initData, sendHandler, waitCondition, message}) => {
+const CountryAddForm = ({sendHandler, waitCondition, message}) => {
     const [form, setForm] = useState(countryData)
-    //initData? {...countryData, ...initData} : countryData
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
