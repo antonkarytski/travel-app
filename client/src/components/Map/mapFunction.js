@@ -1,30 +1,39 @@
-// export const drawRoute = (map, coordinates) => {
-//   map.flyTo({
-//     center: coordinates[0],
-//     zoom: 15
-//   });
- 
-//   map.addLayer({
-//     id: "route",
-//     type: "line",
-//     source: {
-//       type: "geojson",
-//       data: {
-//         type: "Feature",
-//         properties: {},
-//         geometry: {
-//           type: "LineString",
-//           coordinates
-//         }
-//       }
-//     },
-//     layout: {
-//       "line-join": "round",
-//       "line-cap": "round"
-//     },
-//     paint: {
-//       "line-color": "#ffc617",
-//       "line-width": 8
-//     }
-//   });
-// };
+import Countries from "./countries.json"
+
+export const colorBoundaries = (map) => {
+  const coordinates = Countries.features[1].geometry.coordinates;
+  const country = Countries.features[1].properties.ADMIN;
+
+  map.flyTo({
+    center: coordinates[0][0][0],
+    zoom: 3
+  });
+
+  map.on('load', function() {
+    map.addLayer({
+        id: "lang",
+        type: "fill",
+        source: {
+          type: "geojson",
+          data: {
+            "type": "FeatureCollection",
+            
+            "features": [
+            { "type": "Feature", 
+            "properties": { 
+              "ADMIN": country
+            }, 
+            "geometry": { "type": "MultiPolygon", 
+              "coordinates": coordinates
+         } }
+            ]
+            }
+        },
+        paint: {
+          "fill-color": "#ffc617",
+          "fill-outline-color": "#000000",
+          "fill-opacity": 0.3
+        }
+    });
+  })
+}
