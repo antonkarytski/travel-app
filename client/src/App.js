@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, Redirect, NavLink } from "react-router-dom";
 import classesCss from "./styles/App.module.scss";
 import { MainPage } from "./pages/MainPage";
@@ -10,21 +10,12 @@ import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import { Search } from "./components/Search/Search";
+import { useCountries } from "./hooks/useHttp";
 
 function App() {
   const { token, login, logout, userId } = useAuth();
   const isAuthenticated = !!token;
   const [searchbarState, setSearchbarState] = useState();
-  const countries = [
-    { name: "Belarus", capital: "Minsk" },
-    { name: "Russia", capital: "Moscow" },
-    { name: "France", capital: "Paris" },
-    { name: "Spain", capital: "Madrid" },
-    { name: "Germany", capital: "Berlin" },
-    { name: "Ukraine", capital: "Kiev" },
-    { name: "Italy", capital: "Rome" },
-    { name: "Sweden", capital: "Stockholm" },
-  ];
 
   return (
     <AuthContext.Provider
@@ -34,7 +25,6 @@ function App() {
         <NavBar classes={classesCss.SiteNavBar}>
           <NavLink to={"/"}>Main</NavLink>
           <Search
-            countries={countries}
             searchbarState={searchbarState}
             setSearchbarState={setSearchbarState}
           />
@@ -51,12 +41,7 @@ function App() {
             <Route
               path="/"
               exact
-              render={() => (
-                <MainPage
-                  countries={countries}
-                  searchbarState={searchbarState}
-                />
-              )}
+              render={() => <MainPage searchbarState={searchbarState} />}
             />
             {
               !isAuthenticated ? (

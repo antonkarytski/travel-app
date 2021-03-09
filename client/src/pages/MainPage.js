@@ -1,13 +1,26 @@
-import React from "react";
+import { useCountries } from "../hooks/useHttp";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
 
 export const MainPage = (props) => {
+  const { getCountryFromBase, countryResponse, cLoading } = useCountries();
+
+  useEffect(() => {
+    getCountryFromBase({ key: "short" });
+  }, []);
+
+  let countries;
+
+  if (countryResponse) {
+    countries = countryResponse.countries.map((country) => country.langData[1]);
+  }
+
   const filterCountries = (countries) => {
     let filteredCountries = countries;
     if (props.searchbarState) {
       filteredCountries = countries.filter((country) =>
-        country.name.includes(props.searchbarState)
+        country.countryName.includes(props.searchbarState)
       );
     }
     return filteredCountries.map((country, index) => {
@@ -15,7 +28,7 @@ export const MainPage = (props) => {
         <div key={`countryCard${index}`}>
           <NavLink
             className={classesCss.CountryCard}
-            to={`/country/${country.name.toLowerCase()}`}
+            to={`/country/${country.countryName.toLowerCase()}`}
           >
             <div>
               <img
@@ -25,7 +38,7 @@ export const MainPage = (props) => {
               />
             </div>
             <div>
-              {country.name}, {country.capital}
+              {country.countryName}, {country.capitalName}
             </div>
           </NavLink>
         </div>
@@ -34,7 +47,7 @@ export const MainPage = (props) => {
   };
   return (
     <div className={classesCss.MainPage}>
-      {filterCountries([...props.countries])}
+      {countries && filterCountries([...countries])}
     </div>
   );
 };

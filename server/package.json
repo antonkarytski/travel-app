@@ -1,0 +1,44 @@
+{
+  "name": "travel-app",
+  "version": "1.0.0",
+  "description": "rss task 2: travel app",
+  "main": "app.js",
+  "engines": {
+    "node": "14.x",
+    "npm": "6.14.4"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node app.js",
+    "server": "nodemon app.js",
+    "build": "webpack",
+    "client": "npm run start --prefix ../client/",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server \" \"npm run client\"",
+    "client:install": "npm install --prefix ../client/",
+    "client:build": "npm run build --prefix ../client/"
+  },
+  "author": "Task 2 Team",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.4",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^5.11.18",
+    "npm": "^7.6.1",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.7",
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  },
+  "keywords": []
+}
