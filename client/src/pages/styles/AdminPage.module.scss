@@ -1,6 +1,15 @@
 .FormStyle1{
   padding: 30px;
   background: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+
+  .FormColumn{
+    &:not(:last-child){
+      margin-right: 30px;
+    }
+  }
+
 
   h2{
     background: #4D4D4D;
@@ -29,7 +38,14 @@
 
   textarea{
     resize:none;
+    width: 350px;
     overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .Description{
+    textarea{
+      width: 500px;
+    }
   }
 }
 

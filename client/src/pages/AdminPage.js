@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {useHttp} from "../hooks/useHttp";
-import VerticalTabs from "../components/Tabs/VerticalTabs";
 import TabPanel from "../components/Tabs/TabPanel";
-import classesCss from './styles/AdminPage.module.scss'
+import VerticalTabs from "../components/Tabs/VerticalTabs";
 import CountryAddForm from "../components/Forms/CountryAddForm";
 import CountryUpdateForm from "../components/Forms/CountryUpdateForm";
+import classesCss from './styles/AdminPage.module.scss'
 
 
 const langShortDummy = {
@@ -135,6 +135,7 @@ const AdminPage = () => {
                         waitCondition={loading}
                         sendHandler={updateCountryHandler}
                         countriesData={countriesData}
+                        message={message}
                     />
                 </TabPanel>
             </VerticalTabs>

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Input from "./Input/Input";
 import Button from "../Buttons/Button";
 import classesCss from "../../pages/styles/AdminPage.module.scss";
+import Textarea from "./Textarea";
 
 
 const countryLang = {
@@ -10,7 +11,7 @@ const countryLang = {
     FR: "France"
 }
 
-const CountryUpdateForm = ({sendHandler, waitCondition, countriesData}) => {
+const CountryUpdateForm = ({sendHandler, waitCondition, countriesData, message}) => {
 
     const [form, setForm] = useState({
         countryCode: Object.keys(countriesData)[0],
@@ -26,7 +27,6 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countriesData}) => {
         const newCountriesData = {...countriesData}
         newCountriesData[form.countryCode].langData[form.lang][event.target.name] = event.target.value
         setCountries(newCountriesData)
-        console.log(countries[form.countryCode])
     }
 
     const countriesCodes = []
@@ -40,7 +40,7 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countriesData}) => {
 
     return (
         <>
-            <div>
+            <div className={classesCss.FormColumn}>
             <label>Country</label>
             <select
                 name="countryCode"
@@ -78,17 +78,36 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countriesData}) => {
                 value={countries[form.countryCode]?.langData[form.lang]?.capitalName || ""}
                 onChange={langDataChangeHandler}
             />
+                <Button
+                    onClick={() => sendHandler({
+                        countryCode: form.countryCode,
+                        data: countries[form.countryCode]
+                    })}
+                    disabled={waitCondition}
+                    label={"Update"}
+                    className={[classesCss.SignUpButton, classesCss.FormButton].join(" ")}
+                />
+                <br/>
+                {message}
+            </div>
+            <div className={classesCss.FormColumn}>
+                <Textarea
+                    label={"Short text(in Mane Page: "}
+                    name={"shortText"}
+                    value={countries[form.countryCode]?.langData[form.lang]?.shortText || ""}
+                    onChange={langDataChangeHandler}
+                />
+                <Textarea
+                    className={classesCss.Description}
+                    label={"Description: "}
+                    name={"description"}
+                    value={countries[form.countryCode]?.langData[form.lang]?.description || ""}
+                    onChange={langDataChangeHandler}
+                    rows = {11}
+                />
             </div>
 
-            <Button
-                onClick={() => sendHandler({
-                    countryCode: form.countryCode,
-                    data: countries[form.countryCode]
-                })}
-                disabled={waitCondition}
-                label={"Update"}
-                className={[classesCss.SignUpButton, classesCss.FormButton].join(" ")}
-            />
+
         </>
     )
 }

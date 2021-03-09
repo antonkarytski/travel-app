@@ -16,19 +16,21 @@ const CountryAddForm = ({initData, sendHandler, waitCondition, message}) => {
     }
 
     return(
-        <>
+        <div>
             <Input
                 label={"Country code:"}
                 onChange={changeHandler}
                 name={"countryCode"}
             />
-            {message}
+
             <Button
                 onClick={() => sendHandler(form)}
                 disabled={waitCondition}
                 label={"Add"}
             />
-        </>
+            <br/>
+            {message}
+        </div>
     )
 }
 

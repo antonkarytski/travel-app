@@ -1,6 +1,4 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -18,6 +16,7 @@ function TabPanel(props: TabPanelProps) {
 
     return (
         <div
+            style={{display: value === index? 'flex': 'none'}}
             role={"tabpanel"}
             className={[classes ,className].join(' ')}
             hidden={value !== index}
@@ -25,11 +24,7 @@ function TabPanel(props: TabPanelProps) {
             aria-labelledby={`vertical-tab-${index}`}
             {...other}
         >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
+            {value === index && children}
         </div>
     );
 }
