@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useHttp} from "../hooks/useHttp";
+import {useHttp, useCountries} from "../hooks/useHttp";
 import TabPanel from "../components/Tabs/TabPanel";
 import VerticalTabs from "../components/Tabs/VerticalTabs";
 import CountryAddForm from "../components/Forms/CountryAddForm";
@@ -23,6 +23,7 @@ const langFullDummy = {
 
 const AdminPage = () => {
     const {request, loading} = useHttp()
+    const {getCountryFromBase, countryResponse, cLoading} = useCountries()
     const [message, setMessage] = useState('')
     const [countriesData, setCountriesData] = useState(null)
 
@@ -30,7 +31,6 @@ const AdminPage = () => {
         try {
             const data = await request('/api/country/add', 'POST', {...form})
             setMessage(data.message || '')
-            console.log(data.message)
         } catch (e) {
 
         }
@@ -41,11 +41,9 @@ const AdminPage = () => {
         try {
             const data = await request('/api/country/update', 'POST', destructCountry(form))
             setMessage(data.message || '')
-            console.log(data.message)
         } catch (e) {
 
         }
-        destructCountry(form)
     }
 
     const destructCountry= (countryDataFromClient) => {
@@ -112,13 +110,15 @@ const AdminPage = () => {
 
 
     useEffect(() => {
-        const dataResponse = (async () => await request('/api/country/get', 'POST', {}))()
-        dataResponse.then(data => {
-            setCountriesData(structCountries(data))
-        }).catch(e => {
-            console.log(e)
-        })
+        getCountryFromBase({})
     }, [])
+
+    useEffect(() => {
+        if(countryResponse){
+            setCountriesData(structCountries(countryResponse))
+        }
+    }, [countryResponse])
+
 
     return (
         <>
@@ -131,12 +131,17 @@ const AdminPage = () => {
                     />
                 </TabPanel>
                 <TabPanel className={classesCss.FormStyle1} label={"Add Lang"}>
-                    <CountryUpdateForm
-                        waitCondition={loading}
-                        sendHandler={updateCountryHandler}
-                        countriesData={countriesData}
-                        message={message}
-                    />
+                    {
+                        !countryResponse? cLoading?
+                            <div>Загрузка...</div> :
+                            <div>Ошибка при загрузке базы стран</div>:
+                            <CountryUpdateForm
+                                waitCondition={loading}
+                                sendHandler={updateCountryHandler}
+                                countriesData={countriesData}
+                                message={message}
+                            />
+                    }
                 </TabPanel>
             </VerticalTabs>
         </>)

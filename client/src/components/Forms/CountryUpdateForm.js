@@ -14,7 +14,7 @@ const countryLang = {
 const CountryUpdateForm = ({sendHandler, waitCondition, countriesData, message}) => {
 
     const [form, setForm] = useState({
-        countryCode: Object.keys(countriesData)[0],
+        countryCode: countriesData? Object.keys(countriesData)[0] : '',
         lang: Object.keys(countryLang)[0]
     })
     const [countries, setCountries] = useState(countriesData)
@@ -24,9 +24,12 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countriesData, message})
     }
 
     const langDataChangeHandler = event => {
-        const newCountriesData = {...countriesData}
-        newCountriesData[form.countryCode].langData[form.lang][event.target.name] = event.target.value
-        setCountries(newCountriesData)
+        if(countries){
+            const newCountriesData = {...countries}
+            newCountriesData[form.countryCode].langData[form.lang][event.target.name] = event.target.value
+            setCountries(newCountriesData)
+        }
+
     }
 
     const countriesCodes = []
@@ -65,17 +68,16 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countriesData, message})
                 <option value={'RU'}>Russian</option>
                 <option value={'FR'}>French</option>
             </select>
-
             <Input
                 label={"Country Name: "}
                 name={"countryName"}
-                value={countries[form.countryCode]?.langData[form.lang]?.countryName || ""}
+                value={countries? countries[form.countryCode]?.langData[form.lang]?.countryName || "": ""}
                 onChange={langDataChangeHandler}
             />
             <Input
                 label={"Capital Name: "}
                 name={"capitalName"}
-                value={countries[form.countryCode]?.langData[form.lang]?.capitalName || ""}
+                value={countries? countries[form.countryCode]?.langData[form.lang]?.capitalName || "" : ""}
                 onChange={langDataChangeHandler}
             />
                 <Button
@@ -94,14 +96,14 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countriesData, message})
                 <Textarea
                     label={"Short text(in Mane Page: "}
                     name={"shortText"}
-                    value={countries[form.countryCode]?.langData[form.lang]?.shortText || ""}
+                    value={countries? countries[form.countryCode]?.langData[form.lang]?.shortText || "" : ""}
                     onChange={langDataChangeHandler}
                 />
                 <Textarea
                     className={classesCss.Description}
                     label={"Description: "}
                     name={"description"}
-                    value={countries[form.countryCode]?.langData[form.lang]?.description || ""}
+                    value={countries? countries[form.countryCode]?.langData[form.lang]?.description || "" : ""}
                     onChange={langDataChangeHandler}
                     rows = {11}
                 />

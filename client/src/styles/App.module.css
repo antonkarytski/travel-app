@@ -2,11 +2,11 @@
   margin: 0;
   padding: 0;
   background-color: white;
-  color: white;
   height: 100vh;
 }
 
 .SiteNavBar {
+  color: white;
   height: 60px;
   background-color: #17c3b2;
   display: flex;

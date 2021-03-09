@@ -1,1 +1,14 @@
+.MainPage {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
 
+.CountryCardPhoto {
+  width: 200px;
+}
+
+.CountryCard {
+  color: firebrick;
+  text-decoration: none;
+}
