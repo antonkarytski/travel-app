@@ -8,11 +8,11 @@
     "npm": "6.14.4"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app.js",
+    "start": "cross-env NODE_ENV=production&& node app.js",
     "server": "nodemon app.js",
     "build": "webpack",
     "client": "npm run start --prefix ../client/",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm run server \" \"npm run client\"",
+    "dev": "cross-env NODE_ENV=development&& concurrently \"npm run server \" \"npm run client\"",
     "client:install": "npm install --prefix ../client/",
     "client:build": "npm run build --prefix ../client/"
   },
