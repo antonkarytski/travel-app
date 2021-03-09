@@ -1,4 +1,17 @@
-import React from 'react'
+import React from 'react';
+import Slider from './../components/Sliders/slider';
+
+const imagesArr = [
+    {
+        url: 'imageUrl1'
+    },
+    {
+        url: 'imageUrl2'
+    },
+    {
+        url: 'imageUrl3'
+    }
+];
 
 export const CountryPage = (props) => {
 
@@ -12,6 +25,7 @@ export const CountryPage = (props) => {
     return(
         <div>
             <h1>Country Page</h1>
+            <Slider images={imagesArr}/>
             <button
                 //onClick={toHomePage}
             >Back
