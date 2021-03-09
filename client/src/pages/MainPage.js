@@ -1,6 +1,7 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import classesCss from './styles/Pages.module.scss'
+import Map from '../components/Map/Map'
 
 export const MainPage = () => {
 
@@ -24,6 +25,7 @@ export const MainPage = () => {
                                 to={`/country/${country.name.toLowerCase()}`}>
                                 {country.name}
                             </NavLink>
+                            <Map />
                         </div>
                     )
 
