@@ -6,7 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 const application = (
-    <BrowserRouter basename={"/travel-app/"}>
+    <BrowserRouter basename={"/"}>
         <App />
     </BrowserRouter>
 )

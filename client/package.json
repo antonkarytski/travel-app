@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://heyheyjude.github.io/travel-app",
+  "homepage": "http://heyheyjude.github.io/travel-app/",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material/tab-bar": "^10.0.0",
