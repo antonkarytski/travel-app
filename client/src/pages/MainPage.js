@@ -4,7 +4,9 @@ import { NavLink } from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
 
 export const MainPage = (props) => {
-  const { getCountryFromBase, countryResponse, cLoading } = useCountries();
+
+  const { getCountryFromBase, countryResponse} = useCountries();
+
 
   useEffect(() => {
     getCountryFromBase({ key: "short" });
@@ -23,6 +25,7 @@ export const MainPage = (props) => {
         country.countryName.includes(props.searchbarState)
       );
     }
+
     return filteredCountries.map((country, index) => {
       return (
         <div key={`countryCard${index}`}>
@@ -45,6 +48,7 @@ export const MainPage = (props) => {
       );
     });
   };
+
   return (
     <div className={classesCss.MainPage}>
       {countries && filterCountries([...countries])}

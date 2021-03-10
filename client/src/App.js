@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Route, Switch, Redirect, NavLink } from "react-router-dom";
 import classesCss from "./styles/App.module.scss";
 import { MainPage } from "./pages/MainPage";
@@ -10,7 +10,6 @@ import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import { Search } from "./components/Search/Search";
-import { useCountries } from "./hooks/useHttp";
 
 function App() {
   const { token, login, logout, userId } = useAuth();
@@ -50,10 +49,11 @@ function App() {
                 </Route>
               ) : null //TODO: create route to user page
             }
-            <Redirect to="/" />
           </Switch>
         </div>
-        <div className={classesCss.SiteFooter}></div>
+        <div className={classesCss.SiteFooter}>
+
+        </div>
       </div>
     </AuthContext.Provider>
   );

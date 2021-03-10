@@ -36,6 +36,7 @@ const VerticalTabs = ({children}) => {
     let TabsContent = null;
     if(children){
         TabLabels = children.map((child, index) => {
+            console.log(child)
             return (<Tab label={child.props.label} key = {index} {...a11yProps(index)} />)
         })
         TabsContent = children.map((child, index) => {

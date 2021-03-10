@@ -92,18 +92,23 @@ const AdminPage = () => {
             for (let i = 0; i < structure[countryCode].langData.length; i++) {
                 countryLangData[structure[countryCode].langData[i].lang] = structure[countryCode].langData[i]
             }
-            const currentCountryLangs = countriesDataFromServer.langCountries.filter(county => {
-                return county.countryCode === countryCode
-            })
-            for (let i = 0; i < currentCountryLangs.length; i++) {
-                countryLangData[currentCountryLangs[i].lang] = {
-                    ...countryLangData[currentCountryLangs[i].lang],
-                    ...currentCountryLangs[i]
+            if(countriesDataFromServer.langCountries){
+                const currentCountryLangs = countriesDataFromServer.langCountries.filter(county => {
+                    return county.countryCode === countryCode
+                })
+                for (let i = 0; i < currentCountryLangs.length; i++) {
+                    countryLangData[currentCountryLangs[i].lang] = {
+                        ...countryLangData[currentCountryLangs[i].lang],
+                        ...currentCountryLangs[i]
+                    }
+                    delete countryLangData[currentCountryLangs[i].lang].lang
+                    delete countryLangData[currentCountryLangs[i].lang].countryCode
                 }
-                delete countryLangData[currentCountryLangs[i].lang].lang
-                delete countryLangData[currentCountryLangs[i].lang].countryCode
+
             }
             structure[countryCode].langData = countryLangData
+
+
         }
         return structure
     }
@@ -118,7 +123,6 @@ const AdminPage = () => {
             setCountriesData(structCountries(countryResponse))
         }
     }, [countryResponse])
-
 
     return (
         <>
