@@ -32,7 +32,7 @@ const Map = () => {
             .setLngLat(coordinates)
             .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
                 .setHTML(`<h3>${city}</h3>`))
-            .addTo(this.map)
+            .addTo(map)
 
         map.addControl(nav, 'bottom-right');
         //colorBoundaries(this.map)
