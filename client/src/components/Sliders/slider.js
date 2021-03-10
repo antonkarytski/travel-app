@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ImageGallery from 'react-image-gallery'
 
 
 export default function Slider(props) {
@@ -15,18 +16,35 @@ export default function Slider(props) {
 
     return (
         <div>
-            <div>&lt;</div>
+            <div onClick = {() => {SetActiveIndex(prevImageIndex)}}>&lt;</div>
+            <div>
+                {/* {
+                    props.images.map(imageObject => {
+                        return (
+                        <div>
+                                {imageObject.url}
+                            <img key={imageObject.url} src={imageObject.url} alt="" />
+                        </div>
+                        )
+                    })
+                } */}
+                <div>
+                        {props.images[activeIndex].url}
+                    <img key={props.images[activeIndex].url} src={props.images[activeIndex].url} alt="" />
+                </div>
+            </div>
             <div>
                 {
-                    props.images.map(imageObject => {
-                        return <img key={imageObject.url} src={imageObject.url} alt="" />
+                    props.images.map((e, i) => {
+                        return (
+                        <div>
+                            ---
+                        </div>
+                        )
                     })
                 }
             </div>
-            <div>
-                div
-            </div>
-            <div>&gt;</div>
+            <div  onClick = {() => {SetActiveIndex(nextImageIndex)}}>&gt;</div>
         </div>
     )
 

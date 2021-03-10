@@ -11,6 +11,7 @@ import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import { Search } from "./components/Search/Search";
 import { useCountries } from "./hooks/useHttp";
+import Slider from "./components/Sliders/slider"
 
 function App() {
   const { token, login, logout, userId } = useAuth();
@@ -31,6 +32,7 @@ function App() {
           <UserBar classes={classesCss.UserBar} />
         </NavBar>
         <div className={classesCss.SiteContent}>
+          <Slider images={[{url:"./1"},{url:"./2"},{url:"./3"},{url:"./4"}]}/>
           <Switch>
             <Route path="/country/:countryName" exact>
               <CountryPage />
