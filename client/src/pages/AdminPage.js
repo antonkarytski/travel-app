@@ -119,6 +119,8 @@ const AdminPage = () => {
         }
     }, [countryResponse])
 
+    console.log(countryResponse)
+
 
     return (
         <>

@@ -11,7 +11,7 @@ export const colorBoundaries = (map) => {
 
   map.on('load', function() {
     map.addLayer({
-        id: "lang",
+        id: "boundaries",
         type: "fill",
         source: {
           type: "geojson",
@@ -35,5 +35,7 @@ export const colorBoundaries = (map) => {
           "fill-opacity": 0.3
         }
     });
+
+      
   })
 }
