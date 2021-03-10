@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material/tab-bar": "^10.0.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
@@ -32,7 +34,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://escape-from-this-planet-serv.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -45,5 +47,11 @@
       "last 1 safari version"
     ]
   },
+<<<<<<< HEAD
   "devDependencies": {}
+=======
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.7"
+  }
+>>>>>>> 03a62ec0aa86db38f85dca1829d2f22e99681780
 }

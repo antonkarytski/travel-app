@@ -16,6 +16,7 @@ export const CountryPage = (props) => {
                 //onClick={toHomePage}
             >Back
             </button>
+            <Map />
         </div>
     )
 }

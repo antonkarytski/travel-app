@@ -12,11 +12,11 @@ $text-color: white;
   margin: 0;
   padding: 0;
   background-color: $white;
-  color: $text-color;
   height: 100vh;
 }
 
 .SiteNavBar{
+  color: $text-color;
   height: 60px;
   background-color: $blue;
   display: flex;

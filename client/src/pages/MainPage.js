@@ -1,36 +1,55 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
-import classesCss from './styles/Pages.module.scss'
 import Map from '../components/Map/Map'
-
-export const MainPage = () => {
-
-    const countries = [
-        {name: 'Belarus',},
-        {name: 'Russia',},
-        {name: 'France'},
-        {name: 'Spain'}
-    ]
+import { useCountries } from "../hooks/useHttp";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import classesCss from "./styles/MainPage.module.scss";
 
 
-    return (
-        <div>
-            {
-                countries.map((country, index) => {
-                    return (
-                        <div
-                            key={`countryCard${index}`}
-                            className={classesCss.CountryCard}>
-                            <NavLink
-                                to={`/country/${country.name.toLowerCase()}`}>
-                                {country.name}
-                            </NavLink>
-                            <Map />
-                        </div>
-                    )
+export const MainPage = (props) => {
+  const { getCountryFromBase, countryResponse, cLoading } = useCountries();
 
-                })
-            }
+  useEffect(() => {
+    getCountryFromBase({ key: "short" });
+  }, []);
+
+  let countries;
+
+  if (countryResponse) {
+    countries = countryResponse.countries.map((country) => country.langData[1]);
+  }
+
+  const filterCountries = (countries) => {
+    let filteredCountries = countries;
+    if (props.searchbarState) {
+      filteredCountries = countries.filter((country) =>
+        country.countryName.includes(props.searchbarState)
+      );
+    }
+    return filteredCountries.map((country, index) => {
+      return (
+        <div key={`countryCard${index}`}>
+          <NavLink
+            className={classesCss.CountryCard}
+            to={`/country/${country.countryName.toLowerCase()}`}
+          >
+            <div>
+              <img
+                className={classesCss.CountryCardPhoto}
+                src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
+                alt="flag"
+              />
+            </div>
+            <div>
+              {country.countryName}, {country.capitalName}
+            </div>
+          </NavLink>
         </div>
-    )
-}
+      );
+    });
+  };
+  return (
+    <div className={classesCss.MainPage}>
+      {countries && filterCountries([...countries])}
+    </div>
+  );
+};
