@@ -4,9 +4,7 @@ import { NavLink } from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
 
 export const MainPage = (props) => {
-
-  const { getCountryFromBase, countryResponse} = useCountries();
-
+  const { getCountryFromBase, countryResponse } = useCountries();
 
   useEffect(() => {
     getCountryFromBase({ key: "short" });
@@ -18,8 +16,13 @@ export const MainPage = (props) => {
 
   let countries;
 
+  const language = "RU";
+
   if (countryResponse) {
-    countries = countryResponse.countries.map((country) => country.langData[1]);
+    let indexOfLang = countryResponse.langs.indexOf(language);
+    countries = countryResponse.countries.map(
+      (country) => country.langData[indexOfLang]
+    );
   }
 
   const filterCountries = (countries) => {
