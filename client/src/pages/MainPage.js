@@ -7,6 +7,7 @@ export const MainPage = (props) => {
 
   const { getCountryFromBase, countryResponse} = useCountries();
 
+
   useEffect(() => {
     getCountryFromBase({ key: "short" });
   }, []);
