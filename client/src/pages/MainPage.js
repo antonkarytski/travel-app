@@ -10,6 +10,10 @@ export const MainPage = (props) => {
     getCountryFromBase({ key: "short" });
   }, []);
 
+  useEffect(() => {
+    props.setSearchbarExists(true);
+  }, []);
+
   let countries;
 
   if (countryResponse) {
@@ -19,8 +23,10 @@ export const MainPage = (props) => {
   const filterCountries = (countries) => {
     let filteredCountries = countries;
     if (props.searchbarState) {
-      filteredCountries = countries.filter((country) =>
-        country.countryName.includes(props.searchbarState)
+      filteredCountries = countries.filter(
+        (country) =>
+          country.countryName.toLowerCase().includes(props.searchbarState) ||
+          country.capitalName.toLowerCase().includes(props.searchbarState)
       );
     }
     return filteredCountries.map((country, index) => {
