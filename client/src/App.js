@@ -15,6 +15,7 @@ function App() {
   const { token, login, logout, userId } = useAuth();
   const isAuthenticated = !!token;
   const [searchbarState, setSearchbarState] = useState();
+  const [searchbarExists, setSearchbarExists] = useState(false);
 
   return (
     <AuthContext.Provider
@@ -23,16 +24,18 @@ function App() {
       <div className={classesCss.Body}>
         <NavBar classes={classesCss.SiteNavBar}>
           <NavLink to={"/"}>Main</NavLink>
-          <Search
-            searchbarState={searchbarState}
-            setSearchbarState={setSearchbarState}
-          />
+          {searchbarExists && (
+            <Search
+              searchbarState={searchbarState}
+              setSearchbarState={setSearchbarState}
+            />
+          )}
           <UserBar classes={classesCss.UserBar} />
         </NavBar>
         <div className={classesCss.SiteContent}>
           <Switch>
             <Route path="/country/:countryName" exact>
-              <CountryPage />
+              <CountryPage setSearchbarExists={setSearchbarExists} />
             </Route>
             <Route path="/admin" exact>
               <AdminPage />
@@ -40,7 +43,12 @@ function App() {
             <Route
               path="/"
               exact
-              render={() => <MainPage searchbarState={searchbarState} />}
+              render={() => (
+                <MainPage
+                  searchbarState={searchbarState}
+                  setSearchbarExists={setSearchbarExists}
+                />
+              )}
             />
             {
               !isAuthenticated ? (

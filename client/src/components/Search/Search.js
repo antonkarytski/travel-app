@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export const Search = (props) => {
   const onSearchValueChange = (e) => {
@@ -15,6 +15,7 @@ export const Search = (props) => {
         onChange={onSearchValueChange}
         value={props.searchbarState}
         placeholder="Search country"
+        autoFocus={true}
       />
       <button onClick={SearchClear}>x</button>
     </div>
