@@ -5,7 +5,6 @@ import VerticalTabs from "../components/Tabs/VerticalTabs";
 import CountryAddForm from "../components/Forms/CountryAddForm";
 import CountryUpdateForm from "../components/Forms/CountryUpdateForm";
 import classesCss from './styles/AdminPage.module.scss'
-import Map from "../components/Map/Map";
 
 
 const langShortDummy = {
