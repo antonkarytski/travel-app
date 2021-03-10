@@ -6,8 +6,8 @@
 
 .Map-wrapper {
   position: relative;
-  width: 500px;
-  height: 290px;
+  min-width: 500px;
+  min-height: 290px;
 }
 
 .Map {
@@ -19,12 +19,13 @@
 }
 
 .mapboxgl-canvas-container{
-  height: 100vh !important;
+  min-height: 290px !important;
+  min-width: 500px !important;
 }
 
 .mapboxgl-canvas {
-  width: auto !important;
-  height: 100vh !important;
+  min-width: 500px !important;
+  min-height: 290px !important;
 }
 
 .Map-page {

@@ -1,11 +1,11 @@
 import Countries from "./countries.json"
 
 export const colorBoundaries = (map) => {
-  const coordinates = Countries.features[1].geometry.coordinates;
-  const country = Countries.features[1].properties.ADMIN;
+  const coordinates = Countries.features[168].geometry.coordinates;
+  const country = Countries.features[168].properties.ADMIN;
 
   map.flyTo({
-    center: coordinates[0][0][0],
+    center: [4.8896900, 52.3740300],
     zoom: 3
   });
 

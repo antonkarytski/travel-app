@@ -34,7 +34,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://escape-from-this-planet-serv.herokuapp.com/",
+  "proxy": "https://travel-app-server24.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",

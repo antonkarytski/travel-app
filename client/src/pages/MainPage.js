@@ -43,6 +43,7 @@ export const MainPage = (props) => {
               {country.countryName}, {country.capitalName}
             </div>
           </NavLink>
+          
         </div>
       );
     });
@@ -50,6 +51,7 @@ export const MainPage = (props) => {
   return (
     <div className={classesCss.MainPage}>
       {countries && filterCountries([...countries])}
+      <Map />
     </div>
   );
 };
