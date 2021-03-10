@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Route, Switch, Redirect, NavLink } from "react-router-dom";
 import classesCss from "./styles/App.module.scss";
 import { MainPage } from "./pages/MainPage";
@@ -57,10 +57,11 @@ function App() {
                 </Route>
               ) : null //TODO: create route to user page
             }
-            <Redirect to="/" />
           </Switch>
         </div>
-        <div className={classesCss.SiteFooter}></div>
+        <div className={classesCss.SiteFooter}>
+
+        </div>
       </div>
     </AuthContext.Provider>
   );
