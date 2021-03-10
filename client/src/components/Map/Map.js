@@ -1,8 +1,7 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect} from 'react';
 import mapboxgl from 'mapbox-gl';
 //import {colorBoundaries} from "./mapFunction";
 //import './Map.css';
-
 
 
 const Map = () => {
