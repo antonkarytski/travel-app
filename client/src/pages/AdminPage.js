@@ -149,8 +149,6 @@ const AdminPage = () => {
                     }
                 </TabPanel>
             </VerticalTabs>
-
-            <Map />
         </>)
 }
 
