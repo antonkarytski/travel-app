@@ -46,12 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-<<<<<<< HEAD
-  "devDependencies": {}
-=======
-  "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
   }
->>>>>>> 03a62ec0aa86db38f85dca1829d2f22e99681780
 }
