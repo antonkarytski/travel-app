@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Slider from './../components/Sliders/slider';
 
@@ -12,14 +13,21 @@ const imagesArr = [
         url: 'imageUrl3'
     }
 ];
+=======
+import React, { useEffect } from "react";
+
 
 export const CountryPage = (props) => {
+  // const toHomePage = () => {
+  //     props.history.push({
+  //         pathname: "/"
+  //     })
+  // }
 
-    // const toHomePage = () => {
-    //     props.history.push({
-    //         pathname: "/"
-    //     })
-    // }
+  useEffect(() => {
+    props.setSearchbarExists(false);
+  }, []);
+
 
 
     return(
@@ -33,3 +41,16 @@ export const CountryPage = (props) => {
         </div>
     )
 }
+=======
+  return (
+    <div>
+      <h1>Country Page</h1>
+      <button
+      //onClick={toHomePage}
+      >
+        Back
+      </button>
+    </div>
+  );
+};
+
