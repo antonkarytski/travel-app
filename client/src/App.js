@@ -49,7 +49,6 @@ function App() {
                 </Route>
               ) : null //TODO: create route to user page
             }
-            <Redirect to="/" />
           </Switch>
         </div>
         <div className={classesCss.SiteFooter}>

@@ -1,8 +1,10 @@
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
 app.use(express.json({extended : true}))
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/country', require('./routes/countries.routes'))
@@ -13,8 +15,6 @@ app.use('/api/country', require('./routes/countries.routes'))
 //         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 //     })
 // }
-
-app.get('/', (req, res) => { res.send('Hello from Express!')})
 
 const PORT = process.env.PORT || config.get('port') || 5000
 
