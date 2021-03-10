@@ -2,3 +2,10 @@
   from = "/*"
   to = "/index.html"
   status = 301
+  
+  
+[[redirects]]
+  from = "/api/*"
+  to = "https://travel-app-server24.herokuapp.com/api/:splat"
+  status = 200
+  force = true
