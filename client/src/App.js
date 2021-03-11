@@ -12,6 +12,7 @@ import { Search } from "./components/Search/Search";
 import { destructCountry, structCountries } from "./helpers/struct";
 import classesCss from "./styles/App.module.scss";
 import { useCountries } from "./hooks/useHttp";
+import { SelectLanguage } from "./components/SelectLanguage/SelectLanguage";
 
 function App() {
   const { token, login, logout, userId } = useAuth();
@@ -19,7 +20,8 @@ function App() {
     value: "",
     exists: false,
   });
-  const { getCountryFromBase, countryResponse } = useCountries();
+  const { getCountryFromBase, countryResponse, cLoading } = useCountries();
+  const [languageState, setLanguageState] = useState("EN");
   const isAuthenticated = !!token;
 
   const updateSearchBar = (update) => {
@@ -47,6 +49,11 @@ function App() {
               updateSearchbar={updateSearchBar}
             />
           )}
+          <SelectLanguage
+            countryResponse={countryResponse}
+            language={languageState}
+            setLanguage={setLanguageState}
+          />
           <UserBar classes={classesCss.UserBar} />
         </NavBar>
         <div className={classesCss.SiteContent}>
@@ -65,6 +72,7 @@ function App() {
                   searchValue={searchbarState.value}
                   setSearchbarExists={updateSearchBar}
                   countryResponse={countryResponse}
+                  language={languageState}
                 />
               )}
             />
