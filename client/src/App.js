@@ -9,14 +9,9 @@ import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import { Search } from "./components/Search/Search";
-<<<<<<< HEAD
-import { useCountries } from "./hooks/useHttp";
-
-=======
 import { destructCountry, structCountries } from "./helpers/struct";
 import classesCss from "./styles/App.module.scss";
 import { useCountries } from "./hooks/useHttp";
->>>>>>> travel-app
 
 function App() {
   const { token, login, logout, userId } = useAuth();

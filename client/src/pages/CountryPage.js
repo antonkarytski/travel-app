@@ -1,6 +1,11 @@
 
-import React from 'react';
-import Slider from './../components/Sliders/slider';
+import Map from "../components/Map/Map";
+import Countries from "../components/Map/countries.json";
+import Capitals from "../components/Map/capitals.json";
+import React, { useEffect } from "react";
+import Slider from "../components/Sliders/slider.js"
+import SightGallery from "../components/Sliders/sight.gallery.js"
+import 'swiper/swiper.scss';
 
 const imagesArr = [
     {
@@ -13,7 +18,7 @@ const imagesArr = [
         url: 'imageUrl3'
     }
 ];
-import React, { useEffect } from "react";
+
 
 
 export const CountryPage = (props) => {
@@ -31,20 +36,6 @@ export const CountryPage = (props) => {
     props.updateSearchbar({ exists: false });
   }, []);
 
-
-
-    return(
-        <div>
-            <h1>Country Page</h1>
-            <Slider images={imagesArr}/>
-            <button
-                //onClick={toHomePage}
-            >Back
-            </button>
-        </div>
-    )
-}
-
   return (
     <div>
       <h1>Country Page</h1>
@@ -53,12 +44,13 @@ export const CountryPage = (props) => {
       >
         Back
       </button>
+      <Slider/>
       <Map
         countries={countriesData}
         countryCode={countryCode}
         capitals={capitalsData}
       />
+      <SightGallery/>
     </div>
   );
-
-
+};

@@ -1,51 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import ImageGallery from 'react-image-gallery'
+import React, { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide} from 'swiper/react';
+import SwiperCore, {Navigation, Scrollbar} from 'swiper/core';
+import 'swiper/swiper.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/scrollbar/scrollbar.scss';
 
+SwiperCore.use([Navigation, Scrollbar]);
 
-export default function Slider(props) {
-    const [activeIndex, SetActiveIndex] = useState(0)
-
-    useEffect (() => {
-        const interval = setInterval(() => {
-            SetActiveIndex(current => current === props.images.length-1 ? 0 : current +1)
-        }, 5000)
-        return () => clearInterval()
-    }, [])
-    const prevImageIndex = activeIndex ? activeIndex -1 : props.images.length -1
-    const nextImageIndex = activeIndex === props.images.length -1 ? 0 : activeIndex +1
-
+export default function Slider () {
     return (
-        <div>
-            <div onClick = {() => {SetActiveIndex(prevImageIndex)}}>&lt;</div>
-            <div>
-                {/* {
-                    props.images.map(imageObject => {
-                        return (
-                        <div>
-                                {imageObject.url}
-                            <img key={imageObject.url} src={imageObject.url} alt="" />
-                        </div>
-                        )
-                    })
-                } */}
-                <div>
-                        {props.images[activeIndex].url}
-                    <img key={props.images[activeIndex].url} src={props.images[activeIndex].url} alt="" />
-                </div>
-            </div>
-            <div>
-                {
-                    props.images.map((e, i) => {
-                        return (
-                        <div>
-                            ---
-                        </div>
-                        )
-                    })
-                }
-            </div>
-            <div  onClick = {() => {SetActiveIndex(nextImageIndex)}}>&gt;</div>
-        </div>
-    )
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        scrollbar ={{draggable: true, hide: false}}
 
-}
+      >
+
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+
+        ...
+      </Swiper>
+    );
+  };
