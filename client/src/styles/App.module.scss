@@ -8,28 +8,32 @@ $text-color: white;
 body{
   font-family: Oswald, sans-serif;
   margin: 0;
+  overflow-y: scroll;
 }
 
 .Body{
   margin: 0;
   padding: 0;
   background-color: $white;
-  height: 100vh;
 }
 
 .SiteNavBar{
   color: $text-color;
   height: 60px;
-  background-color: $blue;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 10px 15px;
+  position: relative;
+  margin-bottom: -60px;
+  z-index: 10;
+
+  .HiddenMenu{
+    display: none;
+  }
 
   .UserBar{
-    margin-left: auto;
-
     a{
       color: $text-color;
       text-decoration: none;
@@ -46,12 +50,36 @@ body{
         text-decoration: none;
       }
     }
+  }
+
+  .SearchBar{
+    width: 40%;
+    margin-left: 30%;
+    input{
+      width: 85%;
+      height: 100%;
+      outline: none;
+      margin-right: 10px;
+      background-color: rgba(0,0,0,0);
+      font-family: Oswald, sans-serif;
+      font-size: 18px;
+      border: none;
+      box-shadow: 0 1px 0 0 rgba(192, 7, 7, 0.66);
+    }
+    button{
+      background-color: rgba(0,0,0,0);
+      border: none;
+      font-size: 25px;
+      line-height: 25px;
+      cursor: pointer;
+      outline: none;
+      color:rgba(192, 7, 7, 1);
+    }
 
   }
 }
 
 .SiteContent{
-  padding: 10px;
   background-color: #4D4D4D;
 }
 

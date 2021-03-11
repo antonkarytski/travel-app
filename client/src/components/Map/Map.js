@@ -3,9 +3,8 @@ import {colorBoundaries} from "./mapFunction";
 import './Map.css';
 import React, {useRef, useEffect} from 'react';
 
-const Map = (props) => {
+const Map = ({countryCode, countries, capitals}) => {
   const mapContainer = useRef();
-  const {countryCode, countries, capitals} = props;
   let capitalCoordinates;
   let countryName;
   let countryCoordinates;
