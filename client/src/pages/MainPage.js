@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
 
+
 export const MainPage = (props) => {
   const { getCountryFromBase, countryResponse } = useCountries();
 
@@ -53,6 +54,7 @@ export const MainPage = (props) => {
               {country.countryName}, {country.capitalName}
             </div>
           </NavLink>
+          
         </div>
       );
     });
