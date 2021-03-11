@@ -2,11 +2,16 @@
   padding: 30px;
   background: #FFFFFF;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
 
-  .FormColumn{
-    &:not(:last-child){
-      margin-right: 30px;
+
+  .FormRow{
+    display: flex;
+    flex-direction: row;
+    >div {
+      flex-direction: column!important;
     }
   }
 
@@ -49,3 +54,12 @@
   }
 }
 
+.CountryPreview{
+  width: 250px;
+  text-align: center;
+
+  img{
+    width: 100%;
+    height: auto
+  }
+}

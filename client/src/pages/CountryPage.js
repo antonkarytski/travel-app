@@ -13,11 +13,14 @@ const imagesArr = [
         url: 'imageUrl3'
     }
 ];
-=======
 import React, { useEffect } from "react";
 
 
 export const CountryPage = (props) => {
+  const countriesData = Countries; // заменить скаченным файлом JSON с  сервера
+  const capitalsData = Capitals; // заменить скаченным файлом JSON с  сервера
+  const countryCode = "NL"; // входящий параметр при смене языка, ожидаю код страны из двух букв
+
   // const toHomePage = () => {
   //     props.history.push({
   //         pathname: "/"
@@ -25,7 +28,7 @@ export const CountryPage = (props) => {
   // }
 
   useEffect(() => {
-    props.setSearchbarExists(false);
+    props.updateSearchbar({ exists: false });
   }, []);
 
 
@@ -41,7 +44,7 @@ export const CountryPage = (props) => {
         </div>
     )
 }
-=======
+
   return (
     <div>
       <h1>Country Page</h1>
@@ -50,7 +53,12 @@ export const CountryPage = (props) => {
       >
         Back
       </button>
+      <Map
+        countries={countriesData}
+        countryCode={countryCode}
+        capitals={capitalsData}
+      />
     </div>
   );
-};
+
 

@@ -1,23 +1,43 @@
-import React, {useState } from "react";
-import { Route, Switch, Redirect, NavLink } from "react-router-dom";
-import classesCss from "./styles/App.module.scss";
-import { MainPage } from "./pages/MainPage";
-import { CountryPage } from "./pages/CountryPage";
-import { AuthPage } from "./pages/AuthPage";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "./hooks/useAuth";
 import { AuthContext } from "./context/AuthContext";
+import { Route, Switch, Redirect, NavLink } from "react-router-dom";
+import MainPage from "./pages/MainPage/MainPage";
+import { CountryPage } from "./pages/CountryPage";
+import { AuthPage } from "./pages/AuthPage";
 import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import { Search } from "./components/Search/Search";
+<<<<<<< HEAD
 import { useCountries } from "./hooks/useHttp";
 
+=======
+import { destructCountry, structCountries } from "./helpers/struct";
+import classesCss from "./styles/App.module.scss";
+import { useCountries } from "./hooks/useHttp";
+>>>>>>> travel-app
 
 function App() {
   const { token, login, logout, userId } = useAuth();
+  const [searchbarState, setSearchbarState] = useState({
+    value: "",
+    exists: false,
+  });
+  const { getCountryFromBase, countryResponse } = useCountries();
   const isAuthenticated = !!token;
-  const [searchbarState, setSearchbarState] = useState();
-  const [searchbarExists, setSearchbarExists] = useState(false);
+
+  const updateSearchBar = (update) => {
+    const newState = {
+      ...searchbarState,
+      ...update,
+    };
+    setSearchbarState(newState);
+  };
+
+  useEffect(() => {
+    getCountryFromBase({});
+  }, []);
 
   return (
     <AuthContext.Provider
@@ -26,10 +46,10 @@ function App() {
       <div className={classesCss.Body}>
         <NavBar classes={classesCss.SiteNavBar}>
           <NavLink to={"/"}>Main</NavLink>
-          {searchbarExists && (
+          {searchbarState.exists && (
             <Search
-              searchbarState={searchbarState}
-              setSearchbarState={setSearchbarState}
+              value={searchbarState.value}
+              updateSearchbar={updateSearchBar}
             />
           )}
           <UserBar classes={classesCss.UserBar} />
@@ -37,7 +57,7 @@ function App() {
         <div className={classesCss.SiteContent}>
           <Switch>
             <Route path="/country/:countryName" exact>
-              <CountryPage setSearchbarExists={setSearchbarExists} />
+              <CountryPage updateSearchbar={updateSearchBar} />
             </Route>
             <Route path="/admin" exact>
               <AdminPage />
@@ -47,8 +67,9 @@ function App() {
               exact
               render={() => (
                 <MainPage
-                  searchbarState={searchbarState}
-                  setSearchbarExists={setSearchbarExists}
+                  searchValue={searchbarState.value}
+                  setSearchbarExists={updateSearchBar}
+                  countryResponse={countryResponse}
                 />
               )}
             />
@@ -61,9 +82,7 @@ function App() {
             }
           </Switch>
         </div>
-        <div className={classesCss.SiteFooter}>
-
-        </div>
+        <div className={classesCss.SiteFooter}></div>
       </div>
     </AuthContext.Provider>
   );
