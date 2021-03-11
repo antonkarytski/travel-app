@@ -1,4 +1,3 @@
-import Map from '../components/Map/Map'
 import { useCountries } from "../hooks/useHttp";
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
@@ -51,7 +50,6 @@ export const MainPage = (props) => {
   return (
     <div className={classesCss.MainPage}>
       {countries && filterCountries([...countries])}
-      <Map />
     </div>
   );
 };
