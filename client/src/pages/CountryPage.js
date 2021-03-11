@@ -1,7 +1,25 @@
+
 import Map from "../components/Map/Map";
 import Countries from "../components/Map/countries.json";
 import Capitals from "../components/Map/capitals.json";
 import React, { useEffect } from "react";
+import Slider from "../components/Sliders/slider.js"
+import SightGallery from "../components/Sliders/sight.gallery.js"
+import 'swiper/swiper.scss';
+
+const imagesArr = [
+    {
+        url: 'imageUrl1'
+    },
+    {
+        url: 'imageUrl2'
+    },
+    {
+        url: 'imageUrl3'
+    }
+];
+
+
 
 export const CountryPage = (props) => {
   const countriesData = Countries; // заменить скаченным файлом JSON с  сервера
@@ -26,11 +44,13 @@ export const CountryPage = (props) => {
       >
         Back
       </button>
+      <Slider/>
       <Map
         countries={countriesData}
         countryCode={countryCode}
         capitals={capitalsData}
       />
+      <SightGallery/>
     </div>
   );
 };
