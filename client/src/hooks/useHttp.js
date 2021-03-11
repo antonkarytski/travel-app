@@ -14,9 +14,9 @@ export const useHttp = () => {
                 body = JSON.stringify(body)
                 headers['Content-Type'] = 'application/json'
             }
-            //const urlAddon = process.env.NODE_ENV === "production" ? "https://travel-app-server24.herokuapp.com": ""
-            const urlAddon=""
-            const response = await fetch(url, {method, body, headers})
+            const urlAddon = "https://travel-app-server24.herokuapp.com"
+            //const urlAddon=""
+            const response = await fetch(urlAddon+url, {method, body, headers})
             const data = await response.json()
             if (!response.ok) {
                 throw new Error(data.message || "Smth wrong")
