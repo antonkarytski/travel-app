@@ -9,8 +9,7 @@ app.use(express.json({extended : true}))
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/country', require('./routes/countries.routes'))
 
-app.get('/', (req, res) => { res.send('Hello from Express!')})
-
+//app.get('/', (req, res) => { res.send('Hello from Express!')})
 
 // if(process.env.NODE_ENV === 'production'){
 //     app.use('/', express.static(path.join(__dirname, 'client', 'build')))

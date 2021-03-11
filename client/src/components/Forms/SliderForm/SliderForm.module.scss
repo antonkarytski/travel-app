@@ -1,0 +1,64 @@
+.Slider {
+  display: flex;
+  flex-direction: row;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  width: 700px;
+  padding: 15px;
+  height: 250px;
+  flex: 1;
+  min-height: min-content;
+  box-sizing: border-box;
+
+
+}
+
+.AddButton{
+  height: 100%;
+  width: 85px;
+  padding: 5px;
+  border: 3px solid #333;
+  border-radius: 6px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 15px;
+  box-sizing: border-box;
+}
+
+.Input{
+
+  textarea,input{
+    background-color: rgba(255,255,255,0.3);
+    width: 85%;
+    border-radius: 5px;
+    border: 1px solid white;
+    border-bottom: 1px solid black;
+  }
+}
+
+.Slide{
+  height: 100%;
+  margin-right: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-size: cover;
+
+  .RemoveButton{
+    cursor: pointer;
+    font-size: 20px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    padding: 0;
+    width: 30px;
+    margin-left: 10px;
+    border: 2px solid white;
+    background-color:rgba(0,0,0,0);
+    outline: none;
+
+  }
+}

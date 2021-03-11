@@ -8,25 +8,28 @@ import {destructCountry, structCountries} from "../helpers/struct"
 import classesCss from './styles/AdminPage.module.scss'
 
 
-
-
 const AdminPage = () => {
     const {request, loading} = useHttp()
     const {getCountryFromBase, countryResponse, cLoading} = useCountries()
     const [message, setMessage] = useState('')
-    const [countriesData, setCountriesData] = useState(null)
+    const [countries, setCountries] = useState({
+        data: null,
+        codes: []
+    })
 
     const addCountryHandler = async (form) => {
         try {
             const data = await request('/api/country/add', 'POST', {...form})
             setMessage(data.message || '')
+            const countriesUpd = {...countries}
+            countriesUpd.codes.push(form.countryCode)
+            setCountries(countriesUpd)
         } catch (e) {
 
         }
     }
 
-    const updateCountryHandler = async (form) => {
-
+    const updateCountryHandler = async form => {
         try {
             const data = await request('/api/country/update', 'POST', destructCountry(form))
             setMessage(data.message || '')
@@ -35,18 +38,40 @@ const AdminPage = () => {
         }
     }
 
+    const removeCountryHandler = async countryCode => {
+        try {
+            const localCountriesUpdate = {...countries.data}
+            if (countryCode in localCountriesUpdate) {
+                const data = await request('/api/country/remove', 'POST', {countryCode})
+                setMessage(data.message || '')
+                delete localCountriesUpdate[countryCode]
+                setCountries(localCountriesUpdate)
+            }
+        } catch (e) {
+
+        }
+    }
+
+    useEffect(() => {
+        if (countryResponse) {
+            const struct = structCountries(countryResponse)
+            const codes = []
+            for (let countryCode in struct) {
+                if (struct.hasOwnProperty(countryCode)) {
+                    codes.push(countryCode)
+                }
+            }
+            setCountries({
+                data: struct,
+                codes
+            })
+        }
+    }, [countryResponse])
 
     useEffect(() => {
         getCountryFromBase({})
     }, [])
 
-    useEffect(() => {
-        if(countryResponse){
-            setCountriesData(structCountries(countryResponse))
-        }
-    }, [countryResponse])
-
-    console.log(countryResponse)
 
     return (
         <>
@@ -55,18 +80,20 @@ const AdminPage = () => {
                     <CountryAddForm
                         waitCondition={loading}
                         sendHandler={addCountryHandler}
+                        removeHandler={removeCountryHandler}
+                        countriesCodes={countries.codes}
                         message={message}
                     />
                 </TabPanel>
                 <TabPanel className={classesCss.FormStyle1} label={"Add Lang"}>
                     {
-                        !countryResponse? cLoading?
+                        !countryResponse ? cLoading ?
                             <div>Загрузка...</div> :
-                            <div>Ошибка при загрузке базы стран</div>:
+                            <div>Ошибка при загрузке базы стран</div> :
                             <CountryUpdateForm
                                 waitCondition={loading}
                                 sendHandler={updateCountryHandler}
-                                countriesData={countriesData}
+                                countries={countries}
                                 message={message}
                             />
                     }
