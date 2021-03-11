@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-export const Search = (props) => {
+export const Search = ({value, updateSearchbar}) => {
+
   const onSearchValueChange = (e) => {
-    props.setSearchbarState(e.target.value);
-  };
-
-  const SearchClear = () => {
-    props.setSearchbarState("");
+      updateSearchbar({value: e.target.value});
   };
 
   return (
     <div>
       <input
         onChange={onSearchValueChange}
-        value={props.searchbarState}
+        value={value}
         placeholder="Search country"
         autoFocus={true}
       />
-      <button onClick={SearchClear}>x</button>
+      <button onClick={() => updateSearchbar({value: ""})}>x</button>
     </div>
   );
 };

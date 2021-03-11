@@ -1,23 +1,13 @@
-import { useCountries } from "../hooks/useHttp";
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
+import CountryCard from "./CountryCard";
 
-export const MainPage = (props) => {
-  const { getCountryFromBase, countryResponse } = useCountries();
-
-  useEffect(() => {
-    getCountryFromBase({ key: "short" });
-  }, []);
-
-  useEffect(() => {
-    props.setSearchbarExists(true);
-  }, []);
-
-  let countries;
+const MainPage = ({searchBarValue, setSearchbarExists, countryResponse}) => {
 
   const language = "RU";
 
+  let countries;
   if (countryResponse) {
     let indexOfLang = countryResponse.langs.indexOf(language);
     countries = countryResponse.countries.map(
@@ -27,11 +17,11 @@ export const MainPage = (props) => {
 
   const filterCountries = (countries) => {
     let filteredCountries = countries;
-    if (props.searchbarState) {
+    if (searchBarValue) {
       filteredCountries = countries.filter(
         (country) =>
-          country.countryName.toLowerCase().includes(props.searchbarState) ||
-          country.capitalName.toLowerCase().includes(props.searchbarState)
+          country.countryName.toLowerCase().includes(searchBarValue) ||
+          country.capitalName.toLowerCase().includes(searchBarValue)
       );
     }
 
@@ -42,25 +32,26 @@ export const MainPage = (props) => {
             className={classesCss.CountryCard}
             to={`/country/${country.countryName.toLowerCase()}`}
           >
-            <div>
-              <img
-                className={classesCss.CountryCardPhoto}
-                src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
-                alt="flag"
-              />
-            </div>
-            <div>
-              {country.countryName}, {country.capitalName}
-            </div>
+            <CountryCard
+                name={country.countryName}
+                capital={country.capitalName}
+                countryImage={false} //Сюда надо передать Превью!
+            />
           </NavLink>
         </div>
       );
     });
   };
 
+  useEffect(() => {
+    setSearchbarExists({exist:true});
+  }, []);
+
   return (
     <div className={classesCss.MainPage}>
       {countries && filterCountries([...countries])}
     </div>
-  );
-};
+  )
+}
+
+export default MainPage

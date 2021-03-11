@@ -48,7 +48,7 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
     }
 
     const sliderChangeHandler = (photos) => {
-        if(photos){
+        if (photos) {
             const newCountriesData = {...countriesDataState}
             newCountriesData[form.countryCode].countryPhotos = photos
             setCountriesCountriesData(newCountriesData)
@@ -73,8 +73,15 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
                     >
                         {countries.codes ?
                             countries.codes.map((countryCode) => {
-                                return <option key={countryCode}
-                                               value={countryCode}>{countryCode}</option>
+                                if (countryCode in countries.data) {
+                                    return(
+                                    <option
+                                        key={countryCode}
+                                        value={countryCode}
+                                    >{countryCode}
+                                    </option>)
+                                }
+
                             }) : null
                         }
                     </select>
@@ -163,13 +170,13 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
             <h3>Slider:</h3>
             <Row>
                 <SliderForm
-                    data={currentCountry? currentCountry.countryPhotos : []}
+                    data={currentCountry ? currentCountry.countryPhotos : []}
                     onChange={sliderChangeHandler}
                 />
             </Row>
-
-
-
+            <h3>Showplaces:</h3>
+            <Row>
+            </Row>
         </>
     )
 }
