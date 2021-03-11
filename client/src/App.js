@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Route, Switch, Redirect, NavLink } from "react-router-dom";
 import classesCss from "./styles/App.module.scss";
 import { MainPage } from "./pages/MainPage";
@@ -10,12 +10,12 @@ import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import { Search } from "./components/Search/Search";
-import { useCountries } from "./hooks/useHttp";
 
 function App() {
   const { token, login, logout, userId } = useAuth();
   const isAuthenticated = !!token;
   const [searchbarState, setSearchbarState] = useState();
+  const [searchbarExists, setSearchbarExists] = useState(false);
 
   return (
     <AuthContext.Provider
@@ -24,16 +24,18 @@ function App() {
       <div className={classesCss.Body}>
         <NavBar classes={classesCss.SiteNavBar}>
           <NavLink to={"/"}>Main</NavLink>
-          <Search
-            searchbarState={searchbarState}
-            setSearchbarState={setSearchbarState}
-          />
+          {searchbarExists && (
+            <Search
+              searchbarState={searchbarState}
+              setSearchbarState={setSearchbarState}
+            />
+          )}
           <UserBar classes={classesCss.UserBar} />
         </NavBar>
         <div className={classesCss.SiteContent}>
           <Switch>
             <Route path="/country/:countryName" exact>
-              <CountryPage />
+              <CountryPage setSearchbarExists={setSearchbarExists} />
             </Route>
             <Route path="/admin" exact>
               <AdminPage />
@@ -41,7 +43,12 @@ function App() {
             <Route
               path="/"
               exact
-              render={() => <MainPage searchbarState={searchbarState} />}
+              render={() => (
+                <MainPage
+                  searchbarState={searchbarState}
+                  setSearchbarExists={setSearchbarExists}
+                />
+              )}
             />
             {
               !isAuthenticated ? (
@@ -50,10 +57,11 @@ function App() {
                 </Route>
               ) : null //TODO: create route to user page
             }
-            <Redirect to="/" />
           </Switch>
         </div>
-        <div className={classesCss.SiteFooter}></div>
+        <div className={classesCss.SiteFooter}>
+
+        </div>
       </div>
     </AuthContext.Provider>
   );

@@ -5,25 +5,37 @@ import classesCss from "./styles/MainPage.module.scss";
 
 
 export const MainPage = (props) => {
-  const { getCountryFromBase, countryResponse, cLoading } = useCountries();
+  const { getCountryFromBase, countryResponse } = useCountries();
 
   useEffect(() => {
     getCountryFromBase({ key: "short" });
   }, []);
 
+  useEffect(() => {
+    props.setSearchbarExists(true);
+  }, []);
+
   let countries;
 
+  const language = "RU";
+
   if (countryResponse) {
-    countries = countryResponse.countries.map((country) => country.langData[1]);
+    let indexOfLang = countryResponse.langs.indexOf(language);
+    countries = countryResponse.countries.map(
+      (country) => country.langData[indexOfLang]
+    );
   }
 
   const filterCountries = (countries) => {
     let filteredCountries = countries;
     if (props.searchbarState) {
-      filteredCountries = countries.filter((country) =>
-        country.countryName.includes(props.searchbarState)
+      filteredCountries = countries.filter(
+        (country) =>
+          country.countryName.toLowerCase().includes(props.searchbarState) ||
+          country.capitalName.toLowerCase().includes(props.searchbarState)
       );
     }
+
     return filteredCountries.map((country, index) => {
       return (
         <div key={`countryCard${index}`}>
@@ -47,6 +59,7 @@ export const MainPage = (props) => {
       );
     });
   };
+
   return (
     <div className={classesCss.MainPage}>
       {countries && filterCountries([...countries])}
