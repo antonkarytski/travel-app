@@ -61,7 +61,7 @@ const Map = (props) => {
       map.setLayoutProperty('country-label', 'text-field', ['get', language])
     })
     
-    colorBoundaries(map, countryCoordinates, countryName)
+    colorBoundaries(map, countryCoordinates, countryName, capitalCoordinates)
 
     return () => {
       map.remove();
@@ -79,3 +79,4 @@ const Map = (props) => {
 }
 
 export default Map;
+
