@@ -3,8 +3,7 @@ import { NavLink } from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
 import CountryCard from "./CountryCard";
 
-const MainPage = ({searchBarValue, setSearchbarExists, countryResponse}) => {
-
+const MainPage = ({ searchValue, setSearchbarExists, countryResponse }) => {
   const language = "RU";
 
   let countries;
@@ -16,53 +15,48 @@ const MainPage = ({searchBarValue, setSearchbarExists, countryResponse}) => {
   }
 
   //REMOVE WHEN MADE COUNTRY PREVIEW TRANSFER TO COUNTRY CARD
-  let countryPreviews = []
-  if(countryResponse){
-    console.log(countryResponse)
+  let countryPreviews = [];
+  if (countryResponse) {
+    console.log(countryResponse);
     countryPreviews = countryResponse.countries.map((country) => {
-      return country.preview
-    })
+      return country.preview;
+    });
   }
-
-
 
   //REMOVE
 
-
-
-
   const filterCountries = (countries) => {
     let filteredCountries = countries;
-    if (searchBarValue) {
+    if (searchValue) {
       filteredCountries = countries.filter(
         (country) =>
-          country.countryName.toLowerCase().includes(searchBarValue) ||
-          country.capitalName.toLowerCase().includes(searchBarValue)
+          country.countryName.toLowerCase().includes(searchValue) ||
+          country.capitalName.toLowerCase().includes(searchValue)
       );
     }
 
     return filteredCountries.map((country, index) => {
       return (
-            <CountryCard
-                key={`countryCard${index}`}
-                name={country.countryName}
-                capital={country.capitalName}
-                preview={countryPreviews[index]} //Сюда надо передать Превью!
-                to={`/country/${country.countryName.toLowerCase()}`}
-            />
+        <CountryCard
+          key={`countryCard${index}`}
+          name={country.countryName}
+          capital={country.capitalName}
+          preview={countryPreviews[index]} //Сюда надо передать Превью!
+          to={`/country/${country.countryName.toLowerCase()}`}
+        />
       );
     });
   };
 
   useEffect(() => {
-    setSearchbarExists({exist:true});
+    setSearchbarExists({ exists: true });
   }, []);
 
   return (
     <div className={classesCss.MainPage}>
       {countries && filterCountries([...countries])}
     </div>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;
