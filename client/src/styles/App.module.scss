@@ -3,10 +3,12 @@ $white: white;
 $yellow: #ffcb77;
 $blue: #17c3b2;
 $dark-blue: #227c9d;
-
 $text-color: white;
 
-
+body{
+  font-family: Oswald, sans-serif;
+  margin: 0;
+}
 
 .Body{
   margin: 0;
@@ -48,10 +50,9 @@ $text-color: white;
   }
 }
 
-
 .SiteContent{
   padding: 10px;
-  height: 100%;
+  background-color: #4D4D4D;
 }
 
 .SiteFooter{

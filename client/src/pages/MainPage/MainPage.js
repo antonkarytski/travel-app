@@ -15,6 +15,22 @@ const MainPage = ({searchBarValue, setSearchbarExists, countryResponse}) => {
     );
   }
 
+  //REMOVE WHEN MADE COUNTRY PREVIEW TRANSFER TO COUNTRY CARD
+  let countryPreviews = []
+  if(countryResponse){
+    console.log(countryResponse)
+    countryPreviews = countryResponse.countries.map((country) => {
+      return country.preview
+    })
+  }
+
+
+
+  //REMOVE
+
+
+
+
   const filterCountries = (countries) => {
     let filteredCountries = countries;
     if (searchBarValue) {
@@ -27,18 +43,13 @@ const MainPage = ({searchBarValue, setSearchbarExists, countryResponse}) => {
 
     return filteredCountries.map((country, index) => {
       return (
-        <div key={`countryCard${index}`}>
-          <NavLink
-            className={classesCss.CountryCard}
-            to={`/country/${country.countryName.toLowerCase()}`}
-          >
             <CountryCard
+                key={`countryCard${index}`}
                 name={country.countryName}
                 capital={country.capitalName}
-                countryImage={false} //Сюда надо передать Превью!
+                preview={countryPreviews[index]} //Сюда надо передать Превью!
+                to={`/country/${country.countryName.toLowerCase()}`}
             />
-          </NavLink>
-        </div>
       );
     });
   };

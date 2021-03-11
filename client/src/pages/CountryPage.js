@@ -15,7 +15,7 @@ export const CountryPage = (props) => {
     // }
 
     useEffect(() => {
-        props.setSearchbarExists(false);
+        props.updateSerachbar({exists:false});
     }, []);
 
   return (

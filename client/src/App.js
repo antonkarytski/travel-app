@@ -53,7 +53,9 @@ function App() {
         <div className={classesCss.SiteContent}>
           <Switch>
             <Route path="/country/:countryName" exact>
-              <CountryPage />
+              <CountryPage
+                  updateSearchbar={updateSearchBar}
+              />
             </Route>
             <Route path="/admin" exact>
               <AdminPage />
