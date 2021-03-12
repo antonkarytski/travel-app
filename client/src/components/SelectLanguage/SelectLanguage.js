@@ -11,7 +11,7 @@ export const SelectLanguage = ({countryResponse, language, setLanguage, classNam
     };
 
     return (
-        <select value={language} onChange={handleChange} className={className}>
+        <select value={language} onChange={handleChange} className={className}> 
             {languages &&
             languages.map((lang) => {
                 return <option key={`lang-${lang}`} value={lang}>{lang}</option>;

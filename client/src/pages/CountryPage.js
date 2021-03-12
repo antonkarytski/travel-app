@@ -1,10 +1,11 @@
 import React, {useEffect, useContext} from "react";
 import {AppContext} from "../context/AppContext";
+import Countries from "../components/Map/countriesShort.json"
+import Capitals from "../components/Map/capitals.json"
 import Map from "../components/Map/Map";
-import Countries from "../components/Map/countries.json";
-import Capitals from "../components/Map/capitals.json";
-import Slider from "../components/Sliders/slider.js"
-import SightGallery from "../components/Sliders/sight.gallery.js"
+import {Currency} from "../components/Currency/Currency";
+// import Slider from "../components/Sliders/slider.js"
+// import SightGallery from "../components/Sliders/sight.gallery.js"
 
 
 export const CountryPage = ({updateSearch, country}) => {
@@ -21,14 +22,15 @@ export const CountryPage = ({updateSearch, country}) => {
 
     return (
         <div>
-            <Slider/>
+            {/* <Slider/>
 
-            <SightGallery/>
+            <SightGallery/> */}
             <Map
                 countries={countriesData}
                 countryCode={country.countryCode}
                 capitals={capitalsData}
             />
+            <Currency countryCode={country.countryCode}/>
         </div>
     );
 };
