@@ -1,9 +1,4 @@
 export const colorBoundaries = (map, countryCoordinates, countryName, capitalCoordinates) => {
-  map.flyTo({
-    center: capitalCoordinates,
-    zoom: 4
-  });
-
   map.on('load', function() {
     map.addLayer({
       id: "boundaries",
