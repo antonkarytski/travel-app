@@ -1,28 +1,34 @@
 import React from 'react';
 import { Swiper, SwiperSlide} from 'swiper/react';
-import SwiperCore, {Navigation, Scrollbar} from 'swiper/core';
+import SwiperCore, {Navigation, Scrollbar, Centered} from 'swiper/core';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 
 SwiperCore.use([Navigation, Scrollbar]);
 
-export default function Slider () {
+// url: props.country.countryPhotos.file
+
+export default function Slider (props) {
     return (
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
         navigation
+        centered
         scrollbar ={{draggable: true, hide: false}}
-
       >
 
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
+        {props.country.countryPhotos.map((e) =>
+          {
+            return (<SwiperSlide>
+              <img src={e.file} alt=""/>
+            </SwiperSlide>)
+          }
 
-        ...
+        )}
+
+
       </Swiper>
     );
   };
