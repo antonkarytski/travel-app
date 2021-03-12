@@ -8,6 +8,7 @@ const Map = ({countryCode, countries, capitals}) => {
   let capitalCoordinates;
   let countryName;
   let countryCoordinates;
+  let currentLanguage = 'RU' //// заменить на данные из контекста
 
   const getCountriesCoordinates = () => {
     countries.features.forEach(country => {
@@ -27,7 +28,7 @@ const Map = ({countryCode, countries, capitals}) => {
   }
 
   useEffect(() => {
-    const language = 'name_' + countryCode.toLocaleLowerCase();
+    const language = 'name_' + currentLanguage.toLocaleLowerCase();
     getCountriesCoordinates()
     getCapitalCoordinates()
 
@@ -36,7 +37,7 @@ const Map = ({countryCode, countries, capitals}) => {
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: capitalCoordinates || countryCoordinates[0][0][0], 
-      zoom: 5
+      zoom: 4
     })
 
     const nav = new mapboxgl.NavigationControl({
@@ -60,7 +61,7 @@ const Map = ({countryCode, countries, capitals}) => {
       map.setLayoutProperty('country-label', 'text-field', ['get', language])
     })
     
-    colorBoundaries(map, countryCoordinates, countryName)
+    colorBoundaries(map, countryCoordinates, countryName, capitalCoordinates)
 
     return () => {
       map.remove();
@@ -78,3 +79,4 @@ const Map = ({countryCode, countries, capitals}) => {
 }
 
 export default Map;
+

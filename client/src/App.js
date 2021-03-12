@@ -58,7 +58,7 @@ function App() {
                     )}
 
                     <SelectLanguage
-                        countryResponse={countryResponse}
+                        countryResponse={countryResponse} 
                         language={languageState}
                         setLanguage={setLanguageState}
                         className={classesCss.SelectLanguage}
@@ -84,6 +84,7 @@ function App() {
                                             <CountryPage
                                                 country={country}
                                                 updateSearch={updateSearch}
+                                                language={languageState}
                                             />
                                         </Route>
                                     )
