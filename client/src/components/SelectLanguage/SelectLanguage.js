@@ -1,26 +1,22 @@
 import React from "react";
 
-export const SelectLanguage = ({ countryResponse, language, setLanguage }) => {
-  let languages;
-  if (countryResponse) {
-    languages = countryResponse.langs;
-  }
+export const SelectLanguage = ({countryResponse, language, setLanguage, className}) => {
+    let languages;
+    if (countryResponse) {
+        languages = countryResponse.langs;
+    }
 
-  const handleChange = (e) => {
-    setLanguage(e.target.value);
-  };
+    const handleChange = (e) => {
+        setLanguage(e.target.value);
+    };
 
-  return (
-    <form>
-      <label>
-        Select language:
-        <select value={language} onChange={handleChange}>
-          {languages &&
+    return (
+        <select value={language} onChange={handleChange} className={className}>
+            {languages &&
             languages.map((lang) => {
-              return <option value={lang}>{lang}</option>;
+                return <option key={`lang-${lang}`} value={lang}>{lang}</option>;
             })}
         </select>
-      </label>
-    </form>
-  );
+
+    );
 };

@@ -9,7 +9,6 @@ const UserBar = ({classes}) => {
                 {value => !value.isAuthenticated ?
                     <NavLink to={"/login"}>Sign in</NavLink> :
                     <div>
-                        You are in the system!
                         <button
                             onClick={value.logout}
                         >Log out

@@ -74,7 +74,7 @@ const AdminPage = () => {
 
 
     return (
-        <>
+        <div className={classesCss.AdminPage}>
             <VerticalTabs>
                 <TabPanel className={classesCss.FormStyle1} label={"Add Country"}>
                     <CountryAddForm
@@ -99,7 +99,7 @@ const AdminPage = () => {
                     }
                 </TabPanel>
             </VerticalTabs>
-        </>)
+        </div>)
 }
 
 

@@ -15,16 +15,15 @@ const SliderForm = ({onChange, data}) => {
 
     const onAddHandler = () => {
         const changeData = [...data]
-        changeData.splice(0,0,{file: "", description: ""})
+        changeData.splice(0, 0, {file: "", description: ""})
         onChange(changeData)
     }
 
     const onRemoveHandler = (index) => {
         const changeData = [...data]
-        changeData.splice(index,1)
+        changeData.splice(index, 1)
         onChange(changeData)
     }
-
 
 
     return (
@@ -32,7 +31,7 @@ const SliderForm = ({onChange, data}) => {
             <div className={classesCss.AddButton} onClick={onAddHandler}>
                 Добавить слайд
             </div>
-            {data?
+            {data ?
                 data.map((slide, index) => {
                     return (
                         <div
@@ -42,26 +41,30 @@ const SliderForm = ({onChange, data}) => {
                             key={`slide${index}`}
                             className={classesCss.Slide}
                         >
-                            <Row>
-                            <Input
-                                className={classesCss.Input}
-                                name={"file"}
-                                label={"Photo: "}
-                                value={slide.file}
-                                dataAttr={{index}}
-                                onChange={onChangeHandler}
-                            />
-                            <button className={classesCss.RemoveButton} onClick={() => onRemoveHandler(index)}>X</button>
-                            </Row>
-                            <Textarea
-                                className={classesCss.Input}
-                                name={"description"}
-                                label={"Description: "}
-                                value={slide.description}
-                                dataAttr={{index}}
-                                onChange={onChangeHandler}
-                                rows={5}
-                            />
+                            <div className={classesCss.SliderWrap}>
+                                <Row>
+                                    <Input
+                                        className={classesCss.Input}
+                                        name={"file"}
+                                        label={"Photo: "}
+                                        value={slide.file}
+                                        dataAttr={{index}}
+                                        onChange={onChangeHandler}
+                                    />
+                                    <button className={classesCss.RemoveButton}
+                                            onClick={() => onRemoveHandler(index)}>X
+                                    </button>
+                                </Row>
+                                <Textarea
+                                    className={classesCss.Input}
+                                    name={"description"}
+                                    label={"Description: "}
+                                    value={slide.description}
+                                    dataAttr={{index}}
+                                    onChange={onChangeHandler}
+                                    rows={5}
+                                />
+                            </div>
                         </div>
                     )
                 }) : null

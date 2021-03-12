@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Swiper, SwiperSlide} from 'swiper/react';
 import SwiperCore, {Navigation, Scrollbar} from 'swiper/core';
 import 'swiper/swiper.scss';
