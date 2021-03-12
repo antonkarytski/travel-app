@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import {BrowserRouter, HashRouter} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
@@ -10,8 +9,6 @@ const application = (
         <App />
     </HashRouter>
 )
-
-console.log(process.env)
 
 ReactDOM.render(
   <React.StrictMode>

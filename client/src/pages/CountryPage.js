@@ -1,33 +1,30 @@
-import Map from '../components/Map/Map'
 import Countries from "../components/Map/countriesShort.json"
 import Capitals from "../components/Map/capitals.json"
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
+import Map from "../components/Map/Map";
+import Slider from "../components/Sliders/slider.js"
+import SightGallery from "../components/Sliders/sight.gallery.js"
 
-export const CountryPage = (props) => {
+
+
+export const CountryPage = ({updateSearch, country}) => {
     const countriesData = Countries; // заменить скаченным файлом JSON с  сервера
     const capitalsData = Capitals; // заменить скаченным файлом JSON с  сервера
-    const countryCode = 'FR' // входящий параметр при смене языка, ожидаю код страны из двух букв
-
-    // console.log(countriesData)
-    // const toHomePage = () => {
-    //     props.history.push({
-    //         pathname: "/"
-    //     })
-    // }
 
     useEffect(() => {
-        props.setSearchbarExists(false);
+        updateSearch({exists: false});
     }, []);
 
-  return (
-    <div>
-      <h1>Country Page</h1>
-      <button
-      //onClick={toHomePage}
-      >
-        Back
-      </button>
-      <Map countries={countriesData} countryCode={countryCode} capitals={capitalsData}/>
-    </div>
-  );
+    return (
+        <div>
+            <Slider/>
+
+            <SightGallery/>
+            <Map
+                countries={countriesData}
+                countryCode={country.countryCode}
+                capitals={capitalsData}
+            />
+        </div>
+    );
 };
