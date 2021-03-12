@@ -34,6 +34,9 @@ button {
   text-decoration: none;
   display: block;
   transition: color 0.4s;
+  line-height: 35.5px;
+  width: 60px;
+  text-align: center;
 }
 .SiteNavBar .UserBar a:hover {
   color: #c50707;
@@ -53,7 +56,7 @@ button {
   font-size: inherit;
   transition: color 0.4s, box-shadow 0.2s;
   box-shadow: 0 0 0 0 #c50707;
-  line-height: 34px;
+  line-height: 35.5px;
 }
 .SiteNavBar .UserBar button:hover {
   color: #c50707;
