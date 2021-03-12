@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useAuth} from "./hooks/useAuth";
-import {AuthContext} from "./context/AuthContext";
+import {AppContext} from "./context/AppContext";
 import {Route, Switch, NavLink} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import {CountryPage} from "./pages/CountryPage";
@@ -20,7 +20,7 @@ function App() {
         exists: false,
     });
     const {getCountryFromBase, countryResponse} = useCountries();
-    const [languageState, setLanguageState] = useState("EN");
+    const [language, setLanguage] = useState("EN");
     const isAuthenticated = !!token;
 
     const updateSearch = (update) => {
@@ -43,8 +43,8 @@ function App() {
     }, []);
 
     return (
-        <AuthContext.Provider
-            value={{token, login, logout, userId, isAuthenticated}}
+        <AppContext.Provider
+            value={{token, login, logout, userId, isAuthenticated, language}}
         >
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>
@@ -59,8 +59,8 @@ function App() {
 
                     <SelectLanguage
                         countryResponse={countryResponse}
-                        language={languageState}
-                        setLanguage={setLanguageState}
+                        language={language}
+                        setLanguage={setLanguage}
                         className={classesCss.SelectLanguage}
                     />
                     <UserBar classes={classesCss.UserBar}/>
@@ -72,7 +72,7 @@ function App() {
                                 searchValue={searchbarState.value}
                                 setSearchExists={updateSearch}
                                 countryResponse={countryResponse}
-                                language={languageState}
+                                language={language}
                             />
                         </Route>
                         {
@@ -106,7 +106,7 @@ function App() {
 
                 </div>
             </div>
-        </AuthContext.Provider>
+        </AppContext.Provider>
     );
 }
 

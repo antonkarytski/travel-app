@@ -1,47 +1,112 @@
 body {
   font-family: Oswald, sans-serif;
   margin: 0;
+  overflow-y: scroll;
+}
+
+button {
+  cursor: pointer;
 }
 
 .Body {
   margin: 0;
   padding: 0;
   background-color: white;
-  height: 100vh;
 }
 
 .SiteNavBar {
   color: white;
   height: 60px;
-  background-color: #17c3b2;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 10;
+  font-size: 18px;
 }
-.SiteNavBar .UserBar {
-  margin-left: auto;
+.SiteNavBar .HiddenMenu {
+  display: none;
 }
 .SiteNavBar .UserBar a {
   color: white;
   text-decoration: none;
   display: block;
-  line-height: 60px;
-  padding-right: 10px;
-  padding-left: 10px;
-  transition: background-color 0.3s;
+  transition: color 0.4s;
 }
 .SiteNavBar .UserBar a:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  color: #c50707;
+  animation: slide-border 0.2s linear;
+  box-shadow: 0 3px 0 0 #c50707;
+  transition: box-shadow 0.2s 0s, color 0.4s;
 }
 .SiteNavBar .UserBar a:link {
   text-decoration: none;
 }
+.SiteNavBar .UserBar button {
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  transition: color 0.4s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 #c50707;
+  line-height: 34px;
+}
+.SiteNavBar .UserBar button:hover {
+  color: #c50707;
+  box-shadow: 0 3px 0 0 #c50707;
+}
+.SiteNavBar .SearchBar {
+  width: 40%;
+  margin-left: 30%;
+}
+.SiteNavBar .SearchBar input {
+  font-size: inherit;
+  line-height: 21px;
+  width: 85%;
+  height: 90%;
+  outline: none;
+  margin-right: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: Oswald, sans-serif;
+  border: none;
+  box-shadow: 0 1px 0 0 rgba(197, 7, 7, 0.66);
+  transition: box-shadow 0.3s;
+}
+.SiteNavBar .SearchBar button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  font-size: 25px;
+  line-height: 25px;
+  cursor: pointer;
+  outline: none;
+  color: #c50707;
+}
+.SiteNavBar .SelectLanguage {
+  margin-left: auto;
+  margin-right: 10px;
+  display: block;
+  background-color: rgba(0, 0, 0, 0);
+  height: 90%;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  transition: color 0.4s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 #c50707;
+}
+.SiteNavBar .SelectLanguage:hover {
+  color: #c50707;
+  box-shadow: 0 3px 0 0 #c50707;
+}
 
 .SiteContent {
-  padding: 10px;
-  background-color: #4D4D4D;
+  margin-top: -60px;
 }
 
 /*# sourceMappingURL=App.module.css.map */
