@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useAuth} from "./hooks/useAuth";
 import {AuthContext} from "./context/AuthContext";
-import {Route, Switch, Redirect, NavLink} from "react-router-dom";
+import {Route, Switch, NavLink} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import {CountryPage} from "./pages/CountryPage";
 import {AuthPage} from "./pages/AuthPage";
@@ -9,9 +9,9 @@ import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage";
 import {Search} from "./components/Search/Search";
-import {structCountries} from "./helpers/struct";
 import classesCss from "./styles/App.module.scss";
 import {useCountries} from "./hooks/useHttp";
+import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
 
 function App() {
     const {token, login, logout, userId} = useAuth();
@@ -20,15 +20,23 @@ function App() {
         exists: false,
     });
     const {getCountryFromBase, countryResponse} = useCountries();
+    const [languageState, setLanguageState] = useState("EN");
     const isAuthenticated = !!token;
 
-    const updateSearchBar = (update) => {
+    const updateSearch = (update) => {
         const newState = {
             ...searchbarState,
             ...update,
         };
         setSearchbarState(newState);
     };
+
+    const getCountryPathName = (country) => {
+        const engIndex = country.langData.findIndex((lang) => {
+            return lang.lang === "EN"
+        })
+        return '/country/' + country.langData[engIndex].countryName.toLowerCase().replace(/[-\s]/, "_")
+    }
 
     useEffect(() => {
         getCountryFromBase({});
@@ -45,9 +53,16 @@ function App() {
                         <Search
                             className={classesCss.SearchBar}
                             value={searchbarState.value}
-                            updateSearchbar={updateSearchBar}
+                            updateSearch={updateSearch}
                         />
                     )}
+
+                    <SelectLanguage
+                        countryResponse={countryResponse}
+                        language={languageState}
+                        setLanguage={setLanguageState}
+                        className={classesCss.SelectLanguage}
+                    />
                     <UserBar classes={classesCss.UserBar}/>
                 </NavBar>
                 <div className={classesCss.SiteContent}>
@@ -55,25 +70,29 @@ function App() {
                         <Route path="/" exact>
                             <MainPage
                                 searchValue={searchbarState.value}
-                                setSearchbarExists={updateSearchBar}
+                                setSearchExists={updateSearch}
                                 countryResponse={countryResponse}
+                                language={languageState}
                             />
                         </Route>
                         {
-                            countryResponse.countries.map((county, index) => {
-                                return(
-                                    <Route key={`countryPageIndex${index}`} path="/country/:countryName" exact>
-                                        <CountryPage
-                                            updateSearchbar={updateSearchBar}
-                                        />
-                                    </Route>
-                                )
-                            })
+                            countryResponse ?
+                                countryResponse.countries.map((country, index) => {
+                                    return (
+                                        <Route key={`countryPageIndex${index}`} path={getCountryPathName(country)}
+                                               exact>
+                                            <CountryPage
+                                                country={country}
+                                                updateSearch={updateSearch}
+                                            />
+                                        </Route>
+                                    )
+                                }) : null
                         }
-
                         <Route path="/admin" exact>
                             <AdminPage/>
                         </Route>
+
                         {
                             !isAuthenticated ? (
                                 <Route path="/login" exact>
@@ -83,7 +102,9 @@ function App() {
                         }
                     </Switch>
                 </div>
-                <div className={classesCss.SiteFooter}/>
+                <div className={classesCss.SiteFooter}>
+
+                </div>
             </div>
         </AuthContext.Provider>
     );

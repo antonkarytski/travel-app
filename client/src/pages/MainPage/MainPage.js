@@ -1,33 +1,23 @@
 import React, {useEffect} from "react";
-import {NavLink} from "react-router-dom";
 import classesCss from "./styles/MainPage.module.scss";
 import CountryCard from "./CountryCard";
 
-const MainPage = ({searchValue, setSearchbarExists, countryResponse}) => {
-    const language = "EN";
-
+const MainPage = ({
+                      searchValue,
+                      setSearchExists,
+                      countryResponse,
+                      language,
+                  }) => {
     let countries;
     if (countryResponse) {
         let indexOfLang = countryResponse.langs.indexOf(language);
-        countries = countryResponse.countries.map(
-            (country) => country.langData[indexOfLang]
+        countries = countryResponse.countries.map((country) =>
+            Object.assign({}, country.langData[indexOfLang], {
+                preview: country.preview,
+                linkName: country.langData[0].countryName,
+            })
         );
     }
-
-    const hoverHandler = (event) => {
-        console.log(event)
-    }
-
-    //REMOVE WHEN MADE COUNTRY PREVIEW TRANSFER TO COUNTRY CARD
-    let countryPreviews = [];
-    if (countryResponse) {
-        console.log(countryResponse);
-        countryPreviews = countryResponse.countries.map((country) => {
-            return country.preview;
-        });
-    }
-
-    //REMOVE
 
     const filterCountries = (countries) => {
         let filteredCountries = countries;
@@ -42,27 +32,26 @@ const MainPage = ({searchValue, setSearchbarExists, countryResponse}) => {
         return filteredCountries.map((country, index) => {
             return (
                 <CountryCard
-                    hoverHandler={hoverHandler}
                     key={`countryCard${index}`}
                     name={country.countryName}
                     capital={country.capitalName}
-                    preview={countryPreviews[index]} //Сюда надо передать Превью!
-                    to={`/country/${country.countryName.toLowerCase()}`}
+                    preview={country.preview}
+                    to={`/country/${country.linkName
+                        .toLowerCase()
+                        .replace(/[-\s]/g, "_")}`}
+                    engName={country.linkName}
                 />
             );
         });
     };
 
     useEffect(() => {
-        setSearchbarExists({exists: true});
+        setSearchExists({exists: true});
     }, []);
 
     return (
-        <div
-            className={classesCss.MainPage}
-        >
+        <div className={classesCss.MainPage}>
             {countries && filterCountries([...countries])}
-
         </div>
     );
 };

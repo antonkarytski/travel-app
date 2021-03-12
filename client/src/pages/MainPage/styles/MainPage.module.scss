@@ -37,10 +37,16 @@ $defaultMargin: 25px;
 .CountryCard {
   height: $defaultH;
   min-width: $defaultW;
+  max-width: $defaultW;
   border-radius: 10px;
   margin: $defaultMargin;
   transition: min-width 0.3s, height 0.3s, margin 0.3s;
-  box-shadow: 4px 4px 5px 0 rgba(0,0,0,0.4);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11),
+  0 2px 2px rgba(0, 0, 0, 0.4),
+  0 4px 4px rgba(0, 0, 0, 0.4),
+  0 6px 8px rgba(0, 0, 0, 0.4),
+  0 8px 16px rgba(0, 0, 0, 0.4);
+  //box-shadow: 4px 4px 5px 0 rgba(0,0,0,0.4);
   cursor: pointer;
 
 
@@ -49,8 +55,7 @@ $defaultMargin: 25px;
   $hInc: $defaultH * $hoverK;
 
   &:hover {
-    margin: $defaultMargin - $hInc / 2
-            $defaultMargin - $wInc / 2;
+    margin: $defaultMargin - $hInc / 2 $defaultMargin - $wInc / 2;
     min-width: $defaultW + $wInc;
     height: $defaultH + $hInc;
   }

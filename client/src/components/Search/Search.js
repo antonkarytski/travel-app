@@ -1,11 +1,10 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import classesCss from './Search.module.scss'
 
-export const Search = ({value, updateSearchbar, className}) => {
+export const Search = ({value, updateSearch, className}) => {
 
     const onSearchValueChange = (e) => {
-        updateSearchbar({value: e.target.value});
+        updateSearch({value: e.target.value});
     };
 
     const buttonStyle ={
@@ -28,8 +27,11 @@ export const Search = ({value, updateSearchbar, className}) => {
                 placeholder="Search country"
                 autoFocus={true}
             />
-            <button style={buttonStyle} onClick={() => updateSearchbar({value: ""})}>
-                <FontAwesomeIcon icon={faTimes} />
+            <button style={buttonStyle} onClick={() => updateSearch({value: ""})}>
+                <svg className={classesCss.TimesSymbol} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+                    <path stroke="black" stroke-width="8.3" stroke-linecap="round" d="M14,14 L106,106 M106,14 L14,106" />
+                </svg>
+                {/*<FontAwesomeIcon icon={faTimes} />*/}
             </button>
         </div>
     );
