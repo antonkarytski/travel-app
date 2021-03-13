@@ -5,6 +5,7 @@ import Map from "../components/Map/Map";
 import {Currency} from "../components/Currency/Currency";
 import Slider from "../components/Sliders/slider.js"
 import SightGallery from "../components/Sliders/sight.gallery.js"
+import Weather from '../components/weather/weather.js'
 
 
 
@@ -43,7 +44,9 @@ export const CountryPage = ({updateSearch, country, language}) => {
                 countryCode={country.countryCode}
                 capitals={capitalsData}
             />
+
             <Currency countryCode={country.countryCode}/>
+            <Weather country={country}/>
         </div>
     );
 };
