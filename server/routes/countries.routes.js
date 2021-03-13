@@ -70,16 +70,9 @@ router.post(
                         }
                     })
                 } else {
-                    console.log("-----PLACE--------")
-                    console.log(place)
-                    console.log("---------------------------------------------")
-                    place._id = Types.ObjectId(place._id)
-                    for(let i=0; i<place.langData.length; i++){
-                        place.langData[i]._id = Types.ObjectId(place._id)
-                    }
                     requestStack.push({
                         updateOne: {
-                            filter: {countryCode: 'FR'},
+                            filter: {_id: Types.ObjectId(place._id)},
                             update: {place}
                         }
                     })
@@ -87,15 +80,7 @@ router.post(
 
 
             })
-            const dd = await Showplace.findOne({_id: Types.ObjectId(showplaces[0]._id)})
-            console.log("-----RESPONSE--------")
-            console.log(dd)
-            const ud = await Showplace.updateOne({_id: Types.ObjectId(showplaces[0]._id)},showplaces[0])
-            console.log("-----UPDATE RESPONSE--------")
-            console.log(ud)
-            const rd = await Showplace.bulkWrite(requestStack)
-            console.log("-----BULK RESPONSE-------")
-            console.log(rd)
+            await Showplace.bulkWrite(requestStack)
             res.status(201).json({message: "Showplace was successfully updated"})
         } catch (e) {
             res.status(500).json({message: "We got error", e})
