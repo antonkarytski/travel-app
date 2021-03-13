@@ -98,7 +98,7 @@ export const Currency = (props) => {
   
   return (
     <div>
-      <div>{textMap[language].title}</div>
+      <h2>{textMap[language].title}</h2>
       <div>{currencyName}</div>
       <div>{textMap[language].dollar}: {currentCurrency.conversion_rates ? currentCurrency.conversion_rates.USD : ''}</div>
       <div>{textMap[language].euro}: {currentCurrency.conversion_rates ? currentCurrency.conversion_rates.EUR : ''}</div>
