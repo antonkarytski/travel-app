@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import Select from "./Blocks/Select";
 import SelectCountry from "./Blocks/SelectCountry";
-import useForm from "../../hooks/useForm";
 import ShowplaceRepeater from "./Blocks/ShowplaceRepeater/ShowplaceRepeater";
 import {AppContext} from "../../context/AppContext";
 import Button from "../Buttons/Button";
@@ -49,30 +48,36 @@ const ShowplaceAddForm = ({showplaces, codes, sendHandler}) => {
         })
     }
 
-    const removeHandler = showplace => {
+    const removeHandler = event => {
+        const index = Number(event.target.dataset.index)
+        const id = event.target.dataset.id
         const showplacesFull = [...localShowplaces.full]
         const updateStack = [...localShowplaces.updateStack]
-        const indexToRemove = showplacesFull.indexOf(showplace)
-        if (showplace.index) {
+        const indexToRemove = showplacesFull.findIndex((checkShowplace) => {
+            return id ? checkShowplace._id === id :
+                index >= 0? checkShowplace.index === index : false
+        })
+
+        if (index) {
             const indexToRemoveFromStack = updateStack.findIndex((stackShowplace) => {
-                return showplace.index === stackShowplace.index
+                return index === stackShowplace.index
             })
             updateStack.splice(indexToRemoveFromStack, 1)
-        } else if (showplace._id) {
+        } else if (id) {
             const indexToRemoveFromStack = updateStack.findIndex((stackShowplace) => {
-                return showplace._id === stackShowplace._id
+                return id === stackShowplace._id
             })
             if (indexToRemoveFromStack > -1) {
                 updateStack.splice(indexToRemoveFromStack, 1)
             }
-            updateStack.push({_id: showplace._id, key: "remove"})
+            updateStack.push({_id: id, key: "remove"})
         }
-        showplacesFull.splice(indexToRemove, 1)
+        if(indexToRemove>=0) showplacesFull.splice(indexToRemove, 1)
 
         setLocalShowplaces({
+            ...localShowplaces,
             full: showplacesFull,
             updateStack: updateStack,
-            updatesCounter: localShowplaces.updatesCounter
         })
     }
 

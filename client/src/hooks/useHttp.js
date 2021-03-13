@@ -14,13 +14,13 @@ export const useHttp = () => {
                 body = JSON.stringify(body)
                 headers['Content-Type'] = 'application/json'
             }
-            const urlAddon = "https://travel-app-server24.herokuapp.com"
-            //const urlAddon=""
+            //const urlAddon = "https://travel-app-server24.herokuapp.com"
+            const urlAddon=""
             if(url[0] === "/") url = urlAddon+url;
             const response = await fetch(url, {method, body, headers})
             const data = await response.json()
             if (!response.ok) {
-                throw new Error(data.message || "Smth wrong")
+                console.log(data.message || "Smth wrong")
             }
 
             setLoading(false)

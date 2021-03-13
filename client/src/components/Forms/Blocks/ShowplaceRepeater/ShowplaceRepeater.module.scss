@@ -11,17 +11,29 @@
     cursor: pointer;
     border: 3px solid black;
     border-radius: 4px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+    &:hover{
+      background-color: #dddddd;
+    }
   }
 
   .Item{
     width: 100%;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
+    box-shadow: 0 0 2px 2px #333;
+    padding: 10px;
+    cursor: pointer;
 
 
     .PreviewEditor{
-      width: 25%;
-
+      width: 30%;
+      background-size: cover;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #333;
     }
 
     .FullEditor{
@@ -29,15 +41,17 @@
       background-size: cover;
       padding: 10px;
       box-sizing: border-box;
+      border: 1px solid #333;
 
-      textarea, input{
-        font-family: inherit;
-        background-color: rgba(0,0,0,0);
-        border: none;
-        border-bottom: 1px solid #333;
-        outline: none;
-        width: 100%;
-      }
+
+    }
+    textarea, input{
+      font-family: inherit;
+      background-color: rgba(0,0,0,0);
+      border: none;
+      border-bottom: 1px solid #333;
+      outline: none;
+      width: 100%;
     }
   }
 }

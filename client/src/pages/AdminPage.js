@@ -42,7 +42,6 @@ const AdminPage = () => {
 
     const sendShowplacesHandler = async (showplaces, placesStack) => {
         const requestQueue = []
-        console.log(placesStack)
         placesStack.forEach((stackItem) => {
             if(stackItem.key === "remove"){
                 requestQueue.push(stackItem)
@@ -59,10 +58,8 @@ const AdminPage = () => {
 
         try {
             const sendRes = await request('/api/country/showplace', 'POST', {showplaces: requestQueue})
-            console.log('queue',requestQueue)
             const getRes = await request('/api/country/get', 'POST', {key:"showplaces"})
             setMessage(sendRes.message || '')
-            console.log(getRes)
             setCountries({...countries, showplaces:getRes.showplaces})
         } catch (e) {
 

@@ -45,9 +45,12 @@
   padding: 10px;
   box-sizing: border-box;
   background-size: cover;
+  position: relative;
+
 
   .SliderWrap{
-    width: 350px
+    width: 350px;
+
   }
   .RemoveButton{
     cursor: pointer;
@@ -62,6 +65,9 @@
     border: 2px solid white;
     background-color:rgba(0,0,0,0);
     outline: none;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
 
   }
 

@@ -1,11 +1,10 @@
-import React, {useContext, useState} from 'react'
+import React from 'react'
 import Textarea from "../../Textarea";
 import Input from "../../Input/Input";
-import {AppContext} from "../../../../context/AppContext";
 import classesCss from './ShowplaceRepeater.module.scss'
-import Row from "../../../Structs/Row";
 
-const ShowplaceRepeater = ({addHandler, onChange, showplaces, currentLang, currentCountry}) => {
+
+const ShowplaceRepeater = ({addHandler, onChange, showplaces, currentLang, removeHandler}) => {
 
     const getLangIndex = (langSet, currentLang) => {
         return langSet.findIndex((langData) => {
@@ -28,8 +27,8 @@ const ShowplaceRepeater = ({addHandler, onChange, showplaces, currentLang, curre
                     const langIndex = getLangIndex(showplace.langData, currentLang)
                     return (
                         <div key={index} className={classesCss.Item}>
-                            <div className={classesCss.PreviewEditor}>
-                                <img alt={""} src={showplace.prevPhoto || ""}/>
+                            <div className={classesCss.PreviewEditor}
+                                 style={{backgroundImage: `url(${showplace.prevPhoto || ""})`}}>
                                 <Input
                                     name={"prevPhoto"}
                                     label={"Preview: "}
@@ -82,6 +81,12 @@ const ShowplaceRepeater = ({addHandler, onChange, showplaces, currentLang, curre
                                     onChange={onChange}
                                 />
                             </div>
+                            <button
+                                data-index={showplace.index}
+                                data-id={showplace._id}
+                                onClick={removeHandler}
+                                className={classesCss.RemoveButton}>X
+                            </button>
                         </div>
                     )
                 }) : null

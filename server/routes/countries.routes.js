@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 const {Country, Showplace} = require('../models/Country')
-const {Types, Schema} = require('mongoose')
+const {Types} = require('mongoose')
 
 const langSet = ["EN", "RU", "FR"]
 
@@ -73,14 +73,17 @@ router.post(
                     requestStack.push({
                         updateOne: {
                             filter: {_id: Types.ObjectId(place._id)},
-                            update: {place}
+                            update: {$set: place},
                         }
                     })
                 }
-
-
             })
-            await Showplace.bulkWrite(requestStack)
+            //"https://travel-app-server24.herokuapp.com/"
+
+            await Showplace.bulkWrite(requestStack, (err, res) => {
+                console.log('err:', err)
+                console.log('res:', res)
+            })
             res.status(201).json({message: "Showplace was successfully updated"})
         } catch (e) {
             res.status(500).json({message: "We got error", e})
@@ -108,7 +111,6 @@ router.post(
     async (req, res) => {
         const {
             countryCode,
-            lang,
             key //all, showplaces
         } = req.body
         try {
@@ -121,7 +123,7 @@ router.post(
                 if (key === "showplaces") {
                     countrySet.showplaces = await Showplace.find({countryCode})
                 }
-            } else if(key === "showplaces"){
+            } else if (key === "showplaces") {
                 countrySet.showplaces = await Showplace.find({})
             } else {
                 countrySet.countries = await Country.find({})
@@ -152,6 +154,5 @@ router.post(
         }
     }
 )
-
 
 module.exports = router
