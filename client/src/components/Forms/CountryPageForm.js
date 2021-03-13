@@ -1,36 +1,32 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
+import useForm from "../../hooks/useForm";
 import Input from "./Input/Input";
 import Button from "../Buttons/Button";
 import classesCss from "../../pages/styles/AdminPage.module.scss";
 import Textarea from "./Textarea";
 import Column from "../Structs/Column";
 import Row from "../Structs/Row";
-import SliderForm from "./SliderForm/SliderForm";
+import SliderGallery from "./Blocks/SliderForm/SliderGallery";
+import Select from "./Blocks/Select";
+import SelectCountry from "./Blocks/SelectCountry";
+import {AppContext} from "../../context/AppContext";
 
+const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
 
-const countryLang = {
-    EN: "English",
-    RU: "Russian",
-    FR: "France"
-}
-
-const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => {
-
-    const [form, setForm] = useState({
-        countryCode: countries.data ? Object.keys(countries.data)[0] : '',
-        lang: Object.keys(countryLang)[0]
+    const {langSet} = useContext(AppContext)
+    const [form, setForm] = useForm({
+        countryCode: countries ? countries.codes[0] : '',
+        lang: Object.keys(langSet)[0],
+        currencyCode: countries.data ? countries.data[Object.keys(countries.data)[0]].currencyCode : '',
     })
-    const [countriesDataState, setCountriesCountriesData] = useState(countries.data)
+    const [countriesDataState, setCountriesData] = useState(countries.data)
 
-    const formChangeHandler = event => {
-        setForm({...form, [event.target.name]: event.target.value})
-    }
 
     const langDataChangeHandler = event => {
         if (countriesDataState) {
             const newCountriesData = {...countriesDataState}
             newCountriesData[form.countryCode].langData[form.lang][event.target.name] = event.target.value
-            setCountriesCountriesData(newCountriesData)
+            setCountriesData(newCountriesData)
         }
     }
     const commonDataChangeHandler = event => {
@@ -43,7 +39,7 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
                 newCountriesData[form.countryCode][event.target.name] = event.target.value
             }
 
-            setCountriesCountriesData(newCountriesData)
+            setCountriesData(newCountriesData)
         }
     }
 
@@ -51,12 +47,18 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
         if (photos) {
             const newCountriesData = {...countriesDataState}
             newCountriesData[form.countryCode].countryPhotos = photos
-            setCountriesCountriesData(newCountriesData)
+            setCountriesData(newCountriesData)
+        }
+    }
+    const showplacesChangeHandler = (photos) => {
+        if (photos) {
+            const newCountriesData = {...countriesDataState}
+            newCountriesData[form.countryCode].langData[form.lang].countryPhotos = photos
+            setCountriesData(newCountriesData)
         }
     }
 
     const currentCountry = countriesDataState ? countriesDataState[form.countryCode] : undefined
-    console.log(currentCountry)
     const currentCountryLang = currentCountry ? currentCountry.langData[form.lang] : undefined
 
     return (
@@ -64,37 +66,27 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
 
             <Row>
                 <Column className={classesCss.FormColumn}>
-                    <label>Country</label>
-                    <select
-                        name="countryCode"
-                        id="counties"
-                        value={form.countryCode}
-                        onChange={formChangeHandler}
-                    >
-                        {countries.codes ?
-                            countries.codes.map((countryCode) => {
-                                if (countryCode in countries.data) {
-                                    return(
-                                    <option
-                                        key={countryCode}
-                                        value={countryCode}
-                                    >{countryCode}
-                                    </option>)
-                                }
-
-                            }) : null
-                        }
-                    </select>
-                    <label>Language</label>
-                    <select
+                    <Row style={{marginBottom: 0}}>
+                        <SelectCountry
+                            value={form.countryCode}
+                            onChange={setForm}
+                            codes={countries.codes}
+                        />
+                        <Input
+                            blockStyle={{flexDirection: "column"}}
+                            label={"Currency code: "}
+                            name={"currencyCode"}
+                            value={form.currencyCode}
+                            onChange={setForm}
+                        />
+                    </Row>
+                    <Select
+                        label={"Language"}
                         name="lang"
-                        onChange={formChangeHandler}
+                        onChange={setForm}
                         value={form.lang}
-                    >
-                        <option value={'EN'}>English</option>
-                        <option value={'RU'}>Russian</option>
-                        <option value={'FR'}>French</option>
-                    </select>
+                        options={langSet}
+                    />
                     <Input
                         label={"Country Name: "}
                         name={"countryName"}
@@ -105,6 +97,12 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
                         label={"Capital Name: "}
                         name={"capitalName"}
                         value={currentCountryLang ? currentCountryLang.capitalName || "" : ""}
+                        onChange={langDataChangeHandler}
+                    />
+                    <Input
+                        label={"Currency: "}
+                        name={"currency"}
+                        value={currentCountryLang ? currentCountryLang.currency || "" : ""}
                         onChange={langDataChangeHandler}
                     />
                     <Button
@@ -169,16 +167,13 @@ const CountryUpdateForm = ({sendHandler, waitCondition, countries, message}) => 
             </Row>
             <h3>Slider:</h3>
             <Row>
-                <SliderForm
+                <SliderGallery
                     data={currentCountry ? currentCountry.countryPhotos : []}
                     onChange={sliderChangeHandler}
                 />
-            </Row>
-            <h3>Showplaces:</h3>
-            <Row>
             </Row>
         </>
     )
 }
 
-export default CountryUpdateForm
+export default CountryPageForm

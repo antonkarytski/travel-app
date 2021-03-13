@@ -13,6 +13,12 @@ import classesCss from "./styles/App.module.scss";
 import {useCountries} from "./hooks/useHttp";
 import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
 
+const langSet = {
+    EN: "English",
+    RU: "Russian",
+    FR: "France"
+}
+
 function App() {
     const {token, login, logout, userId} = useAuth();
     const [searchbarState, setSearchbarState] = useState({
@@ -44,7 +50,7 @@ function App() {
 
     return (
         <AppContext.Provider
-            value={{token, login, logout, userId, isAuthenticated, language}}
+            value={{token, login, logout, userId, isAuthenticated, language, langSet}}
         >
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>

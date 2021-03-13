@@ -1,7 +1,7 @@
 import React from 'react'
 import classesCss from './style/Input.module.scss'
 
-const Input = ({name, type, onChange, label, placeholder, className, value, dataAttr, style}) => {
+const Input = ({name, type, onChange, label, placeholder, className, value, dataAttr, style, blockStyle}) => {
 
     const classes = [classesCss.InputBlock, className]
 
@@ -12,12 +12,13 @@ const Input = ({name, type, onChange, label, placeholder, className, value, data
     }
 
     return (
-        <div className={classes.join(' ')}>
+        <div
+            style={blockStyle}
+            className={classes.join(' ')}>
             <label htmlFor={`inputId${name}`}>{label}</label>
             <input
                 style = {style}
                 name={name}
-                id={`inputId${name}`}
                 type={type}
                 value={value}
                 onChange={onChange}

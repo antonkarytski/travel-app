@@ -3,9 +3,10 @@ import {useHttp, useCountries} from "../hooks/useHttp";
 import TabPanel from "../components/Tabs/TabPanel";
 import VerticalTabs from "../components/Tabs/VerticalTabs";
 import CountryAddForm from "../components/Forms/CountryAddForm";
-import CountryUpdateForm from "../components/Forms/CountryUpdateForm";
+import CountryPageForm from "../components/Forms/CountryPageForm";
 import {destructCountry, structCountries} from "../helpers/struct"
 import classesCss from './styles/AdminPage.module.scss'
+import ShowplaceAddForm from "../components/Forms/ShowplaceAddForm";
 
 
 const AdminPage = () => {
@@ -14,7 +15,8 @@ const AdminPage = () => {
     const [message, setMessage] = useState('')
     const [countries, setCountries] = useState({
         data: null,
-        codes: []
+        codes: [],
+        showplaces: []
     })
 
     const addCountryHandler = async (form) => {
@@ -38,6 +40,15 @@ const AdminPage = () => {
         }
     }
 
+    const sendShowplacesHandler = async placesStack => {
+        try {
+            const res = await request('/api/country/addshowplace', 'POST', placesStack)
+            setMessage(res.message || '')
+        } catch (e) {
+
+        }
+    }
+
     const removeCountryHandler = async countryCode => {
         try {
             const localCountriesUpdate = {...countries.data}
@@ -54,7 +65,7 @@ const AdminPage = () => {
 
     useEffect(() => {
         if (countryResponse) {
-            const struct = structCountries(countryResponse)
+            const struct = structCountries(countryResponse.countries)
             const codes = []
             for (let countryCode in struct) {
                 if (struct.hasOwnProperty(countryCode)) {
@@ -63,13 +74,14 @@ const AdminPage = () => {
             }
             setCountries({
                 data: struct,
-                codes
+                codes,
+                showplaces: countryResponse.showplaces? countryResponse.showplaces : []
             })
         }
     }, [countryResponse])
 
     useEffect(() => {
-        getCountryFromBase({})
+        getCountryFromBase({key:'all'})
     }, [])
 
 
@@ -85,15 +97,28 @@ const AdminPage = () => {
                         message={message}
                     />
                 </TabPanel>
-                <TabPanel className={classesCss.FormStyle1} label={"Add Lang"}>
+                <TabPanel className={classesCss.FormStyle1} label={"Countries manager"}>
                     {
                         !countryResponse ? cLoading ?
-                            <div>Загрузка...</div> :
-                            <div>Ошибка при загрузке базы стран</div> :
-                            <CountryUpdateForm
+                            <div>Loading...</div> :
+                            <div>Showplaces data loading error</div> :
+                            <CountryPageForm
                                 waitCondition={loading}
                                 sendHandler={updateCountryHandler}
                                 countries={countries}
+                                message={message}
+                            />
+                    }
+                </TabPanel>
+                <TabPanel className={classesCss.FormStyle1} label={"Showplaces manager"}>
+                    {
+                        !countryResponse ? cLoading ?
+                            <div>Loading...</div> :
+                            <div>Showplaces data loading error</div> :
+                            <ShowplaceAddForm
+                                codes={countries.codes}
+                                showplaces={countries.showplaces}
+                                sendHandler={sendShowplacesHandler}
                                 message={message}
                             />
                     }

@@ -81,7 +81,7 @@ export const Currency = (props) => {
 
   const getData = async (currency) => {
     try {
-      const response = await fetch(`${'https://v6.exchangerate-api.com/v6/675fab136db2f695f21dbba6/latest/' + currency}`)
+      const response = await fetch(`https://v6.exchangerate-api.com/v6/675fab136db2f695f21dbba6/latest/ ${currency}`)
       .then(res => res.json())
       if(response.result == 'success' && response.time_last_update_unix != currentCurrency.time_last_update_unix) {
         setCurrency(response);

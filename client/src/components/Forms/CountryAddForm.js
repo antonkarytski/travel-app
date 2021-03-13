@@ -19,7 +19,6 @@ const CountryAddForm = ({sendHandler, removeHandler, waitCondition, message, cou
             removeHandler(code)
     }
 
-
     return (
         <div>
             <Input
