@@ -3,6 +3,7 @@ import Capitals from "../components/Map/capitals.json"
 import React, {useEffect} from "react";
 import Map from "../components/Map/Map";
 import {Currency} from "../components/Currency/Currency";
+import {Video} from "../components/Video/Video";
 // import Slider from "../components/Sliders/slider.js"
 // import SightGallery from "../components/Sliders/sight.gallery.js"
 
@@ -26,7 +27,8 @@ export const CountryPage = ({updateSearch, country, language}) => {
                 countryCode={country.countryCode}
                 capitals={capitalsData}
             />
-            <Currency countryCode={country.countryCode}/>
+            <Currency countryCode={country.countryCode} />
+            <Video countryCode={country.countryCode}/>
         </div>
     );
 };
