@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react'
-import Textarea from "../../Textarea";
-import Input from "../../Input/Input";
-import classesCss from "./SliderForm.module.scss"
-import SliderForm from "./SliderForm";
-import {AppContext} from "../../../../context/AppContext";
+import Textarea from "../Textarea";
+import Input from "../Input/Input";
+import classesCss from "./SliderForm/SliderForm.module.scss"
+import SliderForm from "./SliderForm/SliderForm";
+import {AppContext} from "../../../context/AppContext";
 
 const ShowplaceRepeater = ({addHandler, onChange, showplaces}) => {
 

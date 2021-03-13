@@ -6,7 +6,7 @@ import Row from "../Structs/Row";
 import classesCss from "./Blocks/SliderForm/SliderForm.module.scss";
 import Input from "./Input/Input";
 import Textarea from "./Textarea";
-import ShowplaceRepeater from "./Blocks/SliderForm/ShowplaceRepeater";
+import ShowplaceRepeater from "./Blocks/ShowplaceRepeater";
 import {AppContext} from "../../context/AppContext";
 
 
@@ -24,7 +24,8 @@ const ShowplaceAddForm = ({showplaces, codes}) => {
     })
     const [localShowplaces, setLocalShowplaces] = useState({
         full: showplaces,
-        updateStack: []
+        updateStack: [],
+        updatesCounter: 0
     })
     const {langSet} = useContext(AppContext)
 
@@ -32,8 +33,9 @@ const ShowplaceAddForm = ({showplaces, codes}) => {
     const addHandler = (index) => {
         const showplacesFull = [...localShowplaces.full]
         const showplacesUpdateStack = [...localShowplaces.updateStack]
+        const localCounter = localShowplaces.updatesCounter + 1;
         const showplaceDummy = {
-            index,
+            index: localCounter,
             countryCode: form.countryCode,
             langData: []
         }
@@ -41,19 +43,22 @@ const ShowplaceAddForm = ({showplaces, codes}) => {
             showplaceDummy.langData.push({lang})
         })
         showplacesFull.push(showplaceDummy)
-        showplacesUpdateStack.push(showplaceDummy)
+        showplacesUpdateStack.push({index})
         setLocalShowplaces({
             full: showplacesFull,
-            updateStack: showplacesUpdateStack
+            updateStack: showplacesUpdateStack,
+            updatesCounter: localCounter
         })
     }
 
-    const removeHandler = (showplace) => {
+    const removeHandler = showplace => {
         const showplacesFull = [...localShowplaces.full]
         const showplacesUpdateStack = [...localShowplaces.updateStack]
         const indexToRemove = showplacesFull.indexOf(showplace)
-        const indexToRemoveFromStack = showplacesUpdateStack.indexOf(showplace)
-        if (indexToRemoveFromStack > -1) {
+        if (showplace.index) {
+            showplacesUpdateStack.find((showplace) => {
+                return showplace.index
+            })
             showplacesUpdateStack.splice(indexToRemoveFromStack, 1)
         }
         if (showplacesFull[indexToRemove]._id) {
