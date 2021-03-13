@@ -1,0 +1,43 @@
+.ShowplaceRepeater{
+  display: flex;
+  flex-direction: column;
+
+  .AddButton{
+    width: 30%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 3px solid black;
+    border-radius: 4px;
+  }
+
+  .Item{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+
+    .PreviewEditor{
+      width: 25%;
+
+    }
+
+    .FullEditor{
+      width: 55%;
+      background-size: cover;
+      padding: 10px;
+      box-sizing: border-box;
+
+      textarea, input{
+        font-family: inherit;
+        background-color: rgba(0,0,0,0);
+        border: none;
+        border-bottom: 1px solid #333;
+        outline: none;
+        width: 100%;
+      }
+    }
+  }
+}

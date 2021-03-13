@@ -1,36 +1,33 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Select from "./Blocks/Select";
 import SelectCountry from "./Blocks/SelectCountry";
 import useForm from "../../hooks/useForm";
-import Row from "../Structs/Row";
-import classesCss from "./Blocks/SliderForm/SliderForm.module.scss";
-import Input from "./Input/Input";
-import Textarea from "./Textarea";
-import ShowplaceRepeater from "./Blocks/ShowplaceRepeater";
+import ShowplaceRepeater from "./Blocks/ShowplaceRepeater/ShowplaceRepeater";
 import {AppContext} from "../../context/AppContext";
+import Button from "../Buttons/Button";
+import classesCss from "../../pages/styles/AdminPage.module.scss";
 
 
-const countryLang = {
-    EN: "English",
-    RU: "Russian",
-    FR: "France"
-}
+const ShowplaceAddForm = ({showplaces, codes, sendHandler}) => {
 
-const ShowplaceAddForm = ({showplaces, codes}) => {
+    const {langSet} = useContext(AppContext)
 
-    const [form, setForm] = useForm({
-        countryCode: codes ? codes[0] : '',
-        lang: Object.keys(countryLang)[0],
+    const [form, setForm] = useState({
+        countryCode: codes.length > 0 ? codes[0] : '',
+        lang: Object.keys(langSet)[0],
     })
     const [localShowplaces, setLocalShowplaces] = useState({
         full: showplaces,
         updateStack: [],
         updatesCounter: 0
     })
-    const {langSet} = useContext(AppContext)
+
+    const updateForm = event => {
+        setForm({...form, [event.target.name]: event.target.value})
+    }
 
 
-    const addHandler = (index) => {
+    const addHandler = () => {
         const showplacesFull = [...localShowplaces.full]
         const showplacesUpdateStack = [...localShowplaces.updateStack]
         const localCounter = localShowplaces.updatesCounter + 1;
@@ -39,11 +36,12 @@ const ShowplaceAddForm = ({showplaces, codes}) => {
             countryCode: form.countryCode,
             langData: []
         }
-        langSet.forEach(lang => {
-            showplaceDummy.langData.push({lang})
-        })
-        showplacesFull.push(showplaceDummy)
-        showplacesUpdateStack.push({index})
+        for (let lang in langSet) {
+            if (langSet.hasOwnProperty(lang))
+                showplaceDummy.langData.push({lang})
+        }
+        showplacesFull.unshift(showplaceDummy)
+        showplacesUpdateStack.push({index: localCounter})
         setLocalShowplaces({
             full: showplacesFull,
             updateStack: showplacesUpdateStack,
@@ -53,97 +51,113 @@ const ShowplaceAddForm = ({showplaces, codes}) => {
 
     const removeHandler = showplace => {
         const showplacesFull = [...localShowplaces.full]
-        const showplacesUpdateStack = [...localShowplaces.updateStack]
+        const updateStack = [...localShowplaces.updateStack]
         const indexToRemove = showplacesFull.indexOf(showplace)
         if (showplace.index) {
-            showplacesUpdateStack.find((showplace) => {
-                return showplace.index
+            const indexToRemoveFromStack = updateStack.findIndex((stackShowplace) => {
+                return showplace.index === stackShowplace.index
             })
-            showplacesUpdateStack.splice(indexToRemoveFromStack, 1)
-        }
-        if (showplacesFull[indexToRemove]._id) {
-            showplacesUpdateStack.push({_id:showplacesFull[indexToRemove]._id, remove: true})
+            updateStack.splice(indexToRemoveFromStack, 1)
+        } else if (showplace._id) {
+            const indexToRemoveFromStack = updateStack.findIndex((stackShowplace) => {
+                return showplace._id === stackShowplace._id
+            })
+            if (indexToRemoveFromStack > -1) {
+                updateStack.splice(indexToRemoveFromStack, 1)
+            }
+            updateStack.push({_id: showplace._id, key: "remove"})
         }
         showplacesFull.splice(indexToRemove, 1)
+
         setLocalShowplaces({
             full: showplacesFull,
-            updateStack: showplacesUpdateStack
+            updateStack: updateStack,
+            updatesCounter: localShowplaces.updatesCounter
         })
     }
 
     const updateStackHandler = (showplace) => {
-        const showplacesUpdateStack = [...localShowplaces.updateStack]
-        const indexInLocal = showplacesUpdateStack.indexOf(showplace)
-        if(indexInLocal === -1){
-            showplacesUpdateStack.push(showplace)
-        } else {
-            showplacesUpdateStack[indexInLocal] = showplace;
+        const updateStack = [...localShowplaces.updateStack]
+
+        const showplaceInUpdateStack = updateStack.findIndex((checkShowplace) => {
+            return checkShowplace._id ? showplace._id === checkShowplace._id :
+                checkShowplace.index? checkShowplace.index === showplace.index : false
+        })
+        if (showplaceInUpdateStack === -1) {
+            showplace.index ? updateStack.push({index: showplace.index}) : updateStack.push({_id: showplace._id})
         }
+        return updateStack
+    }
+
+    const onChangeHandler = (event) => {
+        const showplacesFull = [...localShowplaces.full]
+
+        const currentShowplace = showplacesFull.find((showplace) => {
+            return showplace.index === Number(event.target.dataset.index) || showplace._id === event.target.dataset.index
+        })
+
+        if (event.target.dataset.key === "lang") {
+            const langIndex = currentShowplace.langData.findIndex((lang) => {
+                return lang.lang === form.lang
+            })
+            currentShowplace.langData[langIndex][event.target.name] = event.target.value
+        } else {
+            currentShowplace[event.target.name] = event.target.value
+        }
+
+        const updateStack = updateStackHandler(currentShowplace)
         setLocalShowplaces({
-            full: localShowplaces.full,
-            updateStack: showplacesUpdateStack
+            full: showplacesFull,
+            updateStack: updateStack,
+            updatesCounter: localShowplaces.updatesCounter
         })
     }
 
+    const sendHandlerWrap = () => {
+        sendHandler(localShowplaces.full, localShowplaces.updateStack)
+        setLocalShowplaces({...localShowplaces, updateStack: []})
+    }
 
-    const getCurrentShowplaces = {}
+    const getCurrentShowplaces = () => {
+        if(localShowplaces.full){
+            return localShowplaces.full.filter((showplace) => {
+                return showplace.countryCode === form.countryCode
+            })
+        }
+        return []
+    }
 
+    useEffect(() => {
+        setForm({...form, countryCode: codes[0]})
+    }, [codes])
 
     return (
         <div>
+            <Button
+                onClick={sendHandlerWrap}
+                label={"Update"}
+                className={[classesCss.SignUpButton, classesCss.FormButton].join(" ")}
+            />
             <Select
                 label={"Language"}
                 name="lang"
-                onChange={setForm}
+                onChange={updateForm}
                 value={form.lang}
-                options={countryLang}
+                options={langSet}
             />
             <SelectCountry
-                value={form.countryCode}
-                onChange={setForm}
+                value={form.countryCode || codes[0]}
+                onChange={updateForm}
                 codes={codes}
             />
             <ShowplaceRepeater
-                showplaces={showplaces}
+                showplaces={getCurrentShowplaces()}
                 addHandler={addHandler}
+                onChange={onChangeHandler}
+                removeHandler={removeHandler}
+                currentLang={form.lang}
             />
-            <div>
-                <button>
-
-                </button>
-                <Row>
-                    <div>
-                        <img/>
-                        <Input
-                            className={classesCss.Input}
-                            name={"prevPhoto"}
-                            label={"Photo: "}
-                        />
-                        <Textarea
-                            className={classesCss.Input}
-                            name={"description"}
-                            label={"Description: "}
-                            rows={5}
-                        />
-                    </div>
-                    <div>
-                        <Input
-                            className={classesCss.Input}
-                            name={"fullPhoto"}
-                            label={"Photo: "}
-                        />
-                        <Textarea
-                            className={classesCss.Input}
-                            name={"description"}
-                            label={"Description: "}
-                            rows={5}
-                        />
-                    </div>
-                </Row>
-
-            </div>
         </div>
-
     )
 }
 

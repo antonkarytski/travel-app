@@ -39,7 +39,6 @@ const SliderForm = ({onChange, data, children}) => {
                             <div className={classesCss.SliderWrap}>
                                 {
                                     children.map((child, index) => {
-                                        console.log(slideIndex)
                                         return React.cloneElement(child,
                                             {
                                                 value: slide[child.props.name],

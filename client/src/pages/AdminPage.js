@@ -40,10 +40,30 @@ const AdminPage = () => {
         }
     }
 
-    const sendShowplacesHandler = async placesStack => {
+    const sendShowplacesHandler = async (showplaces, placesStack) => {
+        const requestQueue = []
+        console.log(placesStack)
+        placesStack.forEach((stackItem) => {
+            if(stackItem.key === "remove"){
+                requestQueue.push(stackItem)
+            } else {
+                const updatedShowplace = showplaces.find((place) => {
+                    return stackItem._id ? place._id === stackItem._id :
+                        stackItem.index? place.index === stackItem.index : false
+                })
+                if(updatedShowplace){
+                    requestQueue.push(updatedShowplace)
+                }
+            }
+        })
+
         try {
-            const res = await request('/api/country/addshowplace', 'POST', placesStack)
-            setMessage(res.message || '')
+            const sendRes = await request('/api/country/showplace', 'POST', {showplaces: requestQueue})
+            console.log('queue',requestQueue)
+            const getRes = await request('/api/country/get', 'POST', {key:"showplaces"})
+            setMessage(sendRes.message || '')
+            console.log(getRes)
+            setCountries({...countries, showplaces:getRes.showplaces})
         } catch (e) {
 
         }
@@ -75,13 +95,13 @@ const AdminPage = () => {
             setCountries({
                 data: struct,
                 codes,
-                showplaces: countryResponse.showplaces? countryResponse.showplaces : []
+                showplaces: countryResponse.showplaces ? countryResponse.showplaces : []
             })
         }
     }, [countryResponse])
 
     useEffect(() => {
-        getCountryFromBase({key:'all'})
+        getCountryFromBase({key: 'all'})
     }, [])
 
 

@@ -15,8 +15,8 @@ export const useHttp = () => {
                 headers['Content-Type'] = 'application/json'
             }
             const urlAddon = "https://travel-app-server24.herokuapp.com"
-            if(url[0] === "/") url = urlAddon+url;
             //const urlAddon=""
+            if(url[0] === "/") url = urlAddon+url;
             const response = await fetch(url, {method, body, headers})
             const data = await response.json()
             if (!response.ok) {

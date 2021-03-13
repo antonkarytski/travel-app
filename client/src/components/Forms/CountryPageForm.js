@@ -14,13 +14,17 @@ import {AppContext} from "../../context/AppContext";
 const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
 
     const {langSet} = useContext(AppContext)
-    const [form, setForm] = useForm({
+    const [form, setForm] = useState({
         countryCode: countries ? countries.codes[0] : '',
         lang: Object.keys(langSet)[0],
         currencyCode: countries.data ? countries.data[Object.keys(countries.data)[0]].currencyCode : '',
     })
     const [countriesDataState, setCountriesData] = useState(countries.data)
 
+
+    const updateForm = event => {
+        setForm({...form, [event.target.name]: event.target.value})
+    }
 
     const langDataChangeHandler = event => {
         if (countriesDataState) {
@@ -58,8 +62,13 @@ const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
         }
     }
 
+
+
     const currentCountry = countriesDataState ? countriesDataState[form.countryCode] : undefined
     const currentCountryLang = currentCountry ? currentCountry.langData[form.lang] : undefined
+
+
+    console.log(countries)
 
     return (
         <>
@@ -69,7 +78,7 @@ const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
                     <Row style={{marginBottom: 0}}>
                         <SelectCountry
                             value={form.countryCode}
-                            onChange={setForm}
+                            onChange={updateForm}
                             codes={countries.codes}
                         />
                         <Input
@@ -77,13 +86,13 @@ const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
                             label={"Currency code: "}
                             name={"currencyCode"}
                             value={form.currencyCode}
-                            onChange={setForm}
+                            onChange={updateForm}
                         />
                     </Row>
                     <Select
                         label={"Language"}
                         name="lang"
-                        onChange={setForm}
+                        onChange={updateForm}
                         value={form.lang}
                         options={langSet}
                     />
