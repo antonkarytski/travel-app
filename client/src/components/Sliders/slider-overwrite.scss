@@ -1,0 +1,21 @@
+@import '../../styles/colors';
+
+
+.swiper-container {
+  margin:0;
+}
+.swiper-button-prev, .swiper-button-next{
+  color: $dark;
+  top: 95%;
+  transition: color 0.3s;
+  &:hover{
+    color: red(1);
+  }
+}
+
+.swiper-button-prev{
+  left: 20px;
+}
+.swiper-button-next{
+  right: 20px;
+}

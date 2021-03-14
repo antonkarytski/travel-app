@@ -1,11 +1,11 @@
 import React from 'react'
 import {NavLink} from "react-router-dom";
-import {AuthContext} from "../../context/AuthContext";
+import {AppContext} from "../../context/AppContext";
 
 const UserBar = ({classes}) => {
     return (
         <div className={classes}>
-            <AuthContext.Consumer>
+            <AppContext.Consumer>
                 {value => !value.isAuthenticated ?
                     <NavLink to={"/login"}>Sign in</NavLink> :
                     <div>
@@ -14,8 +14,7 @@ const UserBar = ({classes}) => {
                         >Log out
                         </button>
                     </div>}
-
-            </AuthContext.Consumer>
+            </AppContext.Consumer>
         </div>
     )
 }

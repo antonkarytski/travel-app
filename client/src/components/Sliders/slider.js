@@ -1,34 +1,37 @@
 import React from 'react';
-import { Swiper, SwiperSlide} from 'swiper/react';
-import SwiperCore, {Navigation, Scrollbar, Centered} from 'swiper/core';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import SwiperCore, {Navigation, EffectFade, Autoplay} from 'swiper/core';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
+import 'swiper/components/effect-fade/effect-fade.scss';
+import './slider-overwrite.scss'
+import classesCss from './Slider.module.scss'
 
-SwiperCore.use([Navigation, Scrollbar]);
+SwiperCore.use([Navigation, EffectFade, Autoplay]);
 
-// url: props.country.countryPhotos.file
-
-export default function Slider (props) {
+export default function Slider({slides}) {
     return (
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        navigation
-        centeredSlides = {true}
-        scrollbar ={{draggable: true, hide: false}}
-      >
+        <Swiper
+            slidesPerView={1}
+            loop
+            autoplay={{
+                delay: 4500,
+                disableOnInteraction: false,
+            }}
+            effect={"fade"}
+        >
 
-        {props.country.countryPhotos.map((e) =>
-          {
-            return (<SwiperSlide key={e.file}>
-              <img src={e.file} alt=""/>
-            </SwiperSlide>)
-          }
+            {slides.map((slide, index) => {
+                return (
+                    <SwiperSlide
+                        className={classesCss.Slide}
+                        key={index}
+                        style={{backgroundImage: `url(${slide.file})`}}/>
+                )
+            }
+            )}
+        </Swiper>
 
-        )}
-
-
-      </Swiper>
     );
-  };
+};

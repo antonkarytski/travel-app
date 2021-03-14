@@ -17,8 +17,6 @@ export const Search = ({value, updateSearch, className}) => {
         buttonStyle.opacity = 1
         buttonStyle.transition = 'visibility linear 0s, opacity .5s'
     }
-    console.log(buttonStyle)
-
     return (
         <div className={className}>
             <input
@@ -36,3 +34,8 @@ export const Search = ({value, updateSearch, className}) => {
         </div>
     );
 };
+class s{
+    toString(){
+        return 22;
+    }
+}

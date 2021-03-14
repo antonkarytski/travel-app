@@ -11,8 +11,6 @@ export default function ModalWindow (props) {
     const onClose = () => {
         props.onClose?.();
     }
-
-
     return (
 
         <Modal

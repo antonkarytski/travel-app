@@ -1,17 +1,23 @@
 import React, {useState, useEffect} from "react";
 import {useAuth} from "./hooks/useAuth";
-import {AuthContext} from "./context/AuthContext";
+import {AppContext} from "./context/AppContext";
 import {Route, Switch, NavLink} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import {CountryPage} from "./pages/CountryPage";
 import {AuthPage} from "./pages/AuthPage";
 import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
-import AdminPage from "./pages/AdminPage";
+import AdminPage from "./pages/AdminPage/AdminPage";
 import {Search} from "./components/Search/Search";
-import classesCss from "./styles/App.module.scss";
 import {useCountries} from "./hooks/useHttp";
 import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
+import classesCss from "./styles/App.module.scss";
+
+const langSet = {
+    EN: "English",
+    RU: "Russian",
+    FR: "France"
+}
 
 function App() {
     const {token, login, logout, userId} = useAuth();
@@ -20,7 +26,7 @@ function App() {
         exists: false,
     });
     const {getCountryFromBase, countryResponse} = useCountries();
-    const [languageState, setLanguageState] = useState("EN");
+    const [language, setLanguage] = useState("EN");
     const isAuthenticated = !!token;
 
     const updateSearch = (update) => {
@@ -43,12 +49,16 @@ function App() {
     }, []);
 
     return (
-        <AuthContext.Provider
-            value={{token, login, logout, userId, isAuthenticated}}
+        <AppContext.Provider
+            value={{token, login, logout, userId, isAuthenticated, language, langSet}}
         >
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>
-                    <NavLink to={"/"} activeClassName={classesCss.HiddenMenu} exact>Main</NavLink>
+                    {/*activeClassName={classesCss.HiddenMenu}*/}
+                    <NavLink className={classesCss.LogoLink} to={"/"}  exact>
+                        <div className={classesCss.Logo}>GO TRAVEL!</div>
+                    </NavLink>
+
                     {searchbarState.exists && (
                         <Search
                             className={classesCss.SearchBar}
@@ -58,9 +68,9 @@ function App() {
                     )}
 
                     <SelectLanguage
-                        countryResponse={countryResponse} 
-                        language={languageState}
-                        setLanguage={setLanguageState}
+                        countryResponse={countryResponse}
+                        language={language}
+                        setLanguage={setLanguage}
                         className={classesCss.SelectLanguage}
                     />
                     <UserBar classes={classesCss.UserBar}/>
@@ -72,7 +82,7 @@ function App() {
                                 searchValue={searchbarState.value}
                                 setSearchExists={updateSearch}
                                 countryResponse={countryResponse}
-                                language={languageState}
+                                language={language}
                             />
                         </Route>
                         {
@@ -84,7 +94,6 @@ function App() {
                                             <CountryPage
                                                 country={country}
                                                 updateSearch={updateSearch}
-                                                language={languageState}
                                             />
                                         </Route>
                                     )
@@ -107,7 +116,7 @@ function App() {
 
                 </div>
             </div>
-        </AuthContext.Provider>
+        </AppContext.Provider>
     );
 }
 

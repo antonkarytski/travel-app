@@ -28,9 +28,9 @@ export default function ShowTime(props) {
     }, []);
 
     return (
-        <div>
-            <div>{weekDate}</div>
-            <div>{date}</div>
+        <div className={props.className}>
+            <div className={props.timeClassName}>{date}</div>
+            <div className={props.dateClassName}>{weekDate}</div>
         </div>
     )
 

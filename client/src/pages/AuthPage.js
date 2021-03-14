@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {useHttp} from "../hooks/useHttp";
-import {AuthContext} from "../context/AuthContext";
+import {AppContext} from "../context/AppContext";
 import classesCss from "./styles/AuthPage.module.scss"
 import AuthForm from "../components/Forms/AuthForm";
 
@@ -8,7 +8,7 @@ export const AuthPage = () => {
 
     const {loading, error, request} = useHttp()
     const [message, setMessage] = useState('')
-    const auth = useContext(AuthContext)
+    const auth = useContext(AppContext)
 
 
     const requestHandler = async(form) => {

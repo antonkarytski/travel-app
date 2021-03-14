@@ -1,5 +1,9 @@
 const {Schema, model} = require('mongoose')
 
+function arrayLimit(val) {
+    return val.length <= 2;
+}
+
 const countySchema = new Schema({
     countryCode: {type: String, required: true, unique: true},
     preview: {type: String, required: false, default: ""},
@@ -16,19 +20,6 @@ const countySchema = new Schema({
             rate: {type: Number, default: 0},
         }], required: false, default: []
     },
-    showplaces: {
-        type: [{
-            prevPhoto: {type: String, default: ""},
-            fullPhoto: {type: String, default: ""},
-            description: {type: String, default: ""},
-            location:{
-                type: [Number],
-                validate: [arrayLimit, '{PATH} have to have only two coordinates'],
-                default: [0, 0]
-            },
-            rate: {type: Number, default: 0},
-        }], required: false, default: []
-    },
     langData: [
         {
             lang: {type: String, required: true},
@@ -37,15 +28,34 @@ const countySchema = new Schema({
             shortText: {type: String, required: false, default: ""},
             description: {type: String, required: false, default: ""},
             video: {type: String, required: false, default: ""},
+            currency: {type: String, required: false, default: ""},
         }
     ]
 
 }, {collection: "countries"})
 
-function arrayLimit(val) {
-    return val.length <= 2;
-}
+
+const showplaceSchema = new Schema({
+    countryCode: {type: String, default: ""},
+    prevPhoto: {type: String, default: ""},
+    fullPhoto: {type: String, default: ""},
+    langData: [
+        {
+            lang: {type: String, required: true},
+            name: {type: String, default: ""},
+            shortDescription: {type: String, default: ""},
+            description: {type: String, default: ""},
+        }
+    ],
+    location:{
+        type: [Number],
+        validate: [arrayLimit, '{PATH} have to have only two coordinates'],
+        default: [0, 0]
+    },
+    rate: {type: Number, default: 0},
+}, {collection: "showplaces"})
 
 module.exports = {
-    Country: model('Country', countySchema)
+    Country: model('Country', countySchema),
+    Showplace: model('Showplace', showplaceSchema),
 }

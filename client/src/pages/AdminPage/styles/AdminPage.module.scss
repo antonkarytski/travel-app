@@ -1,0 +1,70 @@
+.AdminPage{
+  padding-top: 60px;
+}
+
+
+.FormStyle1{
+  padding: 30px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+
+
+  .FormRow{
+    display: flex;
+    flex-direction: row;
+    >div {
+      flex-direction: column!important;
+    }
+  }
+
+
+  h2{
+    background: #4D4D4D;
+    text-transform: uppercase;
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #797979;
+    font-size: 18px;
+    font-weight: 100;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+  }
+
+  input, select{
+    box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 45px;
+  }
+
+  textarea{
+    resize:none;
+    width: 350px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .Description{
+    textarea{
+      width: 500px;
+    }
+  }
+}
+
+.CountryPreview{
+  width: 250px;
+  text-align: center;
+
+  img{
+    width: 100%;
+    height: auto
+  }
+}
