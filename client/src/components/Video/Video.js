@@ -6,7 +6,7 @@ export const Video = (props) => {
   const language = "FR"; // заменить на данные из контекста
 
   const currentCountry = props.countryCode;
-  const videoId = { 
+  const videoId = {
     EN: {
       FR:"2N7l6SSKeds",
       CH:"oZRBUBbfIJ8",
@@ -53,7 +53,7 @@ export const Video = (props) => {
     FR: "Vidéo"
   }
 
-  
+
   const opts = {
     // height: '390',
     // width: '640',
@@ -68,9 +68,9 @@ export const Video = (props) => {
   return (
     <div>
       <h2>{title[language]}</h2>
-      <Player 
-        videoId={videoId[language][currentCountry]} 
-        opts={opts} 
+      <Player
+        videoId={videoId[language][currentCountry]}
+        opts={opts}
         className="Video"
       />
     </div>

@@ -25,7 +25,7 @@ export default function SightGallery (props) {
 
     return (
       <>
-        <ModalWindow isOpened={isModalVisible} onClose={onClose} content={props.places[objectIndex]} />
+        <ModalWindow isOpened={isModalVisible} onClose={onClose} content={props.places} />
         <Swiper
           spaceBetween={50}
           slidesPerView={4}
@@ -36,7 +36,7 @@ export default function SightGallery (props) {
 
         {props.places.map((e, i) =>
                   {
-                    return (<SwiperSlide>
+                    return (<SwiperSlide key={i+e.prevPhoto}>
                       <div onClick={() => { showObject(i)}}><img src={e.prevPhoto} alt=""/></div>
                       <div>{e.description}</div>
                     </SwiperSlide>)

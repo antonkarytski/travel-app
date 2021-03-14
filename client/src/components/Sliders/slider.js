@@ -12,16 +12,16 @@ SwiperCore.use([Navigation, Scrollbar]);
 export default function Slider (props) {
     return (
       <Swiper
-        spaceBetween={50}
+        spaceBetween={0}
         slidesPerView={1}
         navigation
-        centered
+        centeredSlides = {true}
         scrollbar ={{draggable: true, hide: false}}
       >
 
         {props.country.countryPhotos.map((e) =>
           {
-            return (<SwiperSlide>
+            return (<SwiperSlide key={e.file}>
               <img src={e.file} alt=""/>
             </SwiperSlide>)
           }
