@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export const Currency = (props) => {
   const [currentCurrency, setCurrency] = useState({time_last_update_unix: ''});
   const {countryCode} = props;
-  const language = "EN"   //// заменить на данные из контекста
+  const language = "EN"   //// comment: заменить на данные из контекста
 
   const codeMap = {
     FR: {currency: 'EUR',
@@ -91,7 +91,7 @@ export const Currency = (props) => {
     }
   }
 
-  ///// раскомментировать перед сдачей проекта, иначе закончится количетсво бесплатных попыток отправки api
+  ///// comment: раскомментировать перед сдачей проекта, иначе закончится количетсво бесплатных попыток отправки api
   // useEffect(() => {
   //   getData(countryCurrency);
   // }, []);

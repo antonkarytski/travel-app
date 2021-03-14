@@ -8,7 +8,7 @@ const Map = ({countryCode, countries, capitals}) => {
   let capitalCoordinates;
   let countryName;
   let countryCoordinates;
-  let currentLanguage = 'RU' //// заменить на данные из контекста
+  let currentLanguage = 'RU' //// comment: заменить на данные из контекста
 
   const getCountriesCoordinates = () => {
     countries.features.forEach(country => {
@@ -48,7 +48,7 @@ const Map = ({countryCode, countries, capitals}) => {
     const el = document.createElement('div');
     el.className = 'marker';
 
-    if(capitalCoordinates) { //может  быть 0
+    if(capitalCoordinates) {
       new mapboxgl.Marker(el) 
       .setLngLat(capitalCoordinates)
       .addTo(map)

@@ -1,0 +1,21 @@
+.Rating {
+  display: flex;
+}
+
+.Rating__item {
+  list-style-type:none;
+  margin-right: 3px;
+}
+
+.Rating__list {
+  display: flex;
+  margin-right: 10px;
+}
+
+.Rating__item:last-child {
+  margin-right: 0;
+}
+
+.Rating__link {
+  cursor: pointer;
+}

@@ -7,7 +7,7 @@ import {Video} from "../components/Video/Video";
 import Slider from "../components/Sliders/slider.js"
 import SightGallery from "../components/Sliders/sight.gallery.js"
 import Weather from '../components/weather/weather.js'
-
+import {RatingStars} from '../components/Rating/RatingStars'
 
 
 export const CountryPage = ({updateSearch, country, language}) => {
@@ -49,6 +49,7 @@ export const CountryPage = ({updateSearch, country, language}) => {
             <Currency countryCode={country.countryCode}/>
             <Weather country={country}/>
             <Video countryCode={country.countryCode}/>
+            <RatingStars />
         </div>
     );
 };
