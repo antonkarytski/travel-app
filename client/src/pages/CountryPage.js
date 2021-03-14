@@ -6,7 +6,8 @@ import {Currency} from "../components/Currency/Currency";
 import {Video} from "../components/Video/Video";
 import Slider from "../components/Sliders/slider.js"
 import SightGallery from "../components/Sliders/sight.gallery.js"
-
+import Weather from '../components/weather/Weather.js'
+import ShowTime from '../components/Clock/Сlock.js'
 
 
 export const CountryPage = ({updateSearch, country, language}) => {
@@ -37,7 +38,7 @@ export const CountryPage = ({updateSearch, country, language}) => {
     return (
         <div>
             <Slider country={country}/>
-
+            <ShowTime country={country}/>
             <SightGallery places={showPlaces}/>
             <Map
                 countries={countriesData}
