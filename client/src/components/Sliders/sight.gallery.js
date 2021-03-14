@@ -45,7 +45,7 @@ export default function SightGallery({places}) {
             <ModalWindow
                 isOpened={modalState.visibility}
                 onClose={onClose}
-                content={places[modalState.index]}/>
+                content={places}/>
             <Swiper
                 spaceBetween={50}
                 slidesPerView={4}
@@ -57,7 +57,7 @@ export default function SightGallery({places}) {
                 {places.map((place, index) => {
                         return (
                             <SwiperSlide
-                                key={`showplaceSlide${index}`}
+                                key={index+place.prevPhoto}
                                 onClick={() => showObject(index)}
                                 className={classesCss.ShowplaceSlide}
                                 style={{backgroundImage: `url(${place.prevPhoto})`}}

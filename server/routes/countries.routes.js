@@ -78,7 +78,6 @@ router.post(
                     })
                 }
             })
-            //"https://travel-app-server24.herokuapp.com/"
 
             await Showplace.bulkWrite(requestStack, (err, res) => {
                 console.log('err:', err)

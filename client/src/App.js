@@ -9,9 +9,9 @@ import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import {Search} from "./components/Search/Search";
-import classesCss from "./styles/App.module.scss";
 import {useCountries} from "./hooks/useHttp";
 import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
+import classesCss from "./styles/App.module.scss";
 
 const langSet = {
     EN: "English",
@@ -54,7 +54,11 @@ function App() {
         >
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>
-                    <NavLink to={"/"} activeClassName={classesCss.HiddenMenu} exact>Main</NavLink>
+                    {/*activeClassName={classesCss.HiddenMenu}*/}
+                    <NavLink className={classesCss.LogoLink} to={"/"}  exact>
+                        <div className={classesCss.Logo}>GO TRAVEL!</div>
+                    </NavLink>
+
                     {searchbarState.exists && (
                         <Search
                             className={classesCss.SearchBar}

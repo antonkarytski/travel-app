@@ -9,6 +9,7 @@ import {Video} from "../components/Video/Video";
 import Slider from "../components/Sliders/slider.js"
 import SightGallery from "../components/Sliders/sight.gallery.js"
 import Weather from '../components/weather/weather.js'
+import ShowTime from '../components/Clock/Сlock.js'
 import classesCss from './styles/CountryPage.module.scss'
 
 
@@ -32,8 +33,34 @@ export const CountryPage = ({updateSearch, country}) => {
             <div className={classesCss.SlideContainer}>
                 <Slider slides={country.countryPhotos}/>
                 <div className={classesCss.CountryWelcome}>
-                    <span className={classesCss.Country}>{currentLangData.countryName.toUpperCase()}</span><br/>
-                    <span className={classesCss.Capital}>{currentLangData.capitalName.toUpperCase()}</span>
+                    <h2 className={classesCss.Country}>{currentLangData.countryName.toUpperCase()}</h2>
+                    <div className={classesCss.Capital}>
+                        <span className={classesCss.CapitalName}>{currentLangData.capitalName.toUpperCase()}</span>
+                        <ShowTime
+                            country={country}
+                            className={classesCss.CapitalTime}
+                            timeClassName={classesCss.Time}
+                            dateClassName={classesCss.Date}
+                        />
+                    </div>
+                </div>
+                <div className={classesCss.CountryWidgets}>
+                    <Weather
+                        city={country.langData[0].capitalName}
+                        classes={{
+                            wrap: classesCss.WeatherWidget,
+                            icon: classesCss.WeatherIcon,
+                            temperature: classesCss.WeatherTemperature,
+                        }}
+                    />
+                    <Currency
+                        countryCode={country.countryCode}
+                        classes={{
+                            wrap: classesCss.CurrencyWidget,
+                            currencyVal: classesCss.CurrencyValue,
+                            currencyName: classesCss.CurrencyName,
+                        }}
+                    />
                 </div>
             </div>
             <div className={classesCss.ShowplacesContainer}>
@@ -60,11 +87,6 @@ export const CountryPage = ({updateSearch, country}) => {
                     />
                 </div>
             </div>
-
-
-            {/*<Currency countryCode={country.countryCode}/>*/}
-            {/*<Weather country={country}/>*/}
-
         </div>
     );
-};
+}

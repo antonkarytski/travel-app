@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik");
 body {
   font-family: Oswald, sans-serif;
   margin: 0;
@@ -64,7 +65,7 @@ button {
 }
 .SiteNavBar .SearchBar {
   width: 40%;
-  margin-left: 30%;
+  margin-left: 25%;
 }
 .SiteNavBar .SearchBar input {
   font-size: inherit;
@@ -110,6 +111,23 @@ button {
 
 .SiteContent {
   margin-top: -60px;
+}
+
+.LogoLink {
+  display: flex;
+  margin-left: 20px;
+  width: auto;
+  height: 100%;
+  text-decoration: none;
+  align-items: center;
+}
+.LogoLink .Logo {
+  width: auto;
+  color: white;
+  font-size: 25px;
+  font-family: Rubik, sans-serif;
+  font-style: italic;
+  text-align: left;
 }
 
 /*# sourceMappingURL=App.module.css.map */
