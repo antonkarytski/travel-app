@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import {useHttp, useCountries} from "../hooks/useHttp";
-import TabPanel from "../components/Tabs/TabPanel";
-import VerticalTabs from "../components/Tabs/VerticalTabs";
-import CountryAddForm from "../components/Forms/CountryAddForm";
-import CountryPageForm from "../components/Forms/CountryPageForm";
-import {destructCountry, structCountries} from "../helpers/struct"
+import {useHttp, useCountries} from "../../hooks/useHttp";
+import TabPanel from "../../components/Tabs/TabPanel";
+import VerticalTabs from "../../components/Tabs/VerticalTabs";
+import CountryAddForm from "./CountryAddForm";
+import CountryPageForm from "./CountryPageForm";
+import {destructCountry, structCountries} from "../../helpers/struct"
 import classesCss from './styles/AdminPage.module.scss'
-import ShowplaceAddForm from "../components/Forms/ShowplaceAddForm";
+import ShowplaceAddForm from "./ShowplaceAddForm";
 
 
 const AdminPage = () => {

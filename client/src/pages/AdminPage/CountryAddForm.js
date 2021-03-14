@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import Input from "./Input/Input";
-import Button from "../Buttons/Button";
+import Input from "../../components/Forms/Input/Input";
+import Button from "../../components/Buttons/Button";
 
 
 const countryData = {

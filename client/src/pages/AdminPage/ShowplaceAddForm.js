@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
-import Select from "./Blocks/Select";
-import SelectCountry from "./Blocks/SelectCountry";
-import ShowplaceRepeater from "./Blocks/ShowplaceRepeater/ShowplaceRepeater";
+import Select from "../../components/Forms/Blocks/Select";
+import SelectCountry from "../../components/Forms/Blocks/SelectCountry";
+import ShowplaceRepeater from "./ShowplaceRepeater/ShowplaceRepeater";
 import {AppContext} from "../../context/AppContext";
-import Button from "../Buttons/Button";
-import classesCss from "../../pages/styles/AdminPage.module.scss";
+import Button from "../../components/Buttons/Button";
+import classesCss from "./styles/AdminPage.module.scss";
 
 
-const ShowplaceAddForm = ({showplaces, codes, sendHandler}) => {
+const ShowplaceAddForm = ({showplaces, codes, sendHandler, message}) => {
 
     const {langSet} = useContext(AppContext)
 
@@ -142,7 +142,7 @@ const ShowplaceAddForm = ({showplaces, codes, sendHandler}) => {
                 onClick={sendHandlerWrap}
                 label={"Update"}
                 className={[classesCss.SignUpButton, classesCss.FormButton].join(" ")}
-            />
+            />{message}<br/>
             <Select
                 label={"Language"}
                 name="lang"

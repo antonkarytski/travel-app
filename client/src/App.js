@@ -7,7 +7,7 @@ import {CountryPage} from "./pages/CountryPage";
 import {AuthPage} from "./pages/AuthPage";
 import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
-import AdminPage from "./pages/AdminPage";
+import AdminPage from "./pages/AdminPage/AdminPage";
 import {Search} from "./components/Search/Search";
 import classesCss from "./styles/App.module.scss";
 import {useCountries} from "./hooks/useHttp";

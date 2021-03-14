@@ -1,17 +1,5 @@
-@function getColor($red, $green, $blue, $opacity) {
-  @return rgba($red, $green, $blue, $opacity);
-}
+@import 'colors';
 
-@function red($opacity){
-  $red: 197;
-  $green: 7;
-  $blue: 7;
-  @return getColor($red,$green,$blue,$opacity)
-}
-
-$transparent: rgba(0,0,0,0);
-$white: white;
-$text-color: white;
 
 body{
   font-family: Oswald, sans-serif;

@@ -1,14 +1,13 @@
 import React, {useContext, useState} from 'react'
-import useForm from "../../hooks/useForm";
-import Input from "./Input/Input";
-import Button from "../Buttons/Button";
-import classesCss from "../../pages/styles/AdminPage.module.scss";
-import Textarea from "./Textarea";
-import Column from "../Structs/Column";
-import Row from "../Structs/Row";
-import SliderGallery from "./Blocks/SliderForm/SliderGallery";
-import Select from "./Blocks/Select";
-import SelectCountry from "./Blocks/SelectCountry";
+import Input from "../../components/Forms/Input/Input";
+import Button from "../../components/Buttons/Button";
+import classesCss from "./styles/AdminPage.module.scss";
+import Textarea from "../../components/Forms/Textarea";
+import Column from "../../components/Structs/Column";
+import Row from "../../components/Structs/Row";
+import SliderGallery from "../../components/Forms/Blocks/SliderForm/SliderGallery";
+import Select from "../../components/Forms/Blocks/Select";
+import SelectCountry from "../../components/Forms/Blocks/SelectCountry";
 import {AppContext} from "../../context/AppContext";
 
 const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
@@ -51,13 +50,6 @@ const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
         if (photos) {
             const newCountriesData = {...countriesDataState}
             newCountriesData[form.countryCode].countryPhotos = photos
-            setCountriesData(newCountriesData)
-        }
-    }
-    const showplacesChangeHandler = (photos) => {
-        if (photos) {
-            const newCountriesData = {...countriesDataState}
-            newCountriesData[form.countryCode].langData[form.lang].countryPhotos = photos
             setCountriesData(newCountriesData)
         }
     }
@@ -172,6 +164,12 @@ const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
                             </div> : null
 
                     }
+                    <Input
+                        label={"Video: "}
+                        name={"video"}
+                        value={currentCountryLang ? currentCountryLang.video || "" : ""}
+                        onChange={langDataChangeHandler}
+                    />
                 </Column>
             </Row>
             <h3>Slider:</h3>

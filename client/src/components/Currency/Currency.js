@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 
 export const Currency = (props) => {
   const [currentCurrency, setCurrency] = useState({time_last_update_unix: ''});
@@ -75,7 +75,7 @@ export const Currency = (props) => {
   }
 
   let data;
-  
+
   const countryCurrency = codeMap[countryCode].currency;
   const currencyName = codeMap[countryCode].currencyTitle[language];
 
@@ -98,7 +98,7 @@ export const Currency = (props) => {
   
   return (
     <div>
-      <div>{textMap[language].title}</div>
+      <h2>{textMap[language].title}</h2>
       <div>{currencyName}</div>
       <div>{textMap[language].dollar}: {currentCurrency.conversion_rates ? currentCurrency.conversion_rates.USD : ''}</div>
       <div>{textMap[language].euro}: {currentCurrency.conversion_rates ? currentCurrency.conversion_rates.EUR : ''}</div>

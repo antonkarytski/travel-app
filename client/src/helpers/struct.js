@@ -7,7 +7,9 @@ const dummyLang = {
     countryPhotos:[],
     countryRate: 0,
     countryCoordinates: [],
-    currency: ""
+    currency: "",
+    description: "",
+    video: ""
 }
 
 export function destructCountry(countryDataFromClient, dummy = dummyLang){

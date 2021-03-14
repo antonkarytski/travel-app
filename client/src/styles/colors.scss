@@ -1,0 +1,16 @@
+$transparent: rgba(0,0,0,0);
+$white: white;
+$text-color: white;
+$dark: #333;
+$light: #eee;
+
+
+@function getColor($red, $green, $blue, $opacity) {
+  @return rgba($red, $green, $blue, $opacity);
+}
+@function red($opacity){
+  $red: 197;
+  $green: 7;
+  $blue: 7;
+  @return getColor($red,$green,$blue,$opacity)
+}

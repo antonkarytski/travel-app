@@ -111,19 +111,23 @@ router.post(
     async (req, res) => {
         const {
             countryCode,
-            key //all, showplaces
+            key //all, showplaces, showplacesOnly
         } = req.body
         try {
             let countrySet = {
                 langs: langSet,
                 showplaces: []
             }
-            if (countryCode) {
-                countrySet.countries = await Country.findOne({countryCode})
-                if (key === "showplaces") {
+            if(countryCode){
+                if(key === "showplaces"){
+                    countrySet.countries = await Country.findOne({countryCode})
                     countrySet.showplaces = await Showplace.find({countryCode})
+                } else if(key === "showplacesOnly"){
+                    countrySet.showplaces = await Showplace.find({countryCode})
+                } else {
+                    countrySet.countries = await Country.findOne({countryCode})
                 }
-            } else if (key === "showplaces") {
+            } else if(key === "showplaces" || key === "showplacesOnly"){
                 countrySet.showplaces = await Showplace.find({})
             } else {
                 countrySet.countries = await Country.find({})

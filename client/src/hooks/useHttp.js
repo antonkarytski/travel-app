@@ -50,6 +50,9 @@ export const useCountries = () => {
     }, [countryAsyncRequest])
 
     return {
-        cLoading : loading, cError: error, countryResponse: response, getCountryFromBase: countryRequest
+        cLoading : loading,
+        cError: error,
+        countryResponse: response,
+        getCountryFromBase: countryRequest
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
-import Textarea from "../../Textarea";
-import Input from "../../Input/Input";
+import Textarea from "../../../components/Forms/Textarea";
+import Input from "../../../components/Forms/Input/Input";
 import classesCss from './ShowplaceRepeater.module.scss'
 
 
