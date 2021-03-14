@@ -45,7 +45,9 @@ export const CountryPage = ({updateSearch, country, language}) => {
                 countryCode={country.countryCode}
                 capitals={capitalsData}
             />
-            <Currency countryCode={country.countryCode} />
+
+            <Currency countryCode={country.countryCode}/>
+            <Weather country={country}/>
             <Video countryCode={country.countryCode}/>
         </div>
     );
