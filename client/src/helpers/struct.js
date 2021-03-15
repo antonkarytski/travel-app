@@ -7,17 +7,16 @@ const dummyLang = {
     countryPhotos:[],
     countryRate: 0,
     countryCoordinates: [],
+    currency: "",
+    description: "",
+    video: ""
 }
-
-
 
 export function destructCountry(countryDataFromClient, dummy = dummyLang){
     const countryStructure = {
         ...countryDataFromClient.data,
         langData: []
     }
-
-    const langCountryStructure = []
     for(let lang in countryDataFromClient.data.langData){
         if(countryDataFromClient.data.langData.hasOwnProperty(lang)){
             const langData = {lang}
@@ -38,21 +37,17 @@ export function destructCountry(countryDataFromClient, dummy = dummyLang){
 
 export function structCountries(countriesDataFromServer){
     const structure = {}
-    for(let i = 0; i < countriesDataFromServer.countries.length; i++){
+    for(let i = 0; i < countriesDataFromServer.length; i++){
 
-        const countryCode = countriesDataFromServer.countries[i].countryCode
+        const countryCode = countriesDataFromServer[i].countryCode
 
-        structure[countryCode] = countriesDataFromServer.countries[i]
-        // delete structure[countryCode].__id
-        // delete structure[countryCode].__v
+        structure[countryCode] = countriesDataFromServer[i]
 
         const countryLangData = {};
         for (let i = 0; i < structure[countryCode].langData.length; i++) {
             countryLangData[structure[countryCode].langData[i].lang] = structure[countryCode].langData[i]
         }
         structure[countryCode].langData = countryLangData
-
-
     }
     return structure
 }

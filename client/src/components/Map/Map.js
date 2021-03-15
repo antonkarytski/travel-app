@@ -1,26 +1,27 @@
 import mapboxgl from 'mapbox-gl';
 import {colorBoundaries} from "./mapFunction";
 import './Map.css';
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useContext} from 'react';
+import {AppContext} from "../../context/AppContext";
 
-const Map = ({countryCode, countries, capitals}) => {
+const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
   const mapContainer = useRef();
   let capitalCoordinates;
   let countryName;
   let countryCoordinates;
-  let currentLanguage = 'RU' //// TODO: заменить на данные из контекста
+  const {language} = useContext(AppContext)
 
   const getCountriesCoordinates = () => {
     countries.features.forEach(country => {
-      if(country.properties.ISO_A2 == countryCode) {
-        countryCoordinates = country.geometry.coordinates; 
+      if(country.properties.ISO_A2 === countryCode) {
+        countryCoordinates = country.geometry.coordinates;
       }
     })
   }
 
   const getCapitalCoordinates = () => {
     capitals.forEach(country => {
-      if(country.CountryCode == countryCode) {
+      if(country.CountryCode === countryCode) {
         capitalCoordinates = [country.CapitalLongitude, country.CapitalLatitude]; //longitude , lattitude
         countryName = country.CountryName;
       }
@@ -28,7 +29,7 @@ const Map = ({countryCode, countries, capitals}) => {
   }
 
   useEffect(() => {
-    const language = `name_${currentLanguage}`.toLocaleLowerCase();
+    // const language = `name_${currentLanguage}`.toLocaleLowerCase();
     getCountriesCoordinates()
     getCapitalCoordinates()
 
@@ -36,7 +37,7 @@ const Map = ({countryCode, countries, capitals}) => {
     const map = new mapboxgl.Map ({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: capitalCoordinates || countryCoordinates[0][0][0], 
+      center: capitalCoordinates || countryCoordinates[0][0][0],
       zoom: 4
     })
 
@@ -58,7 +59,7 @@ const Map = ({countryCode, countries, capitals}) => {
     map.addControl(new mapboxgl.FullscreenControl());
   
     map.on('load', function() {
-      map.setLayoutProperty('country-label', 'text-field', ['get', language])
+      map.setLayoutProperty('country-label', 'text-field', ['get', 'name_' + language.toLocaleLowerCase()])
     })
     
     colorBoundaries(map, countryCoordinates, countryName, capitalCoordinates)
@@ -66,15 +67,14 @@ const Map = ({countryCode, countries, capitals}) => {
     return () => {
       map.remove();
     }
-  }, [])
+  }, [language])
+
+
 
   return (
-    <div className="Мap-container">
-      <div className="Map-wrapper">
-        <div className="Map" ref={mapContainer} />
-        <div>Карта</div>
+      <div className={["Map-wrapper", className].join(" ")}>
+        <div className={["Map", mapClassName].join(" ")} ref={mapContainer} />
       </div>
-    </div>
   )
 }
 
