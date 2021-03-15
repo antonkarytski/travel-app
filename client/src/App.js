@@ -29,6 +29,35 @@ function App() {
   const [language, setLanguage] = useState(
     localStorage.getItem("lang") || "EN"
   );
+  const langExtraData = {
+    EN: {
+      placeholder: "Search country",
+      signIn: "Sign in",
+      logOut: "Log out",
+      logIn: "Login",
+      password: "Password",
+      signInConfirm: "Sign In",
+      signUpConfirm: "Sign Up",
+    },
+    RU: {
+      placeholder: "Найти страну",
+      signIn: "Вход",
+      logOut: "Выход",
+      login: "Логин",
+      password: "Пароль",
+      signInConfirm: "Войти",
+      signUpConfirm: "Зарегистрироваться",
+    },
+    FR: {
+      placeholder: "Rechercher un pays",
+      signIn: "S'identifier",
+      logOut: "Se déconnecter",
+      logIn: "Login",
+      password: "Le mot de passe",
+      signInConfirm: "Se connecter",
+      signUpConfirm: "S'inscrire",
+    },
+  };
   const isAuthenticated = !!token;
 
   const updateSearch = (update) => {
@@ -77,6 +106,7 @@ function App() {
               className={classesCss.SearchBar}
               value={searchbarState.value}
               updateSearch={updateSearch}
+              placeholderValue={langExtraData[language].placeholder}
             />
           )}
 
@@ -86,7 +116,10 @@ function App() {
             setLanguage={setLanguage}
             className={classesCss.SelectLanguage}
           />
-          <UserBar classes={classesCss.UserBar} />
+          <UserBar
+            classes={classesCss.UserBar}
+            langExtraData={langExtraData[language]}
+          />
         </NavBar>
         <div className={classesCss.SiteContent}>
           <Switch>
@@ -121,7 +154,7 @@ function App() {
             {
               !isAuthenticated ? (
                 <Route path="/login" exact>
-                  <AuthPage />
+                  <AuthPage langExtraData={langExtraData[language]} />
                 </Route>
               ) : null //TODO: create route to user page
             }

@@ -1,7 +1,12 @@
 import React from "react";
 import classesCss from "./Search.module.scss";
 
-export const Search = ({ value, updateSearch, className }) => {
+export const Search = ({
+  value,
+  updateSearch,
+  className,
+  placeholderValue,
+}) => {
   const onSearchValueChange = (e) => {
     updateSearch({ value: e.target.value });
   };
@@ -25,7 +30,7 @@ export const Search = ({ value, updateSearch, className }) => {
       <input
         onChange={onSearchValueChange}
         value={value}
-        placeholder="Search country"
+        placeholder={placeholderValue}
         autoFocus={true}
       />
       <button type="submit">Search</button>
