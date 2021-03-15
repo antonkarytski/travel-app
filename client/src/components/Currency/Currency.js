@@ -136,9 +136,9 @@ export const Currency = ({countryCode, classes}) => {
     }
 
     /// TODO:раскомментировать перед сдачей проекта, иначе закончится количетсво бесплатных попыток отправки api
-    useEffect(() => {
-        getData(countryCurrency);
-    }, []);
+    // useEffect(() => {
+    //     getData(countryCurrency);
+    // }, []);
 
     return (
         <div className={classes?.wrap}>
