@@ -14,6 +14,8 @@ const langDummy = {
     currency: "",
 }
 
+//http://s3.amazonaws.com/bucketname/filename
+
 router.post(
     '/add',
     async (req, res) => {
@@ -155,6 +157,14 @@ router.post(
             }
         } catch (e) {
         }
+    }
+)
+
+
+router.post(
+    '/setstar',
+    async (req, res) => {
+
     }
 )
 

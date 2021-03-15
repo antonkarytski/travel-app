@@ -134,7 +134,6 @@ export const Currency = ({countryCode, classes}) => {
         }
     }
 
-    /// раскомментировать перед сдачей проекта, иначе закончится количетсво бесплатных попыток отправки api
     useEffect(() => {
         getData(countryCurrency);
     }, []);

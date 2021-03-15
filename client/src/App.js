@@ -5,6 +5,7 @@ import {Route, Switch, NavLink} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import {CountryPage} from "./pages/CountryPage";
 import {AuthPage} from "./pages/AuthPage";
+import UserPage from "./pages/UserPage";
 import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
 import AdminPage from "./pages/AdminPage/AdminPage";
@@ -12,6 +13,7 @@ import {Search} from "./components/Search/Search";
 import {useCountries} from "./hooks/useHttp";
 import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
 import classesCss from "./styles/App.module.scss";
+
 
 const langSet = {
     EN: "English",
@@ -46,7 +48,7 @@ function App() {
 
     useEffect(() => {
         getCountryFromBase({});
-    }, []);
+    }, [getCountryFromBase]);
 
     return (
         <AppContext.Provider
@@ -55,7 +57,7 @@ function App() {
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>
                     {/*activeClassName={classesCss.HiddenMenu}*/}
-                    <NavLink className={classesCss.LogoLink} to={"/"}  exact>
+                    <NavLink className={classesCss.LogoLink} to={"/"} exact>
                         <div className={classesCss.Logo}>GO TRAVEL!</div>
                     </NavLink>
 
@@ -102,13 +104,17 @@ function App() {
                         <Route path="/admin" exact>
                             <AdminPage/>
                         </Route>
-
                         {
-                            !isAuthenticated ? (
-                                <Route path="/login" exact>
-                                    <AuthPage/>
+                            !isAuthenticated ?
+                                <Route
+                                    path="/login"
+                                    exact
+                                    component={AuthPage}
+                                />
+                                :
+                                <Route path="/user" exact>
+                                    <UserPage/>
                                 </Route>
-                            ) : null //TODO: create route to user page
                         }
                     </Switch>
                 </div>

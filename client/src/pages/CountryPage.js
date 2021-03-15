@@ -23,10 +23,9 @@ export const CountryPage = ({updateSearch, country}) => {
         updateSearch({exists: false});
         getCountryFromBase({countryCode: country.countryCode, key: 'showplacesOnly'})
 
-    }, []);
+    }, [getCountryFromBase]);
 
     const currentLangData = country.langData.find(langItem => langItem.lang === language)
-    console.log(currentLangData)
 
     return (
         <div className={classesCss.CountryPage}>

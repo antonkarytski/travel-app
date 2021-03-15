@@ -6,6 +6,10 @@ const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
 
+
+
+
+
 router.post(
     '/register',
     [
@@ -71,7 +75,7 @@ router.post('/login',
                 config.get('jwtSecretKey'),
                 {expiresIn: '1h'}
             )
-            res.json({token, userId: user.id, message: "you logged in"})
+            res.json({token, userId: user.id, userData: user, message: "you logged in"})
         } catch (e) {
             res.status(500).json({message: "Something wrong", e})
         }

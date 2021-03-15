@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose')
+const {Schema, model, Types} = require('mongoose')
 
 function arrayLimit(val) {
     return val.length <= 2;
@@ -53,9 +53,18 @@ const showplaceSchema = new Schema({
         default: [0, 0]
     },
     rate: {type: Number, default: 0},
+    rateCount: {type: Number, default: 0}
 }, {collection: "showplaces"})
+
+const ratingSchema = new Schema({
+    user: {type: Types.ObjectId, ref: "User"},
+    showplace: {type: Types.ObjectId, ref: "Showplace"},
+    value: {type: Number, default: 0}
+})
 
 module.exports = {
     Country: model('Country', countySchema),
     Showplace: model('Showplace', showplaceSchema),
+    Rating: model('Rating', ratingSchema),
 }
+

@@ -4,21 +4,12 @@ import {AppContext} from "../context/AppContext";
 import classesCss from "./styles/AuthPage.module.scss"
 import AuthForm from "../components/Forms/AuthForm";
 
-export const AuthPage = () => {
+export const AuthPage = ({history}) => {
 
     const {loading, error, request} = useHttp()
     const [message, setMessage] = useState('')
     const auth = useContext(AppContext)
 
-
-    const requestHandler = async(form) => {
-        try{
-            const data = await request('/api/auth/register', 'POST', {...form})
-            setMessage(data.message || '')
-        } catch(e){
-
-        }
-    }
 
     const loginHandler = async(form) => {
         try{
@@ -28,6 +19,21 @@ export const AuthPage = () => {
         } catch(e){
         }
     }
+
+    const requestHandler = async(form) => {
+        try{
+            const data = await request('/api/auth/register', 'POST', {...form})
+            if(data.message === "You successfully registered"){
+                await loginHandler(form)
+                history.push('/user')
+            }
+            setMessage(data.message || '')
+        } catch(e){
+
+        }
+    }
+
+
 
     useEffect(() => {
         setMessage(error)

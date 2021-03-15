@@ -1,5 +1,8 @@
 {
   "port": 5000,
   "mongoUri": "mongodb+srv://taAdmin:heyheyadmin@cluster0.ghkpm.mongodb.net/app?retryWrites=true",
-  "jwtSecretKey": "secret string for this app"
+  "jwtSecretKey": "secret string for this app",
+  "AWS_ACCESS_KEY_ID" : "88cnZATwJYI7QUI5oP3tY5cvS85gBBD7Hn5UvDxR",
+  "AWS_SECRET_ACCESS_KEY": "AKIAW53ZZJKHVRVSLNNK",
+  "S3_BUCKET_NAME": "travel-app-24"
 }
