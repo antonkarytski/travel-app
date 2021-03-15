@@ -29,6 +29,7 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
   }
 
   useEffect(() => {
+    // const language = `name_${currentLanguage}`.toLocaleLowerCase();
     getCountriesCoordinates()
     getCapitalCoordinates()
 
@@ -48,7 +49,7 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
     const el = document.createElement('div');
     el.className = 'marker';
 
-    if(capitalCoordinates) { //может  быть 0
+    if(capitalCoordinates) {
       new mapboxgl.Marker(el) 
       .setLngLat(capitalCoordinates)
       .addTo(map)
