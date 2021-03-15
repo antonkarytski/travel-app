@@ -14,7 +14,6 @@ import {useCountries} from "./hooks/useHttp";
 import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
 import classesCss from "./styles/App.module.scss";
 
-
 const langSet = {
     EN: "English",
     RU: "Russian",
@@ -28,7 +27,38 @@ function App() {
         exists: false,
     });
     const {getCountryFromBase, countryResponse} = useCountries();
-    const [language, setLanguage] = useState("EN");
+    const [language, setLanguage] = useState(
+        localStorage.getItem("lang") || "EN"
+    );
+    const langExtraData = {
+        EN: {
+            placeholder: "Search country",
+            signIn: "Sign in",
+            logOut: "Log out",
+            logIn: "Login",
+            password: "Password",
+            signInConfirm: "Sign In",
+            signUpConfirm: "Sign Up",
+        },
+        RU: {
+            placeholder: "Найти страну",
+            signIn: "Вход",
+            logOut: "Выход",
+            login: "Логин",
+            password: "Пароль",
+            signInConfirm: "Войти",
+            signUpConfirm: "Зарегистрироваться",
+        },
+        FR: {
+            placeholder: "Rechercher un pays",
+            signIn: "S'identifier",
+            logOut: "Se déconnecter",
+            logIn: "Login",
+            password: "Le mot de passe",
+            signInConfirm: "Se connecter",
+            signUpConfirm: "S'inscrire",
+        },
+    };
     const isAuthenticated = !!token;
 
     const updateSearch = (update) => {
@@ -41,10 +71,13 @@ function App() {
 
     const getCountryPathName = (country) => {
         const engIndex = country.langData.findIndex((lang) => {
-            return lang.lang === "EN"
-        })
-        return '/country/' + country.langData[engIndex].countryName.toLowerCase().replace(/[-\s]/, "_")
-    }
+            return lang.lang === "EN";
+        });
+        return (
+            "/country/" +
+            country.langData[engIndex].countryName.toLowerCase().replace(/[-\s]/, "_")
+        );
+    };
 
     useEffect(() => {
         getCountryFromBase({});
@@ -52,7 +85,15 @@ function App() {
 
     return (
         <AppContext.Provider
-            value={{token, login, logout, userId, isAuthenticated, language, langSet}}
+            value={{
+                token,
+                login,
+                logout,
+                userId,
+                isAuthenticated,
+                language,
+                langSet,
+            }}
         >
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>
@@ -66,6 +107,7 @@ function App() {
                             className={classesCss.SearchBar}
                             value={searchbarState.value}
                             updateSearch={updateSearch}
+                            placeholderValue={langExtraData[language].placeholder}
                         />
                     )}
 
@@ -75,7 +117,10 @@ function App() {
                         setLanguage={setLanguage}
                         className={classesCss.SelectLanguage}
                     />
-                    <UserBar classes={classesCss.UserBar}/>
+                    <UserBar
+                        classes={classesCss.UserBar}
+                        langExtraData={langExtraData[language]}
+                    />
                 </NavBar>
                 <div className={classesCss.SiteContent}>
                     <Switch>
@@ -91,16 +136,19 @@ function App() {
                             countryResponse ?
                                 countryResponse.countries.map((country, index) => {
                                     return (
-                                        <Route key={`countryPageIndex${index}`} path={getCountryPathName(country)}
-                                               exact>
+                                        <Route
+                                            key={`countryPageIndex${index}`}
+                                            path={getCountryPathName(country)}
+                                            exact
+                                        >
                                             <CountryPage
                                                 country={country}
                                                 updateSearch={updateSearch}
                                             />
                                         </Route>
                                     )
-                                }) : null
-                        }
+                                })
+                                : null}
                         <Route path="/admin" exact>
                             <AdminPage/>
                         </Route>
