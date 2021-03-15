@@ -19,3 +19,7 @@
 .Rating__link {
   cursor: pointer;
 }
+
+.Rating__icon {
+  color:'FDBF5A'
+}

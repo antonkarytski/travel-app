@@ -8,7 +8,7 @@ const Map = ({countryCode, countries, capitals}) => {
   let capitalCoordinates;
   let countryName;
   let countryCoordinates;
-  let currentLanguage = 'RU' //// comment: заменить на данные из контекста
+  let currentLanguage = 'RU' //// TODO: заменить на данные из контекста
 
   const getCountriesCoordinates = () => {
     countries.features.forEach(country => {
@@ -28,7 +28,7 @@ const Map = ({countryCode, countries, capitals}) => {
   }
 
   useEffect(() => {
-    const language = 'name_' + currentLanguage.toLocaleLowerCase();
+    const language = `name_${currentLanguage}`.toLocaleLowerCase();
     getCountriesCoordinates()
     getCapitalCoordinates()
 

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+// import CodeMap from './CodeMap';
 
 export const Currency = (props) => {
   const [currentCurrency, setCurrency] = useState({time_last_update_unix: ''});
   const {countryCode} = props;
-  const language = "EN"   //// comment: заменить на данные из контекста
+  const language = "EN"   //// TODO: заменить на данные из контекста
 
   const codeMap = {
     FR: {currency: 'EUR',
@@ -81,7 +82,8 @@ export const Currency = (props) => {
 
   const getData = async (currency) => {
     try {
-      const response = await fetch(`${'https://v6.exchangerate-api.com/v6/675fab136db2f695f21dbba6/latest/' + currency}`)
+      const API = 'https://v6.exchangerate-api.com/v6/675fab136db2f695f21dbba6/latest/';
+      const response = await fetch(`${API}${currency}`)
       .then(res => res.json())
       if(response.result == 'success' && response.time_last_update_unix != currentCurrency.time_last_update_unix) {
         setCurrency(response);
@@ -91,7 +93,7 @@ export const Currency = (props) => {
     }
   }
 
-  ///// comment: раскомментировать перед сдачей проекта, иначе закончится количетсво бесплатных попыток отправки api
+  ///// TODO: раскомментировать перед сдачей проекта, иначе закончится количетсво бесплатных попыток отправки api
   // useEffect(() => {
   //   getData(countryCurrency);
   // }, []);

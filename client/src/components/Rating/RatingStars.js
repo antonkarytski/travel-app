@@ -5,24 +5,22 @@ import {faStar as SolidStar}  from '@fortawesome/free-solid-svg-icons';
 import './RatingStyles.css';
 
 export const RatingStars = () => {
-  let stars = new Array(5).fill(EmptyStar);
+  const stars = new Array(5).fill('EmptyStar');
+  const starColor = {color:'FDBF5A'};
+  const starIndices = [0,1,2,3,4,];
   const [starSet, setStarSet] = useState(stars);
   const [rating, setRating] = useState();
 
   const changeStars = (rating) => {
-    stars = stars.map((star, index) => {
-      if(index <= rating) {
-        return SolidStar; 
-      } else {
-        return EmptyStar;
-      }
+    const newStarsSet = stars.map((star, index) => {
+      return index <= rating ? 'SolidStar' : 'EmptyStar'
     })
-    setStarSet(stars)
+    setStarSet(newStarsSet)
   }
 
   const saveOnServer = () => {
     // console.log('Rating '+ ratingForSaving + " stars")
-    // console.log('not Saved') //comment: добавить запрос на сервер
+    // console.log('not Saved') //TODO: добавить запрос на сервер
   }
 
   const onStarClick = (e) => {
@@ -31,7 +29,6 @@ export const RatingStars = () => {
     changeStars(+starId);
     setRating(+starId+1)
     saveOnServer()
-    console.log(rating)
   }
 
   const onHover = (e) => {
@@ -50,21 +47,12 @@ export const RatingStars = () => {
     <div>
       <div className="Rating">
         <ul className="Rating__list">
-          <li className="Rating__item">
-            <a className="Rating__link"><FontAwesomeIcon icon={starSet[0]} id="0" onMouseLeave={onMouseLeave} onMouseEnter={onHover} onClick={onStarClick} style={{color:'FDBF5A'}}/></a>
-          </li>
-          <li className="Rating__item">
-            <a  className="Rating__link"><FontAwesomeIcon icon={starSet[1]} id="1" onMouseLeave={onMouseLeave} onMouseEnter={onHover} onClick={onStarClick} style={{color:'FDBF5A'}}/></a>
-          </li>
-          <li className="Rating__item">
-            <a  className="Rating__link"><FontAwesomeIcon icon={starSet[2]} id="2" onMouseLeave={onMouseLeave} onMouseEnter={onHover} onClick={onStarClick} style={{color:'FDBF5A'}}/></a>
-          </li>
-          <li className="Rating__item" >
-            <a  className="Rating__link"><FontAwesomeIcon icon={starSet[3]} id="3" onMouseLeave={onMouseLeave} onMouseEnter={onHover} onClick={onStarClick} style={{color:'FDBF5A'}}/></a>
-          </li>
-          <li className="Rating__item">
-            <a  className="Rating__link"><FontAwesomeIcon icon={starSet[4]} id="4" onMouseLeave={onMouseLeave} onMouseEnter={onHover} onClick={onStarClick} style={{color:'FDBF5A'}}/></a>
-          </li>
+          {
+          starIndices.map(star => 
+            <li className="Rating__item" key={star}>
+                <a  className="Rating__link"><FontAwesomeIcon icon={starSet[star] == 'EmptyStar' ? EmptyStar : SolidStar} id={star} onMouseLeave={onMouseLeave} onMouseEnter={onHover} onClick={onStarClick} style={starColor}/></a>
+             </li>)
+          }
         </ul>
         <p className="Rating__total">{rating}</p>
       </div>
