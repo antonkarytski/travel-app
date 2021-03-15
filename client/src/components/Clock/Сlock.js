@@ -16,7 +16,7 @@ export default function ShowTime(props) {
 
 
     useEffect(() => {
-        setInterval(() => {
+        let interval = setInterval(() => {
 
             let today = new Date();
             let hour = today.getHours();
@@ -25,6 +25,7 @@ export default function ShowTime(props) {
 
             setDate(`${hour}:${addZero(min)}:${addZero(sec)}`)
         }, 1000);
+        return () => clearInterval(interval);
     }, []);
 
     return (
