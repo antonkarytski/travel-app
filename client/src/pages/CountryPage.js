@@ -27,7 +27,6 @@ export const CountryPage = ({updateSearch, country}) => {
     }, []);
 
     const currentLangData = country.langData.find(langItem => langItem.lang === language)
-    console.log(currentLangData)
 
     return (
         <div className={classesCss.CountryPage}>
