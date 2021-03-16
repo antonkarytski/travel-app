@@ -26,7 +26,7 @@ export const RatingStars = () => {
   }
 
   const averageMarkCalc = (mark, averageMark, marksNumber) => {
-    return (averageMark * marksNumber + mark) / (marksNumber + 1)
+    return (Math.floor((averageMark * marksNumber + mark) / (marksNumber + 1) * 10) / 10)
   }
 
   const saveOnServer = () => {
@@ -45,7 +45,7 @@ export const RatingStars = () => {
     e.preventDefault();
     const starId = e.currentTarget.id;
     changeStars(+starId);
-    const currectAverage = Math.floor(averageMarkCalc(+starId, rating.averageRate, rating.totalMarks) * 10) / 10;
+    const currectAverage = averageMarkCalc(+starId, rating.averageRate, rating.totalMarks);
     const ratingStats = {
         averageRate: currectAverage,
         totalMarks: rating.totalMarks + 1,
