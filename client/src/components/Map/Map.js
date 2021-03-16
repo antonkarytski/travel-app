@@ -1,21 +1,20 @@
 import mapboxgl from 'mapbox-gl';
 import {colorBoundaries} from "./mapFunction";
 import './Map.css';
-import React, {useRef, useEffect, useContext, useState} from 'react';
+import React, {useRef, useEffect, useContext} from 'react';
 import {AppContext} from "../../context/AppContext";
 
 const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
   const mapContainer = useRef();
-  const [countryCoordinates, setCountryCoordinates] = useState();
   let capitalCoordinates;
   let countryName;
+  let countryCoordinates;
   const {language} = useContext(AppContext)
 
   const getCountriesCoordinates = () => {
     countries.features.find(country => {
       if(country.properties.ISO_A2 === countryCode) {
-        const countryCoordinates = country.geometry.coordinates;
-        setCountryCoordinates(countryCoordinates)
+        countryCoordinates = country.geometry.coordinates;
       }
     })
   }
@@ -62,17 +61,12 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
       map.setLayoutProperty('country-label', 'text-field', ['get', 'name_' + language.toLocaleLowerCase()])
     })
     
-    if(countryCoordinates) {
-      colorBoundaries(map, countryCoordinates, countryName, capitalCoordinates)
-    }
+    colorBoundaries(map, countryCoordinates, countryName, capitalCoordinates)
 
     return () => {
       map.remove();
     }
   }, [language])
-  
-
-
 
   return (
       <div className={["Map-wrapper", className].join(" ")}>
