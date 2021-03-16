@@ -23,14 +23,27 @@ const UserBar = ({classes, langExtraData}) => {
                                 isActive={(match) => {
                                     if(match){
                                         setLogoutVisibility(true)
+                                    } else {
+                                        setLogoutVisibility(false)
                                     }
                                 }}
                                 className={classes.avatar}
                                 to={"/user"}>
-                                <Avatar alt={userData?.name.toUpperCase() || userData?.email.toUpperCase()}
-                                        src={userImageLink+userData?.image}/>
+                                {
+                                    !logoutVisibility ?
+                                        <Avatar
+                                            alt={userData?.name?.toUpperCase() || userData?.email?.toUpperCase()}
+                                            src={userImageLink+userData?.image}
+                                        /> : null
+                                }
+
                             </NavLink>
-                            <button className={classes.logButton} onClick={value.logout}>{langExtraData.logOut}</button>
+                            {logoutVisibility ?
+                                <NavLink to={"/"} className={classes.logButton} onClick={value.logout}>
+                                    {langExtraData.logOut}
+                                </NavLink> : null
+                            }
+
                         </div>
 
                     )

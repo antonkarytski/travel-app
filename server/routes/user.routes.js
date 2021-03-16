@@ -23,42 +23,44 @@ router.post(
             file,
             body
         } = req
-        const resData = {}
-        const newFilename = nanoid() + file.originalname
-        const params = {
-            Bucket: config.get("S3_BUCKET_NAME"),
-            Key: newFilename,
-            Body: file.buffer,
-            ContentType: file.mimetype,
-            ContentEncoding: 'base64'
-        };
+        const resData = {
+            name: body.name
+        }
+        const update = {
+            name: body.name,
+        }
         try {
-            await s3.putObject(params, function(err, data){
-                if(err) {console.log(err)
-                }else {
-                    console.log(data)
-                }
-            })
-            console.log({
-                name: body.name,
-                image: newFilename,
-                _id: body.id
-            })
+            if (file) {
+                const newFilename = nanoid() + file.originalname
+                const params = {
+                    Bucket: config.get("S3_BUCKET_NAME"),
+                    Key: newFilename,
+                    Body: file.buffer,
+                    ContentType: file.mimetype,
+                    ContentEncoding: 'base64'
+                };
+
+                await s3.putObject(params, function (err, data) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(data)
+                    }
+                })
+                update.image = newFilename
+                resData.image = newFilename
+            }
+
             await User.findOneAndUpdate(
                 {_id: body.id},
                 {
-                    $set: {
-                        name: body.name,
-                        image: newFilename,
-                    }
-                })
+                    $set: update
+                }, (err) => {console.log(err)})
 
-            resData.image = newFilename
-            resData.name = body.name
             resData.messageLoad = 'loadSuccess'
             res.status(201).json({...resData, message: "You successfully registered"})
-        } catch (e) {
-            res.status(500).json({message: "Image uploading error", err: e})
+        } catch (err) {
+            res.status(500).json({message: "Image uploading error", err})
         }
     })
 

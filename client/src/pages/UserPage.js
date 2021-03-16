@@ -3,14 +3,15 @@ import ImageUploading from 'react-images-uploading';
 import classesCss from './styles/AuthPage.module.scss'
 import Input from "../components/Forms/Input/Input";
 import {AppContext} from "../context/AppContext";
-import {useHttp} from "../hooks/useHttp";
 import Axios from 'axios'
+import {withRouter} from 'react-router-dom';
 
-export default function UserPage({updateSearch}) {
-    const [image, setImage] = useState([]);
-    const [name, setName] = useState("");
-    const {loading, error, request} = useHttp()
+const UserPage = ({updateSearch}) => {
     const auth = useContext(AppContext)
+    const userImageLink = "https://travel-app-24.s3.eu-north-1.amazonaws.com/"
+    const [image, setImage] = useState([{data_url: userImageLink+auth.userData.image}] || []);
+    const [name, setName] = useState(auth.userData.name || "");
+    const [imageChanged, setImageChanged] = useState(false)
 
     const onChangeImage = (image) => {
         setImage(image);
@@ -23,12 +24,13 @@ export default function UserPage({updateSearch}) {
 
     const onSendHandler = async () => {
         const formData = new FormData();
-        formData.append('image',image[0].file);
-        formData.append('name',name);
-        console.log(auth.userId)
+        if(imageChanged) formData.append('image',image[0].file);
+        formData.append('name', name);
         formData.append('id',auth.userId);
         const newData = await Axios.post('/api/user/upd', formData)
-        auth.updateData({name: newData.name, image: newData.image})
+        const updData = {name}
+        if(newData?.image) updData.image = newData.image
+        auth.updateData(updData)
     }
 
 
@@ -82,12 +84,18 @@ export default function UserPage({updateSearch}) {
                                 <img src={image['data_url']} alt="" width="100"/>
                                 <div className="image-item__btn-wrapper">
                                     <button
-                                        onClick={() => onImageUpdate(index)}
+                                        onClick={() => {
+                                            onImageUpdate(index)
+                                            setImageChanged(true)
+                                        }}
                                         className={classesCss.ImageHandler}>
                                         Update
                                     </button>
                                     <button
-                                        onClick={() => onImageRemove(index)}
+                                        onClick={() => {
+                                            onImageRemove(index)
+                                            setImageChanged(true)
+                                        }}
                                         className={classesCss.ImageHandler}
                                     >
                                         Remove
@@ -107,3 +115,5 @@ export default function UserPage({updateSearch}) {
         </div>
     )
 }
+
+export default withRouter(UserPage)

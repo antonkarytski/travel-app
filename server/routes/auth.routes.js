@@ -71,7 +71,7 @@ router.post('/login',
                 {expiresIn: '1h'}
             )
             const userData = {
-                id:user.id,
+                id: user.id,
                 name: user.name,
                 image: user.image,
                 email: user.email

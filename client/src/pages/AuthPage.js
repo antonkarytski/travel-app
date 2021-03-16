@@ -6,8 +6,6 @@ import AuthForm from "../components/Forms/AuthForm";
 import { withRouter } from 'react-router-dom';
 
 const AuthPage = ({history, updateSearch, langExtraData}) => {
-
-
     const {loading, error, request} = useHttp()
     const [message, setMessage] = useState('')
     const auth = useContext(AppContext)
