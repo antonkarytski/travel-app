@@ -26,6 +26,7 @@ function App() {
     exists: false,
   });
   const { getCountryFromBase, countryResponse } = useCountries();
+  const [isSearching, setIsSearching] = useState(false);
   const [language, setLanguage] = useState(
     localStorage.getItem("lang") || "EN"
   );
@@ -107,6 +108,8 @@ function App() {
               value={searchbarState.value}
               updateSearch={updateSearch}
               placeholderValue={langExtraData[language].placeholder}
+              isSearching={isSearching}
+              setIsSearching={setIsSearching}
             />
           )}
 
@@ -129,6 +132,8 @@ function App() {
                 setSearchExists={updateSearch}
                 countryResponse={countryResponse}
                 language={language}
+                isSearching={isSearching}
+                setIsSearching={setIsSearching}
               />
             </Route>
             {countryResponse
