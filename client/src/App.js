@@ -14,6 +14,7 @@ import {useCountries} from "./hooks/useHttp";
 import {SelectLanguage} from "./components/SelectLanguage/SelectLanguage";
 import classesCss from "./styles/App.module.scss";
 
+
 const langSet = {
     EN: "English",
     RU: "Russian",
@@ -97,7 +98,6 @@ function App() {
         >
             <div className={classesCss.Body}>
                 <NavBar classes={classesCss.SiteNavBar}>
-                    {/*activeClassName={classesCss.HiddenMenu}*/}
                     <NavLink className={classesCss.LogoLink} to={"/"} exact>
                         <div className={classesCss.Logo}>GO TRAVEL!</div>
                     </NavLink>
@@ -116,9 +116,16 @@ function App() {
                         language={language}
                         setLanguage={setLanguage}
                         className={classesCss.SelectLanguage}
+                        classes={{
+                            menuItem:classesCss.LangMenuItem
+                        }}
                     />
                     <UserBar
-                        classes={classesCss.UserBar}
+                        classes={{
+                            wrap:classesCss.UserBar,
+                            logButton:classesCss.LogButton,
+                            avatar:classesCss.Avatar
+                        }}
                         langExtraData={langExtraData[language]}
                     />
                 </NavBar>
@@ -157,17 +164,21 @@ function App() {
                                 <Route
                                     path="/login"
                                     exact
-                                    component={AuthPage}
+                                    component={
+                                        <AuthPage
+                                            updateSearch={updateSearch}
+                                        />}
                                 />
                                 :
                                 <Route path="/user" exact>
-                                    <UserPage/>
+                                    <UserPage
+                                        updateSearch={updateSearch}
+                                    />
                                 </Route>
                         }
                     </Switch>
                 </div>
                 <div className={classesCss.SiteFooter}>
-
                 </div>
             </div>
         </AppContext.Provider>

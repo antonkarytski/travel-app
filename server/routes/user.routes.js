@@ -1,39 +1,48 @@
+const {Router} = require('express')
+const router = Router()
+const fs = require('fs');
 const AWS = require('aws-sdk');
 const config = require('config')
-const {Router} = require('express')
-const fs = require('fs');
+const {nanoid} = require('nanoid')
 
-const router = Router()
 
 const s3 = new AWS.S3({
-    accessKeyId: process?.env?.AWS_ACCESS_KEY_ID || config.get("AWS_ACCESS_KEY_ID"),
-    secretAccessKey: process?.env?.AWS_SECRET_ACCESS_KEY || config.get("AWS_SECRET_ACCESS_KEY")
+    //accessKeyId: process?.env?.AWS_ACCESS_KEY_ID || config.get("AWS_ACCESS_KEY_ID"),
+    accessKeyId: "AKIAW53ZZJKHYBET62MT",
+    //secretAccessKey: process?.env?.AWS_SECRET_ACCESS_KEY || config.get("AWS_SECRET_ACCESS_KEY")
+    secretAccessKey: "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",
 });
-
-const uploadFile = (fileName) => {
-    // Read content from the file
-    const fileContent = fs.readFileSync(fileName);
-
-    // Setting up S3 upload parameters
-    const params = {
-        Bucket: process?.env?.S3_BUCKET_NAME || config.get("S3_BUCKET_NAME"),
-        Key: 'cat.jpg',
-        Body: fileContent
-    };
-
-    // Uploading files to the bucket
-    s3.upload(params, function(err, data) {
-        if (err) {
-            throw err;
-        }
-        console.log(`File uploaded successfully. ${data.Location}`);
-    });
-};
 
 
 router.post(
-    '/setimage',
+    '/upd',
     async (req, res) => {
+        const {
+            image,
+            imgType,
+            name
+        } = req.body
+
+        const newFilename = nanoid()+"."+imgType
+        const params = {
+            //Bucket: process?.env?.S3_BUCKET_NAME || config.get("S3_BUCKET_NAME"),
+            Bucket: config.get("S3_BUCKET_NAME"),
+            Key: newFilename,
+            Body: image.data_url
+        };
+        s3.upload(
+            params,
+            function (err, data) {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({message: "Image uploading error"})
+                    throw err;
+                }
+                res.json({message: 'success', fileName:newFilename});
+            })
 
     }
 )
+
+
+module.exports = router

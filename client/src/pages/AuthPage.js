@@ -4,7 +4,7 @@ import {AppContext} from "../context/AppContext";
 import classesCss from "./styles/AuthPage.module.scss"
 import AuthForm from "../components/Forms/AuthForm";
 
-export const AuthPage = ({history}) => {
+export const AuthPage = ({history, updateSearch}) => {
 
     const {loading, error, request} = useHttp()
     const [message, setMessage] = useState('')
@@ -38,6 +38,10 @@ export const AuthPage = ({history}) => {
     useEffect(() => {
         setMessage(error)
     }, [error])
+
+    useEffect(() => {
+        updateSearch({ exists: false });
+    }, []);
 
     return (
         <div className={classesCss.AuthPage}>

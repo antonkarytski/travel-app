@@ -1,3 +1,5 @@
+@import "../../styles/colors";
+
 .AuthPage{
   height: 100%;
   display: flex;
@@ -52,16 +54,72 @@
 
 
 .UserPage{
-  margin: 100px auto 0 auto;
-  width: 60%;
+
+  width: 100%;
+  min-height: 100vh;
   border: 2px solid #333333;
-  padding: 30px;
+  padding: 100px 30px 30px;
+  background-image: linear-gradient(black, black),
+  url('https://media.cntraveler.com/photos/5b329f194965ab254448b8e1/master/w_1600%2Cc_limit/India_GettyImages-511119924.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-blend-mode: saturation;
+  box-sizing: border-box;
+
+
+  button{
+    background-color: transparent;
+    font-family: inherit;
+    font-size: 18px;
+    outline: none;
+    transition: border 0.3s, color 0.3s;
+    border: 3px solid white;
+    border-radius: 5px;
+    color: white;
+
+    &:hover{
+      border: 3px solid red(1);
+      color: red(1);
+    }
+  }
+
+  .SaveButton{
+    width: 230px;
+    margin-top: 20px;
+  }
 
   .ImageLoadButton{
-    width: 200px;
+    width: 230px;
     height: 200px;
-    background-color: white;
-    border: 3px dashed #333333;
+    border: 3px dashed white;
+    border-radius: 15px;
+    font-style: italic;
+    color: #333;
+
+    &:hover{
+      border: 3px dashed red(1);
+      color: white;
+    }
+
+  }
+
+  .ImageHandler{
+    &:not(:first-child){
+      margin-left: 10px;
+    }
+  }
+
+  .NameInput{
+    justify-content: flex-start;
+    input{
+      border: none;
+      border-bottom: 1px solid white;
+      background-color: transparent;
+      transition: border 0.3s;
+      &:focus{
+        border-bottom: 3px solid red(1);
+      }
+    }
 
   }
 }

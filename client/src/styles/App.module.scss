@@ -39,8 +39,10 @@ button{
   .UserBar{
 
     a{
-      color: $text-color;
       text-decoration: none;
+      color: $text-color;
+    }
+    .LogButton{
       display: block;
       transition: color .4s;
       line-height: 35.5px;
@@ -58,9 +60,25 @@ button{
       }
     }
 
+    .Avatar{
+
+      &>div{
+        border: 3px solid transparent;
+        transition: border 0.3s, color 0.3s;
+        margin-left: 10px;
+        margin-top: -3px;
+        &:hover{
+          color: red(1);
+          border: 3px solid red(1);
+        }
+      }
+
+
+    }
+
     button{
       color: $text-color;
-      background-color: $transparent;
+      background-color: transparent;
       border: none;
       outline: none;
       font-family: inherit;
@@ -88,7 +106,7 @@ button{
       height: 90%;
       outline: none;
       margin-right: 10px;
-      background-color: $transparent;
+      background-color: transparent;
       font-family: Oswald, sans-serif;
       border: none;
       box-shadow: 0 1px 0 0 red(0.66);
@@ -96,7 +114,7 @@ button{
 
     }
     button{
-      background-color: $transparent;
+      background-color: transparent;
       border: none;
       font-size: 25px;
       line-height: 25px;
@@ -110,9 +128,10 @@ button{
     margin-left: auto;
     margin-right: 10px;
     display: block;
-    background-color: $transparent;
+    background-color: transparent;
     height: 90%;
     border: none;
+    border-bottom: none!important;
     font-family: inherit;
     font-size: inherit;
     outline: none;
@@ -121,11 +140,24 @@ button{
     transition: color .4s, box-shadow .2s;
     box-shadow: 0 0 0 0 red(1);
 
+    &:before{
+      border: none;
+      border-bottom: none!important;
+    }
+    &:after{
+      border: none;
+      border-bottom: none!important;
+    }
+
     &:hover{
       color: red(1);
       box-shadow: 0 3px 0 0 red(1);
     }
   }
+}
+
+.LangMenuItem{
+  color: green;
 }
 
 .SiteContent{
