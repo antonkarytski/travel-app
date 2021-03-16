@@ -12,7 +12,7 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
   const {language} = useContext(AppContext)
 
   const getCountriesCoordinates = () => {
-    countries.features.forEach(country => {
+    countries.features.find(country => {
       if(country.properties.ISO_A2 === countryCode) {
         countryCoordinates = country.geometry.coordinates;
       }
@@ -20,7 +20,7 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
   }
 
   const getCapitalCoordinates = () => {
-    capitals.forEach(country => {
+    capitals.find(country => {
       if(country.CountryCode === countryCode) {
         capitalCoordinates = [country.CapitalLongitude, country.CapitalLatitude]; //longitude , lattitude
         countryName = country.CountryName;
@@ -29,7 +29,6 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
   }
 
   useEffect(() => {
-    // const language = `name_${currentLanguage}`.toLocaleLowerCase();
     getCountriesCoordinates()
     getCapitalCoordinates()
 
@@ -68,8 +67,6 @@ const Map = ({countryCode, countries, capitals, className, mapClassName}) => {
       map.remove();
     }
   }, [language])
-
-
 
   return (
       <div className={["Map-wrapper", className].join(" ")}>
