@@ -46,7 +46,7 @@ button{
       display: block;
       transition: color .4s;
       line-height: 35.5px;
-      width: 60px;
+      min-width: 60px;
       text-align: center;
       &:hover{
         color: red(1);
@@ -177,7 +177,6 @@ button{
   text-decoration: none;
   align-items: center;
   .Logo{
-
     width: auto;
     color: white;
     font-size: 25px;

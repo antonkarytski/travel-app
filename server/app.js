@@ -1,8 +1,7 @@
 const express = require('express')
-const config = require('config')
 const mongoose = require('mongoose')
 const cors = require('cors')
-
+const config = require('config')
 
 const app = express()
 app.use(cors())
@@ -10,10 +9,6 @@ app.use(express.json({extended : true}))
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/country', require('./routes/countries.routes'))
 app.use('/api/user', require('./routes/user.routes'))
-
-
-
-
 
 // if(process.env.NODE_ENV === 'production'){
 //     app.use('/', express.static(path.join(__dirname, 'client', 'build')))

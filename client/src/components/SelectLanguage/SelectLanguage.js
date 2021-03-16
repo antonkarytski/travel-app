@@ -9,7 +9,7 @@ export const SelectLanguage = ({
                                    className,
                                    classes
                                }) => {
-    let languages;
+    let languages = [];
     if (countryResponse) {
         languages = countryResponse.langs;
     }
@@ -27,8 +27,7 @@ export const SelectLanguage = ({
             onChange={handleChange}
             className={className}
         >
-            {languages &&
-            languages.map((lang) => {
+            {languages.map((lang) => {
                 return (
                     <MenuItem
                         key={`lang-${lang}`}

@@ -39,7 +39,7 @@ button {
   display: block;
   transition: color 0.4s;
   line-height: 35.5px;
-  width: 60px;
+  min-width: 60px;
   text-align: center;
 }
 .SiteNavBar .UserBar .LogButton:hover {

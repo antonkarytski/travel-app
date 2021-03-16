@@ -4,7 +4,7 @@ import {AppContext} from "./context/AppContext";
 import {Route, Switch, NavLink} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import {CountryPage} from "./pages/CountryPage";
-import {AuthPage} from "./pages/AuthPage";
+import AuthPage from "./pages/AuthPage";
 import UserPage from "./pages/UserPage";
 import NavBar from "./components/Navigation/NavBar";
 import UserBar from "./components/Navigation/UserBar";
@@ -21,8 +21,38 @@ const langSet = {
     FR: "France"
 }
 
+const langExtraData = {
+    EN: {
+        placeholder: "Search country",
+        signIn: "Sign in",
+        logOut: "Log out",
+        login: "Login",
+        password: "Password",
+        signInConfirm: "Sign In",
+        signUpConfirm: "Sign Up",
+    },
+    RU: {
+        placeholder: "Найти страну",
+        signIn: "Вход",
+        logOut: "Выход",
+        login: "Логин",
+        password: "Пароль",
+        signInConfirm: "Войти",
+        signUpConfirm: "Зарегистрироваться",
+    },
+    FR: {
+        placeholder: "Rechercher un pays",
+        signIn: "S'identifier",
+        logOut: "Se déconnecter",
+        login: "Login",
+        password: "Le mot de passe",
+        signInConfirm: "Se connecter",
+        signUpConfirm: "S'inscrire",
+    },
+};
+
 function App() {
-    const {token, login, logout, userId} = useAuth();
+    const {token, login, logout, userId, userData, updateData} = useAuth();
     const [searchbarState, setSearchbarState] = useState({
         value: "",
         exists: false,
@@ -31,35 +61,6 @@ function App() {
     const [language, setLanguage] = useState(
         localStorage.getItem("lang") || "EN"
     );
-    const langExtraData = {
-        EN: {
-            placeholder: "Search country",
-            signIn: "Sign in",
-            logOut: "Log out",
-            logIn: "Login",
-            password: "Password",
-            signInConfirm: "Sign In",
-            signUpConfirm: "Sign Up",
-        },
-        RU: {
-            placeholder: "Найти страну",
-            signIn: "Вход",
-            logOut: "Выход",
-            login: "Логин",
-            password: "Пароль",
-            signInConfirm: "Войти",
-            signUpConfirm: "Зарегистрироваться",
-        },
-        FR: {
-            placeholder: "Rechercher un pays",
-            signIn: "S'identifier",
-            logOut: "Se déconnecter",
-            logIn: "Login",
-            password: "Le mot de passe",
-            signInConfirm: "Se connecter",
-            signUpConfirm: "S'inscrire",
-        },
-    };
     const isAuthenticated = !!token;
 
     const updateSearch = (update) => {
@@ -91,6 +92,8 @@ function App() {
                 login,
                 logout,
                 userId,
+                userData,
+                updateData,
                 isAuthenticated,
                 language,
                 langSet,
@@ -117,27 +120,22 @@ function App() {
                         setLanguage={setLanguage}
                         className={classesCss.SelectLanguage}
                         classes={{
-                            menuItem:classesCss.LangMenuItem
+                            menuItem: classesCss.LangMenuItem
                         }}
                     />
                     <UserBar
                         classes={{
-                            wrap:classesCss.UserBar,
-                            logButton:classesCss.LogButton,
-                            avatar:classesCss.Avatar
+                            wrap: classesCss.UserBar,
+                            logButton: classesCss.LogButton,
+                            avatar: classesCss.Avatar
                         }}
                         langExtraData={langExtraData[language]}
                     />
                 </NavBar>
                 <div className={classesCss.SiteContent}>
                     <Switch>
-                        <Route path="/" exact>
-                            <MainPage
-                                searchValue={searchbarState.value}
-                                setSearchExists={updateSearch}
-                                countryResponse={countryResponse}
-                                language={language}
-                            />
+                        <Route path="/admin" exact>
+                            <AdminPage/>
                         </Route>
                         {
                             countryResponse ?
@@ -154,28 +152,30 @@ function App() {
                                             />
                                         </Route>
                                     )
-                                })
-                                : null}
-                        <Route path="/admin" exact>
-                            <AdminPage/>
-                        </Route>
+                                }) : null
+                        }
                         {
-                            !isAuthenticated ?
-                                <Route
-                                    path="/login"
-                                    exact
-                                    component={
-                                        <AuthPage
-                                            updateSearch={updateSearch}
-                                        />}
-                                />
-                                :
+                            isAuthenticated ?
                                 <Route path="/user" exact>
                                     <UserPage
                                         updateSearch={updateSearch}
                                     />
+                                </Route> :
+                                <Route path="/login" exact>
+                                    <AuthPage
+                                        updateSearch={updateSearch}
+                                        langExtraData={langExtraData[language]}
+                                    />
                                 </Route>
                         }
+                        <Route path="/" exact>
+                            <MainPage
+                                searchValue={searchbarState.value}
+                                setSearchExists={updateSearch}
+                                countryResponse={countryResponse}
+                                language={language}
+                            />
+                        </Route>
                     </Switch>
                 </div>
                 <div className={classesCss.SiteFooter}>

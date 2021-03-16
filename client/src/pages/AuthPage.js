@@ -3,8 +3,10 @@ import {useHttp} from "../hooks/useHttp";
 import {AppContext} from "../context/AppContext";
 import classesCss from "./styles/AuthPage.module.scss"
 import AuthForm from "../components/Forms/AuthForm";
+import { withRouter } from 'react-router-dom';
 
-export const AuthPage = ({history, updateSearch}) => {
+const AuthPage = ({history, updateSearch, langExtraData}) => {
+
 
     const {loading, error, request} = useHttp()
     const [message, setMessage] = useState('')
@@ -14,8 +16,12 @@ export const AuthPage = ({history, updateSearch}) => {
     const loginHandler = async(form) => {
         try{
             const data = await request('/api/auth/login', 'POST', {...form})
-            auth.login(data.token, data.userId)
-            setMessage(data.message || '')
+            if(data.token){
+                auth.login(data.token, data.userData)
+                setMessage(data.message || '')
+                history.push('/')
+            }
+
         } catch(e){
         }
     }
@@ -34,7 +40,6 @@ export const AuthPage = ({history, updateSearch}) => {
     }
 
 
-
     useEffect(() => {
         setMessage(error)
     }, [error])
@@ -51,7 +56,10 @@ export const AuthPage = ({history, updateSearch}) => {
                 loginHandler={loginHandler}
                 signUpHandler={requestHandler}
                 waitCondition={loading}
+                langExtraData={langExtraData}
             />
         </div>
     )
 }
+
+export default withRouter(AuthPage)

@@ -4,6 +4,7 @@ import classesCss from './styles/AuthPage.module.scss'
 import Input from "../components/Forms/Input/Input";
 import {AppContext} from "../context/AppContext";
 import {useHttp} from "../hooks/useHttp";
+import Axios from 'axios'
 
 export default function UserPage({updateSearch}) {
     const [image, setImage] = useState([]);
@@ -19,22 +20,15 @@ export default function UserPage({updateSearch}) {
         setName(event.target.value);
     };
 
+
     const onSendHandler = async () => {
-        console.log(image[0])
-        const header = {
-            'content-type': image[0].file.type
-        }
-        const body = {
-            image:image[0],
-            imgType: image[0].file.type.substr(-3,3),
-            name,
-            id: auth.userId
-        }
-        try {
-            const res = await request('/api/user/upd', 'POST', body)
-            console.log(res)
-        } catch (e) {
-        }
+        const formData = new FormData();
+        formData.append('image',image[0].file);
+        formData.append('name',name);
+        console.log(auth.userId)
+        formData.append('id',auth.userId);
+        const newData = await Axios.post('/api/user/upd', formData)
+        auth.updateData({name: newData.name, image: newData.image})
     }
 
 
@@ -109,6 +103,7 @@ export default function UserPage({updateSearch}) {
                 className={classesCss.SaveButton}>
                 Save
             </button>
+
         </div>
     )
 }

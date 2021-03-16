@@ -15,6 +15,7 @@ const AuthForm = ({
     password: "",
   });
 
+
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
@@ -28,6 +29,7 @@ const AuthForm = ({
         type="text"
         onChange={changeHandler}
         className={classes.AuthInput}
+        autoComplete={"off"}
       />
       <Input
         className={classes.AuthInput}
@@ -35,6 +37,7 @@ const AuthForm = ({
         type={"password"}
         label={`${langExtraData.password}: `}
         onChange={changeHandler}
+        autoComplete={"off"}
       />
       <div className={classes.AuthButtonSet}>
         <Button
