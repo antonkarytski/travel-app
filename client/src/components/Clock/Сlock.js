@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState } from "react";
+import {AppContext} from "../../context/AppContext";
 
 export default function ShowTime(props) {
+    const {language} = useContext(AppContext)
     const [date, setDate] = useState('')
+    const translation = {
+        'RU': 'ru-RU',
+        'EN': 'en-US',
+        'FR': 'fr-FR'
+    }
     let currentCity = props.country.langData[0].capitalName
     let today = new Date();
     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    let weekDate = today.toLocaleDateString('en-US', options)
+    let weekDate = today.toLocaleDateString(`${translation[language]}`, options)
 
 
 
@@ -16,15 +23,16 @@ export default function ShowTime(props) {
 
 
     useEffect(() => {
-        setInterval(() => {
+        let interval = setInterval(() => {
 
             let today = new Date();
             let hour = today.getHours();
             let min = today.getMinutes();
             let sec = today.getSeconds();
 
-            setDate(`${hour}:${addZero(min)}:${addZero(sec)}`)
+            setDate(`${addZero(hour)}:${addZero(min)}:${addZero(sec)}`)
         }, 1000);
+        return () => clearInterval(interval);
     }, []);
 
     return (
