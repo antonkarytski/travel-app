@@ -34,7 +34,7 @@ const langExtraData = {
     placeholder: "Найти страну",
     signIn: "Вход",
     logOut: "Выход",
-    login: "Логин",
+    logIn: "Логин",
     password: "Пароль",
     signInConfirm: "Войти",
     signUpConfirm: "Зарегистрироваться",
