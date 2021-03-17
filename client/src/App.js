@@ -13,6 +13,7 @@ import { Search } from "./components/Search/Search";
 import { useCountries } from "./hooks/useHttp";
 import { SelectLanguage } from "./components/SelectLanguage/SelectLanguage";
 import classesCss from "./styles/App.module.scss";
+import logo from "./images/rs_school_js.svg"
 
 const langSet = {
   EN: "English",
@@ -196,22 +197,22 @@ function App() {
             <ul className="Authors__list">
               <h2 className="Authors__title">Авторы</h2>
               <li className="Authors__item">
-                <a className="Authors__link">ссылки на гитхабы авторов</a>
+                <a href="https://github.com/heyheyjude" className="Authors__link">Антон</a>
               </li>
               <li className="Authors__item">
-                <a className="Authors__link">ссылки на гитхабы авторов</a>
+                <a className="Authors__link">Иван</a>
               </li>
               <li className="Authors__item">
-                <a className="Authors__link">ссылки на гитхабы авторов</a>
+                <a href="https://github.com/Safwood?tab=repositories" className="Authors__link">Анастасия</a>
               </li>
               <li className="Authors__item">
-                <a className="Authors__link">ссылки на гитхабы авторов</a>
+                <a href="https://github.com/pannage" className="Authors__link">Татьяна</a>
               </li>
             </ul>
           </div>
           <div className="Footer__date">2021 г.</div>
           <div className="Footer__logo">
-            <a href="https://rs.school" className="Footer__link"><img src="./images/rs_school_js.svg" className="Footer__img"/>Лого</a>
+            <a href="https://rs.school" className="Footer__link" ><img src={logo} className="Footer__img"/>Лого</a>
           </div>
         </div>
       </div>
