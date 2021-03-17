@@ -192,7 +192,7 @@ function App() {
             </Route>
           </Switch>
         </div>
-        <div className={classesCss.SiteFooter}>
+        <div className={classesCss.Footer}>
           <div className="Footer__authors Authors">
             <ul className="Authors__list">
               <h2 className="Authors__title">Авторы</h2>
@@ -200,7 +200,7 @@ function App() {
                 <a href="https://github.com/heyheyjude" className="Authors__link">Антон</a>
               </li>
               <li className="Authors__item">
-                <a className="Authors__link">Иван</a>
+                <a href="http://github.com/ivan-scherbuk" className="Authors__link">Иван</a>
               </li>
               <li className="Authors__item">
                 <a href="https://github.com/Safwood?tab=repositories" className="Authors__link">Анастасия</a>
@@ -210,9 +210,13 @@ function App() {
               </li>
             </ul>
           </div>
-          <div className="Footer__date">2021 г.</div>
-          <div className="Footer__logo">
-            <a href="https://rs.school" className="Footer__link" ><img src={logo} className="Footer__img"/>Лого</a>
+            <div>
+                <div className={classesCss.FooterDate}>2021 г.</div>
+                <div  className={classesCss.FooterLogo}>
+
+            </div>
+
+            <a href="https://rs.school" className="Footer__link" ><img src={logo} className="Footer__img"/></a>
           </div>
         </div>
       </div>

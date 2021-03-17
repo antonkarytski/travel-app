@@ -195,6 +195,40 @@ button {
   text-align: left;
 }
 
+.Footer {
+  display: flex;
+  background-color: #eee;
+  color: #333;
+  text-decoration: none;
+  justify-content: space-between;
+  padding: 10px 40px 10px 5px;
+  align-items: flex-end;
+}
+.Footer .FooterDate {
+  font-size: 40px;
+}
+.Footer .FooterLogo {
+  height: 50px;
+}
+.Footer .FooterLogo img {
+  height: 100%;
+}
+.Footer a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.Footer a:hover {
+  color: #c50707;
+}
+.Footer ul li {
+  text-decoration: none;
+  list-style-type: none;
+}
+.Footer ul li:hover {
+  color: #c50707;
+}
+
 @media screen and (max-width: 1200px) {
   .SiteNavBar .SearchBar {
     margin-left: 20%;
@@ -229,6 +263,9 @@ button {
     margin-right: auto;
     flex-basis: 100%;
     justify-content: center;
+  }
+  .Footer {
+    flex-wrap: wrap;
   }
 }
 

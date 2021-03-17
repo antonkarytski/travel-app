@@ -241,6 +241,47 @@ button{
   }
 }
 
+.Footer{
+  display: flex;
+  background-color: #eee;
+  color: #333;
+  text-decoration: none;
+  justify-content: space-between;
+  padding: 10px 40px 10px 5px;
+  align-items: flex-end;
+
+  .FooterDate{
+    font-size: 40px;
+  }
+
+  .FooterLogo{
+    height: 50px;
+    img{
+      height: 100%;
+    }
+  }
+
+  a{
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+    &:hover{
+      color: red(1)
+    }
+  }
+
+  ul{
+    li{
+      text-decoration: none;
+      list-style-type: none;
+      &:hover{
+        color: red(1)
+      }
+    }
+
+  }
+}
+
 
 @media screen and (max-width: 1200px) {
   .SiteNavBar{
@@ -299,5 +340,11 @@ button{
 
     .LangMenuControl{
     }
+
+
+  }
+
+  .Footer{
+    flex-wrap: wrap
   }
 }

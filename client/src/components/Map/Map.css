@@ -1,6 +1,6 @@
 .Map-wrapper {
   position: relative;
-  min-width: 500px;
+  min-width: 320px;
   min-height: 290px;
 }
 
@@ -15,11 +15,11 @@
 
 .mapboxgl-canvas-container{
   min-height: 290px !important;
-  min-width: 500px !important;
+  min-width: 320px !important;
 }
 
 .mapboxgl-canvas {
-  min-width: 500px !important;
+  min-width: 320px !important;
   min-height: 290px !important;
 }
 
