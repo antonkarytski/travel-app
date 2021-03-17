@@ -110,6 +110,7 @@ export default function SightGallery({places}) {
                                             index={index}
                                             place={place}
                                             showRateCard={showRateCard}
+                                            data={token && rateMap && rateMap[place._id].length> 0 ? rateMap[place._id] : null}
                                         /> : null
                                 }
                                 {

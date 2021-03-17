@@ -250,7 +250,8 @@ router.post(
                         if(reduceIndex >= 0) rating.splice(reduceIndex,1)
                         const userCard = {
                             value: userMark.value,
-                            userImage: user.image
+                            userImage: user.image,
+                            id: user._id
                         }
                         if(user.name) userCard.name = user.name
                         else userCard.email = user.email
