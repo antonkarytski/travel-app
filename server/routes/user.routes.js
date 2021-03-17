@@ -58,7 +58,7 @@ router.post(
                 }, (err) => {console.log(err)})
 
             resData.messageLoad = 'loadSuccess'
-            res.status(201).json({...resData, message: "You successfully registered"})
+            res.status(201).json({...resData, message: "You successfully updated"})
         } catch (err) {
             res.status(500).json({message: "Image uploading error", err})
         }

@@ -6,7 +6,7 @@ import './RatingStyles.css';
 import {useHttp} from "../../hooks/useHttp";
 import {AppContext} from "../../context/AppContext";
 
-export const RatingStars = ({className, place}) => {
+export const RatingStars = ({className, place, classes, showRateCard, index}) => {
     const {request} = useHttp()
     const {userId} = useContext(AppContext)
     const stars = new Array(5).fill('EmptyStar');
@@ -95,7 +95,12 @@ export const RatingStars = ({className, place}) => {
                             </li>)
                     }
                 </ul>
-                <p className="Rating__total">{rating.averageRate}</p>
+                <p
+                    onMouseEnter={() => showRateCard(index)}
+                    onMouseLeave={() => showRateCard(-1)}
+                    className={["Rating__total", classes.rate].join(' ')}>
+                    {rating.averageRate}
+                </p>
             </div>
         </div>
     )

@@ -9,6 +9,7 @@ import classesCss from './Slider.module.scss'
 import {AppContext} from "../../context/AppContext";
 import {RatingStars} from "../Rating/RatingStars";
 import {useHttp} from "../../hooks/useHttp";
+import RateCard from "../RateCard/RateCard";
 
 
 SwiperCore.use([Navigation, Pagination]);
@@ -17,9 +18,17 @@ SwiperCore.use([Navigation, Pagination]);
 export default function SightGallery({places}) {
 
     const [modalState, setModalState] = useState({visibility: false, index: null})
+    const [rateMap, setRateMap] = useState(null)
+    const [currentRateCard, setCurrentRateCard] = useState(-1)
     const {language, token} = useContext(AppContext);
+
     const {request} = useHttp()
 
+
+    const showRateCard = (index) => {
+        console.log(index)
+        setCurrentRateCard(index)
+    }
 
 
     const onClose = () => {
@@ -41,15 +50,29 @@ export default function SightGallery({places}) {
         })
     }
 
-    useEffect(() => {
+
+    useEffect(async () => {
         if(places){
-            console.log(11)
             const placesId = places.map(place => {
                 return place._id
             })
-            request('/api/country/getrates', 'POST', {places : placesId})
+            try{
+                const rateMap = await request('/api/country/getrates', 'POST', {places : placesId})
+                console.log(rateMap)
+
+                setRateMap(rateMap)
+            } catch(e){
+                console.log(e)
+            }
+
         }
     }, [places])
+
+
+    const showStyle = {
+        visibility: 'visible',
+    }
+
 
     return (
         <>
@@ -81,7 +104,19 @@ export default function SightGallery({places}) {
                                     token?
                                         <RatingStars
                                             className={classesCss.Rating}
+                                            classes={{
+                                                rate: classesCss.RateNumber
+                                            }}
+                                            index={index}
                                             place={place}
+                                            showRateCard={showRateCard}
+                                        /> : null
+                                }
+                                {
+                                    token && rateMap && rateMap[place._id].length> 0?
+                                        <RateCard
+                                            style={index === currentRateCard? showStyle: {}}
+                                            data={rateMap[place._id]}
                                         /> : null
                                 }
 

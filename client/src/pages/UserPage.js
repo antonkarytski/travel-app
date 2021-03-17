@@ -8,10 +8,9 @@ import {withRouter} from 'react-router-dom';
 
 const UserPage = ({updateSearch}) => {
     const auth = useContext(AppContext)
-    const userImageLink = "https://travel-app-24.s3.eu-north-1.amazonaws.com/"
-    const [image, setImage] = useState([{data_url: userImageLink+auth.userData.image}] || []);
+    const [image, setImage] = useState(null);
     const [name, setName] = useState(auth.userData.name || "");
-    const [imageChanged, setImageChanged] = useState(false)
+    const [message, setMessage] = useState('')
 
     const onChangeImage = (image) => {
         setImage(image);
@@ -24,12 +23,13 @@ const UserPage = ({updateSearch}) => {
 
     const onSendHandler = async () => {
         const formData = new FormData();
-        if(imageChanged) formData.append('image',image[0].file);
+        formData.append('image',image[0].file);
         formData.append('name', name);
         formData.append('id',auth.userId);
         const newData = await Axios.post('/api/user/upd', formData)
-        const updData = {name}
-        if(newData?.image) updData.image = newData.image
+        const updData = {name: newData?.data?.name}
+        if(newData?.data?.image) updData.image = newData.data.image
+        if(newData?.data?.message) setMessage(newData.data.message)
         auth.updateData(updData)
     }
 
@@ -38,7 +38,6 @@ const UserPage = ({updateSearch}) => {
         updateSearch({exists: false});
     }, []);
 
-    console.log(auth)
 
     return (
         <div className={classesCss.UserPage}>
@@ -86,7 +85,6 @@ const UserPage = ({updateSearch}) => {
                                     <button
                                         onClick={() => {
                                             onImageUpdate(index)
-                                            setImageChanged(true)
                                         }}
                                         className={classesCss.ImageHandler}>
                                         Update
@@ -94,7 +92,6 @@ const UserPage = ({updateSearch}) => {
                                     <button
                                         onClick={() => {
                                             onImageRemove(index)
-                                            setImageChanged(true)
                                         }}
                                         className={classesCss.ImageHandler}
                                     >
@@ -111,6 +108,8 @@ const UserPage = ({updateSearch}) => {
                 className={classesCss.SaveButton}>
                 Save
             </button>
+            <br/>
+            {message}
 
         </div>
     )

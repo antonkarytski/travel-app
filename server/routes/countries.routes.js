@@ -217,7 +217,7 @@ router.post(
 
 router.post(
     '/getrates',
-    async(res, req) => {
+    async(req, res) => {
         try{
             const {
                 places
