@@ -52,7 +52,7 @@ const langExtraData = {
 
 
 function App() {
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId, userData, updateData} = useAuth();
   const [searchbarState, setSearchbarState] = useState({
     value: "",
     exists: false,

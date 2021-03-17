@@ -7,7 +7,7 @@ import Map from "../components/Map/Map";
 import {Currency} from "../components/Currency/Currency";
 import {Video} from "../components/Video/Video";
 import Slider from "../components/Sliders/slider.js"
-import SightGallery from "../components/Sliders/Sight.gallery.js"
+import SightGallery from "../components/Sliders/sight.gallery.js"
 import Weather from '../components/weather/weather.js'
 import ShowTime from '../components/Clock/Сlock.js'
 import classesCss from './styles/CountryPage.module.scss'
