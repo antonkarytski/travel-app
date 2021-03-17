@@ -1,6 +1,7 @@
 const {Router} = require('express')
 const router = Router()
-const {Country, Showplace} = require('../models/Country')
+const {Country, Showplace, Rating} = require('../models/Country')
+const User = require('../models/User')
 const {Types} = require('mongoose')
 
 const langSet = ["EN", "RU", "FR"]
@@ -13,6 +14,8 @@ const langDummy = {
     description: "",
     currency: "",
 }
+
+//http://s3.amazonaws.com/bucketname/filename
 
 router.post(
     '/add',
@@ -117,16 +120,16 @@ router.post(
                 langs: langSet,
                 showplaces: []
             }
-            if(countryCode){
-                if(key === "showplaces"){
+            if (countryCode) {
+                if (key === "showplaces") {
                     countrySet.countries = await Country.findOne({countryCode})
                     countrySet.showplaces = await Showplace.find({countryCode})
-                } else if(key === "showplacesOnly"){
+                } else if (key === "showplacesOnly") {
                     countrySet.showplaces = await Showplace.find({countryCode})
                 } else {
                     countrySet.countries = await Country.findOne({countryCode})
                 }
-            } else if(key === "showplaces" || key === "showplacesOnly"){
+            } else if (key === "showplaces" || key === "showplacesOnly") {
                 countrySet.showplaces = await Showplace.find({})
             } else {
                 countrySet.countries = await Country.find({})
@@ -155,6 +158,113 @@ router.post(
             }
         } catch (e) {
         }
+    }
+)
+
+
+router.post(
+    '/setstar',
+    async (req, res) => {
+        try {
+            const {
+                showplace,
+                user,
+                value
+            } = req.body
+
+            console.log(showplace, user)
+
+            const prevRating = await Rating.findOneAndUpdate(
+                {user, showplace},
+                {user, showplace, value},
+                {
+                    upsert: true,
+                    useFindAndModify: false
+                }
+            )
+            //If record was updated, so this is not a new mark
+            const {rate, rateCount} = await Showplace.findOne({_id: showplace})
+            let newRate;
+            let newRateCount;
+            if (!prevRating) {
+                newRateCount = (rateCount ?? 0) + 1
+                newRate = (rate * rateCount + value) / newRateCount
+            } else {
+                newRate = (rate * rateCount - prevRating.value + value) / rateCount
+                newRateCount = rateCount
+            }
+            console.log(newRate, newRateCount)
+            await Showplace.findOneAndUpdate(
+                {_id: showplace},
+                {
+                    $set: {
+                        rate: newRate,
+                        rateCount: newRateCount
+                    }
+                },
+                {
+                    upsert:false,
+                    useFindAndModify: false
+                })
+
+            res.status(201).json({newRate, newRateCount})
+        } catch (e) {
+            res.status(500).json({message: "Something gonna wrong"})
+        }
+    }
+)
+
+
+router.post(
+    '/getrates',
+    async(req, res) => {
+        try{
+            const {
+                places
+            } = req.body
+            const rating = await Rating.find({'showplace': { $in: places}})
+            const userIdMap = rating.map(rate => {
+                return rate.user.toString()
+            })
+            const uniqueUsers = userIdMap.filter((item, i, arr) => {
+                return arr.indexOf(item) === i
+            });
+            const uniqueUsersDecode = uniqueUsers.map(user => {
+                return Types.ObjectId(user)
+            })
+            const users = await User.find({'_id': { $in:uniqueUsersDecode}})
+            const rateMap = {}
+            places.map(place => {
+                const marksBuffer = []
+                users.forEach(user => {
+                    let reduceIndex = -1
+                    const userMark = rating.find((mark, index) => {
+                        if(mark.user.toString() === user._id.toString()
+                            && mark.showplace.toString() === place.toString()){
+                            reduceIndex = index
+                            return true
+                        }
+                        return false
+                    })
+                    if(userMark?.value){
+                        if(reduceIndex >= 0) rating.splice(reduceIndex,1)
+                        const userCard = {
+                            value: userMark.value,
+                            userImage: user.image
+                        }
+                        if(user.name) userCard.name = user.name
+                        else userCard.email = user.email
+                        marksBuffer.push(userCard)
+                    }
+                })
+                rateMap[place] = marksBuffer
+            })
+            res.status(201).json(rateMap)
+        } catch (e) {
+            res.status(500).json({message: "Something gonna wrong"})
+        }
+
+
     }
 )
 

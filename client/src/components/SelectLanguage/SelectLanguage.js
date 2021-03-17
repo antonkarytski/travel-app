@@ -1,31 +1,39 @@
 import React from "react";
+import Select from 'react-styled-select'
+import './select.scss'
+
 
 export const SelectLanguage = ({
-  countryResponse,
-  language,
-  setLanguage,
-  className,
-}) => {
-  let languages;
-  if (countryResponse) {
-    languages = countryResponse.langs;
-  }
+                                   language,
+                                   setLanguage,
+                                   className,
+                                   classes
+                               }) => {
+    const languages = [
+        {value: 'EN', label: 'EN'},
+        {value: 'RU', label: 'RU'},
+        {value: 'FR', label: 'FR'},
+    ];
 
-  const handleChange = (e) => {
-    setLanguage(e.target.value);
-    localStorage.setItem("lang", e.target.value);
-  };
+    const handleChange = (val) => {
+        setLanguage(val);
+        localStorage.setItem("lang", val);
+    };
 
-  return (
-    <select value={language} onChange={handleChange} className={className}>
-      {languages &&
-        languages.map((lang) => {
-          return (
-            <option key={`lang-${lang}`} value={lang}>
-              {lang}
-            </option>
-          );
-        })}
-    </select>
-  );
+
+    return (
+        <Select
+            value={language}
+            onChange={handleChange}
+            className={className}
+            searchable={false}
+            options={languages}
+            classes={{
+                selectControl: classes.control,
+                selectMenuOuter: classes.dropdown,
+                selectInput: classes.input,
+                selectPlaceholder: classes.placeholder
+            }}
+        />
+    );
 };

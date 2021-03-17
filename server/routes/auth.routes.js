@@ -6,6 +6,7 @@ const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
 
+
 router.post(
     '/register',
     [
@@ -48,14 +49,12 @@ router.post('/login',
     async (req, res) => {
         try {
             const errors = validationResult(req)
-
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
                     message: "incorrect email or password"
                 })
             }
-
             const {email, password} = req.body
             const user = await User.findOne({ email })
             if (!user) {
@@ -71,7 +70,13 @@ router.post('/login',
                 config.get('jwtSecretKey'),
                 {expiresIn: '1h'}
             )
-            res.json({token, userId: user.id, message: "you logged in"})
+            const userData = {
+                id: user.id,
+                name: user.name,
+                image: user.image,
+                email: user.email
+            }
+            res.json({token, userData, message: "you logged in"})
         } catch (e) {
             res.status(500).json({message: "Something wrong", e})
         }

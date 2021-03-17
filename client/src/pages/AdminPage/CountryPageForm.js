@@ -54,13 +54,9 @@ const CountryPageForm = ({sendHandler, waitCondition, countries, message}) => {
         }
     }
 
-
-
     const currentCountry = countriesDataState ? countriesDataState[form.countryCode] : undefined
     const currentCountryLang = currentCountry ? currentCountry.langData[form.lang] : undefined
 
-
-    console.log(countries)
 
     return (
         <>
