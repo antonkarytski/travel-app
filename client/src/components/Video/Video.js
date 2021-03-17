@@ -4,7 +4,7 @@ import {AppContext} from "../../context/AppContext";
 
 export const Video = ({video, countryCode, className}) => {
 
-  const {language} = useContext(AppContext);
+    const {language} = useContext(AppContext);
 
   const videoId = { 
     EN: {
@@ -39,23 +39,22 @@ export const Video = ({video, countryCode, className}) => {
     }
   }
 
-  
-  const opts = {
-    playerVars: {
-      autoplay: 0,
-      rel: 0,
-      modestbranding: 1,
-      hl: language
-    },
-  };
 
-  return (
-    <div className={className}>
-      <Player 
-        videoId={video? video : videoId[language][countryCode]}
-        opts={opts} 
-        className="Video"
-      />
-    </div>
-  )
+    const opts = {
+        playerVars: {
+            autoplay: 0,
+            rel: 0,
+            modestbranding: 1,
+            hl: language
+        },
+    };
+
+    return (
+        <div className={className}>
+            <Player
+                videoId={video ? video : videoId[language][countryCode]}
+                opts={opts}
+            />
+        </div>
+    )
 }

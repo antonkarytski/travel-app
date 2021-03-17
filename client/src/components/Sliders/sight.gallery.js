@@ -64,7 +64,6 @@ export default function SightGallery({places}) {
             } catch(e){
                 console.log(e)
             }
-
         }
     }, [places])
 

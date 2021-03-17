@@ -14,7 +14,7 @@ export const RatingStars = ({className, place, classes, showRateCard, index, dat
     const starIndices = [0, 1, 2, 3, 4,];
     const [starSet, setStarSet] = useState(stars);
     const [userMark, setUserMark] = useState(false);
-    
+
 
     const [rating, setRating] = useState({
         averageRate: Math.floor(place.rate * 10) / 10
@@ -27,16 +27,6 @@ export const RatingStars = ({className, place, classes, showRateCard, index, dat
         setStarSet(newStarsSet)
     }
 
-    const getUserMark = () => {
-        if(data) {
-            data.find(user => { 
-                if( user.id === userId) {
-                    changeStars(user.value)
-                    setUserMark(true)
-                }  //todo проверить работает ли вместе с сервером
-            })
-        }
-    }
 
     const ratingSaveHandler = async (body) => {
         try {
@@ -54,10 +44,9 @@ export const RatingStars = ({className, place, classes, showRateCard, index, dat
 
         const {
             newRate,
-            newRateCount,
             message
-        } = await ratingSaveHandler({showplace: place._id, user: userId, value: Number(starId)+1})
-        if(!message){
+        } = await ratingSaveHandler({showplace: place._id, user: userId, value: Number(starId) + 1})
+        if (!message) {
             setRating({
                 averageRate: Math.floor(newRate * 10) / 10
             })
@@ -77,9 +66,19 @@ export const RatingStars = ({className, place, classes, showRateCard, index, dat
         }
     }
 
-    // useEffect(() => {  // разблокировать если добавим id на сервер 
-    //     getUserMark()
-    // }, [])
+    useEffect(() => {  // разблокировать если добавим id на сервер
+        if (data) {
+            const currentUserMark = data.find(user => {
+                return user.id === userId
+            })
+            if (currentUserMark) {
+                changeStars(Number(currentUserMark.value - 1))
+                setUserMark(true)
+            }
+        }
+
+
+    }, [data])
 
     return (
         <div className={className}>

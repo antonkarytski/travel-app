@@ -24,7 +24,7 @@ const AuthForm = ({
     <div className={classes.AuthForm}>
       <div className={classes.FormMessage}>{message}</div>
       <Input
-        label={`${langExtraData.login}: `}
+        label={`${langExtraData.logIn}: `}
         name={"email"}
         type="text"
         onChange={changeHandler}

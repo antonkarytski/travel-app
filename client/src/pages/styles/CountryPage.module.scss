@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik');
 @import '../../styles/colors';
 
-.CountryPage{
+.CountryPage {
   display: flex;
   flex-direction: column;
 
 }
 
-.SlideContainer{
+.SlideContainer {
   position: relative;
 
-  .CountryWelcome{
+  .CountryWelcome {
     position: absolute;
     z-index: 2;
     margin-left: auto;
@@ -22,36 +22,42 @@
     top: 30%;
     font-family: 'Rubik', sans-serif;
 
-    h2.Country{
-      &{
-        margin: 0!important;
+    h2.Country {
+      & {
+        margin: 0 !important;
       }
+
       color: white;
       font-size: 120px;
       letter-spacing: 20px;
     }
-    .Capital{
+
+    .Capital {
       color: $dark;
-      .CapitalName{
+
+      .CapitalName {
         font-size: 80px;
         display: inline-block;
         margin-right: 10px;
       }
-      .CapitalTime{
+
+      .CapitalTime {
         display: inline-block;
         min-width: 190px;
-        .Time{
+
+        .Time {
           font-size: 45px;
           line-height: 0.85em;
         }
-        .Date{
+
+        .Date {
           font-size: 20px;
         }
       }
     }
   }
 
-  .CountryWidgets{
+  .CountryWidgets {
     position: absolute;
     bottom: 0;
     padding-bottom: 20px;
@@ -66,52 +72,56 @@
     align-items: flex-end;
     font-size: 16.5px;
 
-    .WeatherWidget{
+    .WeatherWidget {
       padding: 0 30px;
       text-align: left;
-      & > :first-child{
+
+      & > :first-child {
         margin-right: 10px;
       }
 
 
-      .WeatherTemperature{
+      .WeatherTemperature {
         display: inline-block;
         vertical-align: top;
         font-size: 40px;
 
       }
-      .WeatherIcon{
+
+      .WeatherIcon {
         display: inline-block;
         vertical-align: top;
         font-size: 60px;
       }
     }
 
-    .CurrencyWidget{
+    .CurrencyWidget {
       padding: 0 30px;
       text-align: left;
       display: grid;
 
-      h4{
+      h4 {
         font-size: 25px;
         margin: 0 0 12px 0;
       }
 
-      >div{
+      > div {
         display: flex;
       }
-      .CurrencyValue{
+
+      .CurrencyValue {
         text-align: right;
         margin-left: auto;
       }
-      .CurrencyName{
+
+      .CurrencyName {
 
       }
     }
   }
 }
 
-.ShowplacesContainer{
+.ShowplacesContainer {
   height: 100vh;
   width: 100%;
   padding: 80px 0;
@@ -120,38 +130,156 @@
   display: flex;
 }
 
-.InfoContainer{
+.InfoContainer {
   min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: row;
   background-color: $dark;
 
-  .MapContainer{
+  .MapContainer {
     width: 40%;
 
-    .Map{
+    .Map {
       outline: none;
       background-image: linear-gradient(black, black);
       background-blend-mode: saturation;
     }
   }
 
-  .Description{
+  .Description {
     width: 60%;
     box-sizing: border-box;
     padding: 60px 60px 30px;
+    font-size: 14px;
 
-    .VideoBlock{
+    .VideoBlock {
       display: flex;
       justify-content: center;
       width: 100%;
+
+      > div {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        padding-top: 56.25%;
+
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
     }
 
-    .DescText{
+    .DescText {
       color: white;
       margin-bottom: 30px;
     }
 
+  }
+}
+
+@media screen and (max-width: 1100px) {
+
+  .SlideContainer {
+    .CountryWelcome {
+
+
+      h2.Country {
+        font-size: 100px;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width: 1000px) {
+  .InfoContainer {
+    flex-wrap: wrap;
+
+    .MapContainer {
+      width: 100%;
+    }
+
+    .Description {
+      width: 100%;
+      padding: 30px;
+    }
+  }
+
+}
+
+@media screen and (max-width: 920px) {
+
+  .SlideContainer {
+    .CountryWelcome {
+
+
+      h2.Country {
+        font-size: 80px;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width: 780px) {
+  .SlideContainer {
+    .CountryWelcome {
+      h2.Country {
+        font-size: 60px;
+        letter-spacing: 5px;
+      }
+      .Capital {
+        .CapitalName {
+          font-size: 40px;
+        }
+
+        .CapitalTime {
+          .Time {
+            font-size: 30px;
+            line-height: 0.85em;
+          }
+
+          .Date {
+            font-size: 15px;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .SlideContainer {
+    .CountryWelcome {
+      h2.Country {
+        font-size: 40px;
+        letter-spacing: 0;
+      }
+      .Capital {
+        .CapitalName {
+          font-size: 40px;
+        }
+
+        .CapitalTime {
+          .Time {
+            font-size: 30px;
+            line-height: 0.85em;
+          }
+
+          .Date {
+            font-size: 15px;
+          }
+        }
+
+      }
+    }
   }
 }
