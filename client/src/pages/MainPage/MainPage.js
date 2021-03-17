@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import classesCss from "./styles/MainPage.module.scss";
 import CountryCard from "./CountryCard";
+import { withRouter } from "react-router-dom";
 
 const MainPage = ({
   searchValue,
   setSearchExists,
   countryResponse,
   language,
+  isSearching,
+  setIsSearching,
+  history,
 }) => {
   let countries;
   if (countryResponse) {
@@ -32,6 +36,14 @@ const MainPage = ({
     }
 
     return filteredCountries.map((country, index) => {
+      if (isSearching) {
+        setIsSearching(false);
+        if (filteredCountries.length === 1) {
+          history.push(
+            `/country/${country.linkName.toLowerCase().replace(/[-\s]/g, "_")}`
+          );
+        }
+      }
       return (
         <CountryCard
           key={`countryCard${index}`}
@@ -58,4 +70,4 @@ const MainPage = ({
   );
 };
 
-export default MainPage;
+export default withRouter(MainPage);

@@ -8,7 +8,8 @@ export const Search = ({
   updateSearch,
   className,
   placeholderValue,
-    classes
+    classes,
+  setIsSearching,
 }) => {
   const onSearchValueChange = (e) => {
     updateSearch({ value: e.target.value });
@@ -16,6 +17,13 @@ export const Search = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSearching(true);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setIsSearching(true);
+    }
   };
 
   const buttonStyle = {
@@ -38,6 +46,7 @@ export const Search = ({
         value={value}
         placeholder={placeholderValue}
         autoFocus={true}
+        onKeyDown={handleKeyDown}
       />
 
       <button className={classes.closeButton} style={buttonStyle} onClick={() => updateSearch({ value: "" })}>
