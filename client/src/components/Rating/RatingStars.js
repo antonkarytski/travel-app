@@ -6,13 +6,15 @@ import './RatingStyles.css';
 import {useHttp} from "../../hooks/useHttp";
 import {AppContext} from "../../context/AppContext";
 
-export const RatingStars = ({className, place, classes, showRateCard, index}) => {
+export const RatingStars = ({className, place, classes, showRateCard, index, data}) => {
     const {request} = useHttp()
     const {userId} = useContext(AppContext)
     const stars = new Array(5).fill('EmptyStar');
     const starColor = {color: 'FDBF5A'};
     const starIndices = [0, 1, 2, 3, 4,];
     const [starSet, setStarSet] = useState(stars);
+    const [userMark, setUserMark] = useState(false);
+    
 
     const [rating, setRating] = useState({
         averageRate: Math.floor(place.rate * 10) / 10
@@ -23,6 +25,17 @@ export const RatingStars = ({className, place, classes, showRateCard, index}) =>
             return index <= rating ? 'SolidStar' : 'EmptyStar'
         })
         setStarSet(newStarsSet)
+    }
+
+    const getUserMark = () => {
+        if(data) {
+            data.find(user => { 
+                if( user.id === userId) {
+                    changeStars(user.value)
+                    setUserMark(true)
+                }  //todo проверить работает ли вместе с сервером
+            })
+        }
     }
 
     const ratingSaveHandler = async (body) => {
@@ -48,20 +61,25 @@ export const RatingStars = ({className, place, classes, showRateCard, index}) =>
             setRating({
                 averageRate: Math.floor(newRate * 10) / 10
             })
+            setUserMark(true)
         }
     }
 
     const onHover = (e) => {
-        if (!rating) {
+        if (!userMark) {
             changeStars(e.target.id)
         }
     }
 
     const onMouseLeave = () => {
-        if (!rating) {
+        if (!userMark) {
             changeStars(-1);
         }
     }
+
+    // useEffect(() => {  // разблокировать если добавим id на сервер 
+    //     getUserMark()
+    // }, [])
 
     return (
         <div className={className}>

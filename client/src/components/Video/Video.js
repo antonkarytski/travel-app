@@ -30,7 +30,7 @@ export const Video = ({video, countryCode, className}) => {
     RU: {
       CH:"wb84vvYSPEU",
       IS:"Qy1SP3Y5y9I",
-      NZ:"6ASD8gHrDeE&t=6s",
+      NZ:"dZiadtI-scQ",
       PH:"dmt3LcikoW4",
       HR:"cNjP2nUyB6U",
       BR:"1x4DnVMWAGs",
