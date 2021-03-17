@@ -1,43 +1,39 @@
 import React from "react";
-import {Select} from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
+import Select from 'react-styled-select'
+import './select.scss'
+
 
 export const SelectLanguage = ({
-                                   countryResponse,
                                    language,
                                    setLanguage,
                                    className,
                                    classes
                                }) => {
-    let languages = [];
-    if (countryResponse) {
-        languages = countryResponse.langs;
-    }
+    const languages = [
+        {value: 'EN', label: 'EN'},
+        {value: 'RU', label: 'RU'},
+        {value: 'FR', label: 'FR'},
+    ];
 
-    const handleChange = (e) => {
-        setLanguage(e.target.value);
-        localStorage.setItem("lang", e.target.value);
+    const handleChange = (val) => {
+        setLanguage(val);
+        localStorage.setItem("lang", val);
     };
+
 
     return (
         <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
             value={language}
             onChange={handleChange}
             className={className}
-        >
-            {languages.map((lang) => {
-                return (
-                    <MenuItem
-                        key={`lang-${lang}`}
-                        value={lang}
-                        className={classes.menuItem}
-                    >
-                        {lang}
-                    </MenuItem>
-                );
-            })}
-        </Select>
+            searchable={false}
+            options={languages}
+            classes={{
+                selectControl: classes.control,
+                selectMenuOuter: classes.dropdown,
+                selectInput: classes.input,
+                selectPlaceholder: classes.placeholder
+            }}
+        />
     );
 };

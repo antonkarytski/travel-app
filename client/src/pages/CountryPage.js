@@ -9,9 +9,9 @@ import {Video} from "../components/Video/Video";
 import Slider from "../components/Sliders/slider.js"
 import SightGallery from "../components/Sliders/sight.gallery.js"
 import Weather from '../components/weather/weather.js'
-import {RatingStars} from '../components/Rating/RatingStars'
 import ShowTime from '../components/Clock/Сlock.js'
 import classesCss from './styles/CountryPage.module.scss'
+
 
 
 export const CountryPage = ({updateSearch, country}) => {
@@ -25,6 +25,8 @@ export const CountryPage = ({updateSearch, country}) => {
         getCountryFromBase({countryCode: country.countryCode, key: 'showplacesOnly'})
 
     }, [getCountryFromBase]);
+
+
 
     const currentLangData = country.langData.find(langItem => langItem.lang === language)
 
@@ -68,7 +70,6 @@ export const CountryPage = ({updateSearch, country}) => {
                     countryResponse ? <SightGallery places={countryResponse.showplaces}/> : null
                 }
             </div>
-            <RatingStars />
             <div className={classesCss.InfoContainer}>
                 <Map
                     countries={countriesData}

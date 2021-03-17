@@ -108,6 +108,10 @@ function App() {
                     {searchbarState.exists && (
                         <Search
                             className={classesCss.SearchBar}
+                            classes={{
+                                searchButton: classesCss.SearchButton,
+                                closeButton: classesCss.CloseButton
+                            }}
                             value={searchbarState.value}
                             updateSearch={updateSearch}
                             placeholderValue={langExtraData[language].placeholder}
@@ -120,7 +124,10 @@ function App() {
                         setLanguage={setLanguage}
                         className={classesCss.SelectLanguage}
                         classes={{
-                            menuItem: classesCss.LangMenuItem
+                            menuItem: classesCss.LangMenuItem,
+                            dropdown: classesCss.LangMenuDropdown,
+                            control: classesCss.LangMenuControl,
+                            //input: classesCss.LangMenuControl,
                         }}
                     />
                     <UserBar

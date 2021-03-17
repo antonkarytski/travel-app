@@ -83,7 +83,7 @@ button {
 .SiteNavBar .SearchBar input {
   font-size: inherit;
   line-height: 21px;
-  width: 85%;
+  width: 80%;
   height: 90%;
   outline: none;
   margin-right: 10px;
@@ -102,37 +102,74 @@ button {
   outline: none;
   color: #c50707;
 }
+.SiteNavBar .SearchBar .CloseButton {
+  margin-left: -35px;
+  font-size: 18px;
+}
+.SiteNavBar .SearchBar .SearchButton {
+  margin-right: 10px;
+  font-size: 18px;
+}
 .SiteNavBar .SelectLanguage {
   margin-left: auto;
   margin-right: 10px;
-  display: block;
-  background-color: transparent;
   height: 90%;
+}
+.SiteNavBar .LangMenuControl {
+  background-color: transparent;
   border: none;
-  border-bottom: none !important;
-  font-family: inherit;
+  display: block;
   font-size: inherit;
-  outline: none;
   cursor: pointer;
-  color: white;
+  height: 100%;
+  width: auto;
+  min-width: 60px;
+  outline: none;
   transition: color 0.4s, box-shadow 0.2s;
   box-shadow: 0 0 0 0 #c50707;
+  border-radius: 0 !important;
 }
-.SiteNavBar .SelectLanguage:before {
-  border: none;
-  border-bottom: none !important;
-}
-.SiteNavBar .SelectLanguage:after {
-  border: none;
-  border-bottom: none !important;
-}
-.SiteNavBar .SelectLanguage:hover {
+.SiteNavBar .LangMenuControl:hover {
   color: #c50707;
   box-shadow: 0 3px 0 0 #c50707;
 }
+.SiteNavBar .LangMenuControl:focus {
+  outline: none;
+  border: none;
+}
+.SiteNavBar .LangMenuControl > div {
+  outline: none;
+  border: none;
+  color: white !important;
+  font-size: inherit;
+}
+.SiteNavBar .LangMenuControl > div > div {
+  font-size: inherit;
+}
+.SiteNavBar .LangMenuControl > div > div > div {
+  font-family: Oswald, sans-serif;
+  color: white !important;
+}
 
-.LangMenuItem {
-  color: green;
+.LangMenuDropdown {
+  background-color: rgba(255, 255, 255, 0) !important;
+  border: none !important;
+  font-family: Oswald, sans-serif;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25), 0 6px 8px rgba(0, 0, 0, 0.25) !important;
+}
+.LangMenuDropdown > div {
+  background-color: transparent;
+  font-family: inherit;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.LangMenuDropdown > div > div {
+  background-color: transparent;
+  font-family: inherit;
+  transition: box-shadow 0.4s, background-color 0.4s;
+}
+.LangMenuDropdown > div > div:hover {
+  background-color: rgba(197, 7, 7, 0.3);
 }
 
 .SiteContent {

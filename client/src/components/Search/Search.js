@@ -1,11 +1,14 @@
 import React from "react";
 import classesCss from "./Search.module.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export const Search = ({
   value,
   updateSearch,
   className,
   placeholderValue,
+    classes
 }) => {
   const onSearchValueChange = (e) => {
     updateSearch({ value: e.target.value });
@@ -27,14 +30,17 @@ export const Search = ({
   }
   return (
     <form className={className} onSubmit={handleSubmit}>
+      <button className={classes.searchButton} style={buttonStyle} type="submit">
+        <FontAwesomeIcon icon={faSearch} />
+      </button>
       <input
         onChange={onSearchValueChange}
         value={value}
         placeholder={placeholderValue}
         autoFocus={true}
       />
-      <button type="submit">Search</button>
-      <button style={buttonStyle} onClick={() => updateSearch({ value: "" })}>
+
+      <button className={classes.closeButton} style={buttonStyle} onClick={() => updateSearch({ value: "" })}>
         <svg
           className={classesCss.TimesSymbol}
           xmlns="http://www.w3.org/2000/svg"
@@ -42,18 +48,12 @@ export const Search = ({
         >
           <path
             stroke="black"
-            stroke-width="8.3"
-            stroke-linecap="round"
+            strokeWidth="8.3"
+            strokeLinecap="round"
             d="M14,14 L106,106 M106,14 L14,106"
           />
         </svg>
-        {/*<FontAwesomeIcon icon={faTimes} />*/}
       </button>
     </form>
   );
 };
-class s {
-  toString() {
-    return 22;
-  }
-}

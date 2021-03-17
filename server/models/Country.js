@@ -60,7 +60,7 @@ const ratingSchema = new Schema({
     user: {type: Types.ObjectId, ref: "User"},
     showplace: {type: Types.ObjectId, ref: "Showplace"},
     value: {type: Number, default: 0}
-})
+}, {collection: "rating"})
 
 module.exports = {
     Country: model('Country', countySchema),
