@@ -192,7 +192,27 @@ function App() {
           </Switch>
         </div>
         <div className={classesCss.SiteFooter}>
-
+          <div className="Footer__authors Authors">
+            <ul className="Authors__list">
+              <h2 className="Authors__title">Авторы</h2>
+              <li className="Authors__item">
+                <a className="Authors__link">ссылки на гитхабы авторов</a>
+              </li>
+              <li className="Authors__item">
+                <a className="Authors__link">ссылки на гитхабы авторов</a>
+              </li>
+              <li className="Authors__item">
+                <a className="Authors__link">ссылки на гитхабы авторов</a>
+              </li>
+              <li className="Authors__item">
+                <a className="Authors__link">ссылки на гитхабы авторов</a>
+              </li>
+            </ul>
+          </div>
+          <div className="Footer__date">2021 г.</div>
+          <div className="Footer__logo">
+            <a href="https://rs.school" className="Footer__link"><img src="./images/rs_school_js.svg" className="Footer__img"/>Лого</a>
+          </div>
         </div>
       </div>
     </AppContext.Provider>

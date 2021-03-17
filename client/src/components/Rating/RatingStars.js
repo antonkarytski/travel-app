@@ -6,20 +6,18 @@ import './RatingStyles.css';
 import {useHttp} from "../../hooks/useHttp";
 import {AppContext} from "../../context/AppContext";
 
-export const RatingStars = ({className, place, classes, showRateCard, index}) => {
+export const RatingStars = ({className, place, classes, showRateCard, index, data}) => {
     const {request} = useHttp()
     const {userId} = useContext(AppContext)
     const stars = new Array(5).fill('EmptyStar');
     const starColor = {color: 'FDBF5A'};
     const starIndices = [0, 1, 2, 3, 4,];
     const [starSet, setStarSet] = useState(stars);
+    const [userMark, setUserMark] = useState(false);
 
-    //save data from server:
+
     const [rating, setRating] = useState({
-        averageRate: place.rate, //yes
-        totalMarks: 4, //no
-        place: place._id, //no
-        userId //no
+        averageRate: Math.floor(place.rate * 10) / 10
     });
 
     const changeStars = (rating) => {
@@ -29,15 +27,6 @@ export const RatingStars = ({className, place, classes, showRateCard, index}) =>
         setStarSet(newStarsSet)
     }
 
-    const averageMarkCalc = (mark, averageMark, marksNumber) => {
-        return (Math.floor((averageMark * marksNumber + mark) / (marksNumber + 1) * 10) / 10)
-    }
-
-
-    const saveOnServer = () => {
-        // console.log('Rating '+ ratingForSaving + " stars")
-        // console.log('not Saved') //TODO: добавить запрос на сервер  //NO
-    }
 
     const ratingSaveHandler = async (body) => {
         try {
@@ -52,34 +41,44 @@ export const RatingStars = ({className, place, classes, showRateCard, index}) =>
         e.stopPropagation();
         const starId = e.currentTarget.id;
         changeStars(+starId);
-        const currectAverage = averageMarkCalc(+starId, rating.averageRate, rating.totalMarks);
 
         const {
             newRate,
-            newRateCount,
             message
-        } = await ratingSaveHandler({showplace: place._id, user: userId, value: Number(starId)+1})
-        if(!message){
+        } = await ratingSaveHandler({showplace: place._id, user: userId, value: Number(starId) + 1})
+        if (!message) {
             setRating({
-                ...rating, //you can remove this
-                averageRate: newRate,
-                totalMarks: newRateCount, //and this
+                averageRate: Math.floor(newRate * 10) / 10
             })
+            setUserMark(true)
         }
-
     }
 
     const onHover = (e) => {
-        if (!rating) {
+        if (!userMark) {
             changeStars(e.target.id)
         }
     }
 
     const onMouseLeave = () => {
-        if (!rating) {
+        if (!userMark) {
             changeStars(-1);
         }
     }
+
+    useEffect(() => {  // разблокировать если добавим id на сервер
+        if (data) {
+            const currentUserMark = data.find(user => {
+                return user.id === userId
+            })
+            if (currentUserMark) {
+                changeStars(Number(currentUserMark.value - 1))
+                setUserMark(true)
+            }
+        }
+
+
+    }, [data])
 
     return (
         <div className={className}>
@@ -99,7 +98,7 @@ export const RatingStars = ({className, place, classes, showRateCard, index}) =>
                     onMouseEnter={() => showRateCard(index)}
                     onMouseLeave={() => showRateCard(-1)}
                     className={["Rating__total", classes.rate].join(' ')}>
-                    {rating.averageRate}
+                    {rating.averageRate ? rating.averageRate : ''}
                 </p>
             </div>
         </div>

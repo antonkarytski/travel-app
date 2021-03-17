@@ -10,9 +10,24 @@ export default function ShowTime(props) {
         'FR': 'fr-FR'
     }
     let currentCity = props.country.langData[0].capitalName
+    const utcZone = {
+        'Brasilia': -3,
+        'Reykjavik': 0,
+        'Paris': 1,
+        'Bern': 1,
+        'Oslo': 1,
+        'Zagreb': 1,
+        'Sri Jayawardenepura Kotte': [5, 30],
+        'Bangkok': 7,
+        'Manila': 8,
+        'Tokyo': 9,
+        'Wellington': 13,
+    }
+
     let today = new Date();
     let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     let weekDate = today.toLocaleDateString(`${translation[language]}`, options)
+    let currentUTC = utcZone[currentCity]
 
 
 
@@ -26,9 +41,19 @@ export default function ShowTime(props) {
         let interval = setInterval(() => {
 
             let today = new Date();
-            let hour = today.getHours();
-            let min = today.getMinutes();
+
+
+            if (Array.isArray(currentUTC)) {
+                today.setTime(today.getTime() + currentUTC[0] * 1000 * 60 * 60 + currentUTC[1] * 1000 * 60);
+            } else {
+                today.setTime(today.getTime() + currentUTC * 1000 * 60 * 60)
+
+            }
+
+            let hour = today.getUTCHours();
+            let min = today.getUTCMinutes();
             let sec = today.getSeconds();
+
 
             setDate(`${addZero(hour)}:${addZero(min)}:${addZero(sec)}`)
         }, 1000);

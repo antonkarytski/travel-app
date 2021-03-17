@@ -77,6 +77,7 @@ export default function SightGallery({places}) {
         <>
             <ModalWindow
                 isOpened={modalState.visibility}
+                index = {modalState.index}
                 onClose={onClose}
                 content={places}/>
             <Swiper
@@ -109,6 +110,7 @@ export default function SightGallery({places}) {
                                             index={index}
                                             place={place}
                                             showRateCard={showRateCard}
+                                            data={token && rateMap && rateMap[place._id].length> 0 ? rateMap[place._id] : null}
                                         /> : null
                                 }
                                 {
